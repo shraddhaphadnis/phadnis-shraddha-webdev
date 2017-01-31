@@ -1,100 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-    .navbar-color{
-        background-color: lavender;
-        border-color: lavender;
-    }
-    a {
-        display:block;
-        padding: 5px;
-        border-collapse: collapse;
-        align-content: flex-start;
-    }
-    .navbarheader {
-        font-size: 20px;
-        color: Black;
-        display: block;
-    }
-</style>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="../css/style.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title>Website List</title>
 </head>
 <body>
 
-<div class = "container-fluid">
-    <div class = "container">
-        <nav class="navbar navbar-color navbar-fixed-top">
-            <div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <a>
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-text pull-right">
+            <a>
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand no-left-padding no-left-margin">
+                Websites
+            </a>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid">
 
-                <div class="row navbar-text">
-                    <div class="col-xs-1">
-                        <a href="#">
-                            <span class = "glyphicon glyphicon-chevron-left pull-left"></span>
-                        </a>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class = "navbar-header navbarheader"> Pages </div>
-                    </div>
-                    <div class="col-xs-3 pull-right">
-                        <a href="#">
-                            <span class="glyphicon glyphicon-plus pull-right"> </span>
-                        </a>
-                    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    Blog Post
+                </div>
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    <a href="website-edit.html">
+                        <span class="glyphicon glyphicon-cog pull-right"></span>
+                    </a>
                 </div>
             </div>
-        </nav>
-    </div>
-    <br>
-    <br>
-    <! Body part>
-    <div class = "container-fluid">
-        <ul style = "list-style-type:none">
-            <li>
-                <a href="assignment/pages/">Blog Post
-                    <span class = "glyphicon glyphicon-cog pull-right"> </span>
-                </a>
-            </li>
-            <li>
-                <a href="assignment/pages/">Blogs
-                    <span class = "glyphicon glyphicon-cog pull-right"> </span>
-                </a>
-            </li>
-            <li>
-                <a href="assignment/pages/">Home
-                    <span class = "glyphicon glyphicon-cog pull-right"> </span>
-                </a>
-            </li>
-            <li>
-                <a href="assignment/websites/">About
-                    <span class = "glyphicon glyphicon-cog pull-right"> </span>
-                </a>
-            </li>
-            <li>
-                <a href="assignment/websites/">Contact Us
-                    <span class = "glyphicon glyphicon-cog pull-right"> </span>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class = "container">
-        <nav class="navbar navbar-color navbar-fixed-bottom">
-            <div class="container-fluid">
-
-                <div class="row navbar-text pull-right">
-                    <div class="col-xs-3 pull-right">
-                        <a href="#">
-                            <span class="glyphicon glyphicon-user"> </span>
-                        </a>
-                    </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    Blogs
+                </div>
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    <a href="website-edit.html">
+                        <span class="glyphicon glyphicon-cog pull-right"></span>
+                    </a>
                 </div>
             </div>
-        </nav>
-    </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    Home
+                </div>
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    <a href="website-edit.html">
+                        <span class="glyphicon glyphicon-cog pull-right"></span>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    About
+                </div>
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    <a href="website-edit.html">
+                        <span class="glyphicon glyphicon-cog pull-right"></span>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    Contact Us
+                </div>
+                <div class="col-xs-11 col-sm-11 col-lg-11">
+                    <a href="website-edit.html">
+                        <span class="glyphicon glyphicon-cog pull-right"></span>
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="row container-fluid">
+        <div class="col-xs-12 col-sm-12 col-lg-12">
+            <div class="navbar-text pull-right">
+                <a>
+                    <span class="glyphicon glyphicon-user pull-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
 </body>
 </html>
