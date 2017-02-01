@@ -12,21 +12,21 @@
     <div class="row container-fluid">
         <div class="col-xs-12 col-sm-12 col-lg-12">
             <div class="navbar-text pull-left">
-                <a>
+                <a href="widget-list.html">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </div>
             <div class="navbar-text pull-right">
-                <a>
+                <a href = widget-list.html>
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>
             <div class="navbar-header">
-                <a class="navbar-brand no-left-padding no-left-margin">
+                <a class="navbar-brand">
                     Widget Edit
                 </a>
             </div>
-          </div>
+        </div>
     </div>
 </nav>
 
@@ -39,11 +39,23 @@
     <textarea class="form-control"
               id="Text"></textarea>
 
-    <label for="size">Size</label>
-    <input class="form-control"
-           id="size"/>
+    <label for="url">URL</label>
+    <input placeholder="https://youtube/uLWLashCXHE"
+           class="form-control"
+           id="url"/>
 
-    <a href="website-list.html" class="btn btn-danger btn-block">
+    <label for="width">Width</label>
+    <input class="form-control" placeholder="100%"
+           id="width"/>
+
+    <label for="upload">Upload</label>
+    <input type="file" placeholder="No File choosen" class="form-control"
+           id="upload"/>
+
+    <a href="widget-list.html" class="btn btn-primary btn-block">
+        Upload Image
+    </a>
+    <a href="widget-list.html" class="btn btn-danger btn-block">
         Delete
     </a>
 </div>
@@ -53,13 +65,12 @@
     <div class="row container-fluid">
         <div class="col-xs-12 col-sm-12 col-lg-12">
             <div class="navbar-text pull-right">
-                <a>
+                <a href="../login/profile.html">
                     <span class="glyphicon glyphicon-user pull-right"></span>
                 </a>
             </div>
         </div>
     </div>
 </nav>
-
 </body>
 </html>
