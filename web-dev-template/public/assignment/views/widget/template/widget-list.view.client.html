@@ -1,0 +1,102 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid bg-primary">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page"
+               class="glyphicon glyphicon-chevron-left navbar-brand pull-left">
+            </a>
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new"
+               class="glyphicon glyphicon-plus navbar-brand pull-right">
+            </a>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Widgets</a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+
+    <div ng-repeat="widget in model.widgets">
+        <div class="jga-toolbar">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <span class="glyphicon glyphicon-align-justify"></span>
+        </div>
+
+        <!--<ng-include src="model.getWidgetTemplateUrl(widget.widgetType)"></ng-include>-->
+
+        <div ng-switch="widget.widgetType">
+            <div ng-switch-when="HEADER">
+                <ng-include src="'views/widget/templates/widget-HEADER.view.client.html'"></ng-include>
+            </div>
+            <div ng-switch-when="IMAGE">
+                <ng-include src="'views/widget/templates/widget-IMAGE.view.client.html'"></ng-include>
+            </div>
+            <div ng-switch-when="HTML">
+                <ng-include src="'views/widget/templates/widget-HTML.view.client.html'"></ng-include>
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <ng-include src="'views/widget/templates/widget-YOUTUBE.view.client.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="jga-toolbar">
+            <a>
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <span class="glyphicon glyphicon-align-justify"></span>
+        </div>
+        <h1>GIZMODO</h1>
+    </div>
+    <div>
+        <h3>New Measurements of the Universe Expanding Tell a Confusing Story</h3>
+    </div>
+    <div>
+        <div class="jga-toolbar">
+            <a>
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <span class="glyphicon glyphicon-align-justify"></span>
+        </div>
+
+        <img width="100%" src="https://i.kinja-img.com/gawker-media/image/upload/s--UE7cu6DV--/c_scale,fl_progressive,q_80,w_800/xoo0evqxzxrrmrn4ayoq.jpg">
+    </div>
+    <div>
+        <div class="jga-toolbar">
+            <a>
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <span class="glyphicon glyphicon-align-justify"></span>
+        </div>
+
+        <p>At the Environmental Protection Agency, it’s typical for an incoming administration to implement a realignment of sorts—with some grants or contracts, for instance, being frozen temporarily—but a decision by President Donald Trump’s staff to <a href="http://www.latimes.com/politics/washington/la-na-trailguide-updates-trump-administration-orders-media-1485281190-htmlstory.html" target="_blank" rel="noopener">order a total media blackout</a>, as well as ban any new spending, has left some employees rattled. <br></p>    </div>
+    <div>
+        <div class="jga-toolbar">
+            <a>
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <span class="glyphicon glyphicon-align-justify"></span>
+        </div>
+        <iframe width="100%" src="https://www.youtube.com/embed/vQD1Txzvq70" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="row container-fluid bg-primary">
+        <div class="col-xs-1">
+            <a href="">
+                <span class="glyphicon glyphicon-triangle-right navbar-brand"></span>
+            </a>
+        </div>
+        <div class="col-xs-2">
+            <a href="">
+                <span class="glyphicon glyphicon-eye-open navbar-brand"></span>
+            </a>
+        </div>
+        <a href="#/user/{{model.userId}}" class="navbar-brand pull-right">
+          <span class="glyphicon glyphicon-user">
+          </span>
+        </a>
+    </div>
+</nav>

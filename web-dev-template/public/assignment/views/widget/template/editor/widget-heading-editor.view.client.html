@@ -1,0 +1,46 @@
+<nav class="navbar navbar-default navbar-fixed-top page-list">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left page-text">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+
+        <div class="navbar-text pull-right page-text">
+            <a ng-click="model.updateWidget()">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+        <div class="navbar-header page-text">
+            <a class="navbar-brand">Widget Edit</a>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid srk-extend">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input  class="form-control" id="name" placeholder="Widget Name">
+    </div>
+    <div class="form-group">
+        <label for="widgettext">Text</label>
+        <input ng-model="widget.text" class="form-control" id="widgettext" placeholder="Widget Text" value="Deep Learning Will Radically Change the Ways We Interact with Technology"></input>
+    </div>
+    <div class="form-group">
+        <label for="widgetsize">Size</label>
+        <input ng-model="widget.size" class="form-control" id="widgetsize" placeholder="Size" value="3"></input>
+    </div>
+
+    <a class="btn btn-danger btn-block"
+       ng-click="model.deleteUser()">Delete</a>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom page-list">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right page-text">
+            <a href="#/user/{{model.userId}}">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+        </div>
+    </div>
+</nav>
