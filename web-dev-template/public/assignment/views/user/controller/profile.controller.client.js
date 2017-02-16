@@ -20,7 +20,7 @@
         };
         function deleteUser(){
             var user = UserService.deleteUser(userId);
-            $location.url("#/login");
+            $location.url("/login");
         }
 
         var user = UserService.findUserById(userId);

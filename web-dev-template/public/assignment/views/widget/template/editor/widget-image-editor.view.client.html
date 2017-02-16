@@ -1,54 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="row container-fluid bg-primary">
-        <div class="col-sm-4 hidden-xs">
-            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-chevron-left pull-left navbar-brand"></a>
-            <div class="navbar-header">
-                <a class="navbar-brand">
-                    Widgets
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-8">
-            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-chevron-left pull-left navbar-brand visible-xs"></a>
-            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-ok pull-right navbar-brand"></a>
-            <div class="navbar-header">
-                <a class="navbar-brand no-left-margin">
-                    Widget Edit
-                </a>
-            </div>
-        </div>
+    <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-chevron-left pull-left navbar-brand visible-xs"></a>
+    <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-ok pull-right navbar-brand"></a>
+    <div class="navbar-header">
+        <a class="navbar-brand no-left-margin">
+            Widget Edit
+        </a>
     </div>
 </nav>
 
 <div class="container-fluid">
-    <div class="col-sm-4 hidden-xs">
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a ng-click="model.createWidget('heading')">
-                    Header
-                </a>
-            </li>
-
-            <li class="list-group-item">
-                <a ng-click="model.createWidget('html')">
-                    HTML
-                </a>
-            </li>
-
-            <li class="list-group-item">
-                <a ng-click="model.createWidget('image')" >
-                    Image
-                </a>
-            </li>
-
-            <li class="list-group-item">
-                <a ng-click="model.createWidget('youtube')">
-                    Youtube
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-8 col-xs-12 wbdv-right-pane">
         <form>
             <div class="form-group">
                 <label for="widget-image-name">Name</label>
