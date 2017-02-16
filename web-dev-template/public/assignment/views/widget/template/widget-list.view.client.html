@@ -27,16 +27,16 @@
 
         <div ng-switch="widget.widgetType">
             <div ng-switch-when="HEADER">
-                <ng-include src="'views/widget/templates/widget-HEADER.view.client.html'"></ng-include>
+                <ng-include src="'views/widget/template/widget-heading.view.client.html'"></ng-include>
             </div>
             <div ng-switch-when="IMAGE">
-                <ng-include src="'views/widget/templates/widget-IMAGE.view.client.html'"></ng-include>
+                <ng-include src="'views/widget/template/widget-image.view.client.html'"></ng-include>
             </div>
             <div ng-switch-when="HTML">
-                <ng-include src="'views/widget/templates/widget-HTML.view.client.html'"></ng-include>
+                <ng-include src="'views/widget/template/widget-html.view.client.html'"></ng-include>
             </div>
             <div ng-switch-when="YOUTUBE">
-                <ng-include src="'views/widget/templates/widget-YOUTUBE.view.client.html'"></ng-include>
+                <ng-include src="'views/widget/template/widget-youtube.view.client.html'"></ng-include>
             </div>
         </div>
     </div>

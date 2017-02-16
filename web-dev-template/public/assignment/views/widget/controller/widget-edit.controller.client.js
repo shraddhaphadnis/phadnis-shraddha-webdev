@@ -20,18 +20,17 @@
         init();
 
         function getEditorTemplateUrl(type) {
-            return 'views/widget/template/editors/widget-'+type+'-editor.view.client.html';
+            return 'views/widget/template/editor/widget-'+type+'-editor.view.client.html';
         }
 
         function deleteWidget(){
             WidgetService.deleteWidget(vm.widgetId);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"widget");
+            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
         }
-
 
         function updateWidget(){
             WidgetService.updateWidget(vm.widgetId,vm.widget);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"widget");
+            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
         }
     }
 })();

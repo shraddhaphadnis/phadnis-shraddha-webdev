@@ -14,7 +14,7 @@
         vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
 
         function getWidgetTemplateUrl(widgetType) {
-            var url = 'views/widget/templates/widget-'+widgetType+'.view.client.html';
+            var url = 'views/widget/template/widget-'+widgetType+'.view.client.html';
             return url;
         }
 

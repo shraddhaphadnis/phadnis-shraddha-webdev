@@ -73,12 +73,12 @@
             // now do all the page routes using websites as an example
             .when("/user/:uid/website/:wid/page/:pid/widget",{
                 templateUrl: 'views/widget/template/widget-list.view.client.html',
-                controller: "EditWidgetController",
+                controller: "WidgetListController",
                 controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/new",{
                 templateUrl: 'views/widget/template/widget-chooser.view.client.html',
-                controller: "WidgetListController",
+                controller: "NewWidgetController",
                 controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/:wgid",{
