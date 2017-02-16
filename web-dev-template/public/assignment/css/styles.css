@@ -50,7 +50,9 @@ body {
     color: white;
 }
 
-
+.a {
+    text-decoration:none;
+}
 .btn {
     border-radius: 0px;
 }

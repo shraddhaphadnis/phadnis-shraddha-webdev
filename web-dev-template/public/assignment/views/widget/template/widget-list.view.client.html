@@ -26,16 +26,16 @@
         <!--<ng-include src="model.getWidgetTemplateUrl(widget.widgetType)"></ng-include>-->
 
         <div ng-switch="widget.widgetType">
-            <div ng-switch-when="HEADER">
+            <div ng-switch-when="heading">
                 <ng-include src="'views/widget/template/widget-heading.view.client.html'"></ng-include>
             </div>
-            <div ng-switch-when="IMAGE">
+            <div ng-switch-when="image">
                 <ng-include src="'views/widget/template/widget-image.view.client.html'"></ng-include>
             </div>
-            <div ng-switch-when="HTML">
+            <div ng-switch-when="html">
                 <ng-include src="'views/widget/template/widget-html.view.client.html'"></ng-include>
             </div>
-            <div ng-switch-when="YOUTUBE">
+            <div ng-switch-when="youtube">
                 <ng-include src="'views/widget/template/widget-youtube.view.client.html'"></ng-include>
             </div>
         </div>

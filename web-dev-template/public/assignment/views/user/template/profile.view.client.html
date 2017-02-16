@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid bg-primary">
-            <a ng-click="model.update(model.user)"
+            <a ng-click="model.updateUser(model.user)"
                class="glyphicon glyphicon-ok navbar-brand pull-right">
             </a>
         <div class="navbar-header">
@@ -63,6 +63,10 @@
         </a>
         <a class="btn btn-danger  btn-block"
            href="#/login">Logout</a>
+        <a ng-click="model.deleteUser()"
+           class="btn btn-warning btn-block">
+            Unregister
+        </a>
     </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">

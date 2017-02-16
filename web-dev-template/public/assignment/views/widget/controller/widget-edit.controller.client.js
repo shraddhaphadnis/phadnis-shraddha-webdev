@@ -30,6 +30,7 @@
 
         function updateWidget(){
             WidgetService.updateWidget(vm.widgetId,vm.widget);
+            console.log(vm.widget);
             $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
         }
     }

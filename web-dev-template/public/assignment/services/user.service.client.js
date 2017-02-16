@@ -6,7 +6,7 @@
     function userService() {
         var users = [
             {_id: "123", username: "alice",    password: "alice", email:"alice.wonderland@com" ,  firstName: "Alice",  lastName: "Wonder"  },
-            {_id: "234", username: "bob",      password: "bob",  email:"bob,marley@com" ,    firstName: "Bob",    lastName: "Marley"  },
+            {_id: "234", username: "bob",      password: "bob",  email:"bob.marley@com" ,    firstName: "Bob",    lastName: "Marley"  },
             {_id: "345", username: "charly",   password: "charly", email:"charly@garcia@com" ,  firstName: "Charly", lastName: "Garcia"  },
             {_id: "456", username: "jannunzi", password: "jannunzi", email:"jannunzi.jose@com" , firstName: "Jose",   lastName: "Annunzi" }
         ];
@@ -74,14 +74,14 @@
             }
             return null;
         }
+
         function deleteUser(uid) {
             for(var u in users) {
-                var user = users[u];
-                if( user._id === uid ) {
-                    user.splice(uid,1)
+                if(users[u]._id === uid) {
+                    users.splice(u, 1);
                 }
             }
-            return andular.copy(user)
         }
-    }
+        }
+
 })();
