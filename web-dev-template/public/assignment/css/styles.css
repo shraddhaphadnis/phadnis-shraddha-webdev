@@ -50,8 +50,8 @@ body {
     color: white;
 }
 
-.a {
-    text-decoration:none;
+a    {
+    text-decoration:none !important;
 }
 .btn {
     border-radius: 0px;
