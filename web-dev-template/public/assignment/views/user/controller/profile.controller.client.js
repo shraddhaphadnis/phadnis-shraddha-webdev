@@ -6,7 +6,6 @@
     function profileController($routeParams, UserService,$location) {
         var vm = this;
         var userId = $routeParams['uid'];
-        console.log(userId);
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
 
@@ -26,6 +25,5 @@
         var user = UserService.findUserById(userId);
         vm.user = user;
 
-        console.log(user);
     }
 })();

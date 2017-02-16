@@ -23,7 +23,6 @@
         function updateWebsite () {
             WebsiteService.updateWebsite(vm.websiteId,vm.website);
             $location.url("/user/"+vm.userId+"/website");
-            console.log(vm.website);
         }
     }
 })();

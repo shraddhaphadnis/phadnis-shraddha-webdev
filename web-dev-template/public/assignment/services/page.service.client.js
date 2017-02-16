@@ -21,7 +21,6 @@
             page.websiteId = websiteId;
             page._id = (new Date()).getTime().toString();
             pages.push(page);
-            console.log(page);
         }
 
         function deletePage(pageId) {

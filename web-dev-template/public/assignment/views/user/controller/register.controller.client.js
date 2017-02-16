@@ -11,7 +11,6 @@
             var registerUser = UserService.findUserByCredentials(user.username,user.password);
             if (registerUser == null) {
                 newuser = UserService.createUser(user);
-                console.log(newuser);
                 $location.url('/user/' + newuser._id);
             }
             else{

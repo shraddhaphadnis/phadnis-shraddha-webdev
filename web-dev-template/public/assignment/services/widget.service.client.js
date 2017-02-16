@@ -32,7 +32,6 @@
                 if(widgets[w].pageId === pageId) {
                     widgets_list.push(widgets[w]);
                 }
-                console.log(pageId)
             }
             return widgets_list;
         }
