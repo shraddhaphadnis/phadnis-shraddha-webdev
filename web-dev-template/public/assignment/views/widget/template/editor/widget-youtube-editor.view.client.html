@@ -1,14 +1,19 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <a href=#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget
-       class="glyphicon glyphicon-chevron-left navbar-brand pull-left visible-xs">
-    </a>
-    <a href=#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget
-       class="glyphicon glyphicon-ok navbar-brand pull-right">
-    </a>
-    <div class="navbar-header">
-        <a class="navbar-brand no-left-margin">
-            Widget Edit
-        </a>
+<nav class="navbar navbar-default navbar-fixed-top page-list">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left page-text">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+
+        <div class="navbar-text pull-right page-text">
+            <a ng-click="model.updateWidget()">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+        <div class="navbar-header page-text">
+            <a class="navbar-brand">Widget Edit</a>
+        </div>
     </div>
 </nav>
 
