@@ -149,9 +149,11 @@ module.exports = function (app) {
                     pageId = widgets[i].pageId;
                 }
             }
-
-            res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/");
         }
+            else{
+                pageId = req.body.pageId;
+                res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/"+widgetId);
+            }
     }
 
     function sortWidget(req, res) {
