@@ -12,7 +12,11 @@
         vm.createWidget = createWidget;
 
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+            var promise = WidgetService
+                .findAllWidgetsForPage(vm.pageId)
+                .success(function (widget) {
+                    vm.widgets = widget;
+                });
         }
 
         init();
@@ -40,10 +44,11 @@
                     newWidget.text = "Default Text";
                     break;
             }
-            WidgetService.createWidget(vm.pageId, newWidget);
-            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
+            var promise = WidgetService
+                .createWidget(vm.pageId, newWidget)
+                .success(function (widget) {
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
+                });
         }
     }
-
-
 })();

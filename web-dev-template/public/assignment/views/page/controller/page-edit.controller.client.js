@@ -12,18 +12,32 @@
         vm.updatePage = updatePage;
 
         function init() {
-            vm.page = PageService.findPageById(vm.pageId);
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
+            var promise = PageService
+                .findPageById(vm.pageId)
+                .success(function (page) {
+                    vm.page = page;
+                });
+            var promise1 = PageService
+                .findAllPagesForWebsite(vm.websiteId)
+                .success(function (page) {
+                    vm.pages = page;
+                });
         }
         init();
 
         function deletePage () {
-            PageService.deletePage(vm.pageId);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+            var promise = PageService
+                .deletePage(vm.pageId)
+                .success(function (page) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+                });
         }
         function updatePage () {
-            PageService.updatePage(vm.pageId,vm.page);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+            var promise = PageService
+                .updatePage(vm.pageId,vm.page)
+                .success(function (page) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+                });
         }
     }
 })();

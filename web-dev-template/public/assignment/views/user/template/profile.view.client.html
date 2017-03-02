@@ -1,8 +1,8 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid bg-primary">
-            <a ng-click="model.updateUser(model.user)"
-               class="glyphicon glyphicon-ok navbar-brand pull-right">
-            </a>
+        <a ng-click="model.updateUser(model.user)"
+           class="glyphicon glyphicon-ok navbar-brand pull-right">
+        </a>
         <div class="navbar-header">
             <a class="navbar-brand">
                 Profile
@@ -19,55 +19,58 @@
     {{model.message}}
 </div>
 
-    <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input ng-model="model.user.username"
-                       type="text"
-                       class="form-control"
-                       id="username"
-                       placeholder="Username">
-            </div>
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input ng-model = "model.user.email"
-                       type="email"
-                       class="form-control"
-                       id="email"
-                       placeholder="alice@wonderland.com">
-            </div>
-            <div class="form-group">
-                <label for="first-name">First Name</label>
-                <input ng-model = "model.user.firstName"
-                       type="text"
-                       class="form-control"
-                       id="first-name"
-                       placeholder="Alice">
-            </div>
-            <div class="form-group">
-                <label for="last-name">Last Name</label>
-                <input ng-model= "model.user.lastName"
-                       type="text"
-                       class="form-control"
-                       id="last-name"
-                       placeholder="Wonderland">
-            </div>
-        </form>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input ng-model="model.user.username"
+                   type="text"
+                   class="form-control"
+                   id="username"
+                   placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input ng-model = "model.user.email"
+                   type="email"
+                   class="form-control"
+                   id="email"
+                   placeholder="alice@wonderland.com">
+        </div>
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input ng-model = "model.user.firstName"
+                   type="text"
+                   class="form-control"
+                   id="first-name"
+                   placeholder="Alice">
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input ng-model= "model.user.lastName"
+                   type="text"
+                   class="form-control"
+                   id="last-name"
+                   placeholder="Wonderland">
+        </div>
+    </form>
 
-        <a class="btn btn-primary btn-block"
-           href="#/user/{{model.user._id}}/website">Websites</a>
-        <a ng-click="model.update(model.user)"
-           class="btn btn-success btn-block">
-            Update
-        </a>
-        <a class="btn btn-danger  btn-block"
-           href="#/login">Logout</a>
-        <a ng-click="model.deleteUser()"
-           class="btn btn-warning btn-block">
-            Unregister
-        </a>
-    </div>
+    <a class="btn btn-primary btn-block"
+       href="#/user/{{model.user._id}}/website">Websites</a>
+
+    <a ng-click="model.updateUser(model.user)"
+       class="btn btn-success btn-block">
+        Update
+    </a>
+
+    <a class="btn btn-danger  btn-block"
+       href="#/login">Logout</a>
+
+    <a ng-click="model.deleteUser(model.user)"
+       class="btn btn-warning btn-block">
+        Unregister
+    </a>
+</div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid bg-primary">

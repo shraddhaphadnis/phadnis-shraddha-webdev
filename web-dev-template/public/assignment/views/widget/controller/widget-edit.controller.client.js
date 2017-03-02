@@ -14,8 +14,11 @@
         vm.updateWidget = updateWidget;
 
         function init() {
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+            WidgetService
+                .findWidgetById(vm.widgetId)
+                .success(function(widget){
+                    vm.widget = widget;
+                });
         }
         init();
 
@@ -24,13 +27,19 @@
         }
 
         function deleteWidget(){
-            WidgetService.deleteWidget(vm.widgetId);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+            var promise = WidgetService
+                .deleteWidget(vm.widgetId)
+                .success(function (widget) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
 
         function updateWidget(){
-            WidgetService.updateWidget(vm.widgetId,vm.widget);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+            var promise = WidgetService
+                .updateWidget(vm.widgetId,vm.widget)
+                .success(function (widget) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                })
         }
     }
 })();

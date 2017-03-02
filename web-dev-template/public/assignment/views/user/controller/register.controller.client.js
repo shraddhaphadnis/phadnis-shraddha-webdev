@@ -8,14 +8,21 @@
         vm.register = register;
 
         function register(user) {
-            var registerUser = UserService.findUserByCredentials(user.username,user.password);
-            if (registerUser == null) {
-                newuser = UserService.createUser(user);
-                $location.url('/user/' + newuser._id);
-            }
-            else{
-                vm.error("User already exists")
-            }
+            UserService
+                .findUserByUsername(user.username)
+                .success(function (user) {
+                    vm.error = "sorry that username is taken"
+                })
+                .error(function(){
+                    UserService
+                        .createUser(user)
+                        .success(function(user){
+                            $location.url('/profile/' + user._id);
+                        })
+                        .error(function () {
+                            vm.error = 'sorry could not register';
+                        });
+                });
         }
     }
 })();

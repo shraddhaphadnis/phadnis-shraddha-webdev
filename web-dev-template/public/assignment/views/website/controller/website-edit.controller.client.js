@@ -11,18 +11,32 @@
         vm.updateWebsite = updateWebsite;
 
         function init() {
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+            var promise = WebsiteService
+                .findWebsiteById(vm.websiteId)
+                .success(function (website) {
+                    vm.website = website;
+                });
+            var promise1 = WebsiteService
+                .findAllWebsitesForUser(vm.userId)
+                .success(function (website) {
+                    vm.websites = website;
+                });
         }
         init();
 
         function deleteWebsite () {
-            WebsiteService.deleteWebsite(vm.websiteId);
-            $location.url("/user/"+vm.userId+"/website");
+            var promise = WebsiteService
+                .deleteWebsite(vm.websiteId)
+                .success(function (website) {
+                    $location.url("/user/"+vm.userId+"/website");
+                });
         }
         function updateWebsite () {
-            WebsiteService.updateWebsite(vm.websiteId,vm.website);
-            $location.url("/user/"+vm.userId+"/website");
+            var promise = WebsiteService
+                .updateWebsite(vm.websiteId,vm.website)
+                .success(function (website) {
+                    $location.url("/user/"+vm.userId+"/website");
+                });
         }
     }
 })();
