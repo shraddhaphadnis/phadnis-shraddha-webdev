@@ -21,6 +21,22 @@
     <input type="password"
            class="form-control"
            placeholder="very password"/>
+    <input ng-model = "model.user.email"
+           type="email"
+           class="form-control"
+           placeholder="Email"/>
+    <input ng-model = "model.user.firstname"
+           type="text"
+           class="form-control"
+           placeholder="firstname"/>
+    <input ng-model = "model.user.lastname"
+           type="text"
+           class="form-control"
+           placeholder="lastname"/>
+    <input ng-model = "model.user.phone"
+           type="text"
+           class="form-control"
+           placeholder="phone number"/>
     <a ng-click="model.register(model.user)"
        class="btn btn-primary btn-block">
         Register

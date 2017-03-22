@@ -1,69 +1,77 @@
-module.exports = function (app) {
+module.exports = function (app,websiteModel) {
     app.get("/api/user/:userId/website", findAllWebsitesForUser);
     app.post("/api/user/:userId/website",createWebsite);
     app.get("/api/website/:websiteId", findWebsiteById);
     app.put("/api/website/:websiteId",updateWebsite);
     app.delete("/api/website/:websiteId",deleteWebsite);
 
-    var websites = [
-        { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem", created: new Date() },
-        { "_id": "234", "name": "Tweeter",     "developerId": "456", "description": "Lorem", created: new Date() },
-        { "_id": "456", "name": "Gizmodo",     "developerId": "456", "description": "Lorem", created: new Date() },
-        { "_id": "567", "name": "Tic Tac Toe", "developerId": "123", "description": "Lorem", created: new Date() },
-        { "_id": "678", "name": "Checkers",    "developerId": "123", "description": "Lorem", created: new Date() },
-        { "_id": "789", "name": "Chess",       "developerId": "234", "description": "Lorem", created: new Date() }
-    ];
-
-    function deleteWebsite(req,res) {
-        var websiteId = req.params['websiteId'];
-        for (var w in websites) {
-            if (websites[w]._id === websiteId) {
-                websites.splice(w, 1);
-                res.send(websites);
-            }
-        }
+    function deleteWebsite(req, res) {
+        var websiteId = req.params.websiteId;
+        console.log(websiteId);
+        websiteModel
+            .deleteWebsite(websiteId)
+            .then(function (website) {
+                res.json(website);
+            }, function (error) {
+                res.sendStatus(404).send(error);
+            });
     }
-
     function updateWebsite(req,res) {
-
         var websiteId = req.params['websiteId'];
         var website = req.body;
-
-        for(var w in websites) {
-            var website_var = websites[w];
-            if (website_var._id === websiteId) {
-                websites[w].name = website.name;
-                websites[w].description = website.description;
-                res.send(websites[w]);
-            }
-        }
+        console.log("website update called");
+        websiteModel
+            .updateWebsite(websiteId, website)
+            .then(function (response) {
+                if (response.ok === 1 && response.n === 1) {
+                    // Update was successful
+                    res.sendStatus(200);
+                }
+                 else {
+                    res.sendStatus(404);
+                }
+            }, function (err) {
+                res.sendStatus(404);
+            });
     }
 
     function findWebsiteById(req,res) {
         wid = req.params['websiteId'];
-        for(var w in websites) {
-            if(websites[w]._id === wid) {
-                res.send(websites[w]);
-            }
-        }
+        websiteModel
+            .findWebsiteById(wid)
+            .then(function (website) {
+                res.json(website);
+            },function (err) {
+                res.sendStatus(404).send(err);
+            });
     }
 
-    function findAllWebsitesForUser(req,res) {
-        var sites = [];
-        var userId = req.params['userId'];
-        for(var w in websites) {
-            if(websites[w].developerId === userId) {
-                sites.push(websites[w]);
-            }
-        }
-        res.send(sites);
+    function findAllWebsitesForUser(req, res){
+        var userId = req.params.userId;
+        websiteModel
+            .findAllWebsitesForUser(userId)
+            .then(function (response) {
+                res.json(response);
+            },function (err) {
+                res.sendStatus(404);
+            });
     }
-
-    function createWebsite(req,res) {
-        var newWebsite = req.body;
-        newWebsite.developerId = req.params['userId'];
-        newWebsite._id = (new Date()).getTime().toString();
-        websites.push(newWebsite);
-        res.send(websites);
+    function createWebsite(req, res) {
+        console.log("inside create user website.service.server");
+        var userId = req.params.userId;
+        var website = req.body;
+        console.log(website);
+        var newWebsite = {
+            name :website.name,
+            description: website.description
+        };
+        console.log(newWebsite);
+        websiteModel
+            .createWebsiteForUser(userId,newWebsite)
+            .then(function (newWebsite) {
+                res.json(newWebsite);
+            },function (err) {
+                res.sendStatus(404).send(err);
+            });
     }
-};
+}

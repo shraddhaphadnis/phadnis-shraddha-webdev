@@ -12,6 +12,7 @@
         vm.getEditorTemplateUrl = getEditorTemplateUrl;
         vm.deleteWidget = deleteWidget;
         vm.updateWidget = updateWidget;
+        vm.searchImage = searchImage;
 
         function init() {
             WidgetService
@@ -39,7 +40,11 @@
                 .updateWidget(vm.widgetId,vm.widget)
                 .success(function (widget) {
                     $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-                })
+                });
+        }
+
+        function searchImage() {
+            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+vm.widgetId+"/flickr");
         }
     }
 })();

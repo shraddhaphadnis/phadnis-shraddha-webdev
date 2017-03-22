@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top page-list">
-    <div class="container-fluid">
+    <div class="container-fluid bg-primary">
         <div class="navbar-text pull-left page-text">
             <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -26,10 +26,14 @@
     <textarea class="form-control"
               id="Text"></textarea>
 
-    <label for="url">URL</label>
-    <input placeholder="https://youtube/uLWLashCXHE"
-           class="form-control"
-           id="url"/>
+    <div class="form-group">
+        <label for="widget-image-url">URL</label>
+        <input  ng-model="model.widget.url"
+                type="url"
+                class="form-control"
+                placeholder="url"
+                id="widget-image-url"/>
+    </div>
 
     <label for="width">Width</label>
     <input class="form-control"

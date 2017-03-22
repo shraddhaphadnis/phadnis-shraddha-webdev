@@ -89,6 +89,13 @@
                 controller: "EditWidgetController",
                 controllerAs: "model"
             })
+
+            .when("/user/:uid/website/:wid/page/:pid/widget/:wgid/flickr", {
+                templateUrl: 'views/widget/template/widget-flickr-search.view.client.html',
+                controller: 'FlickrImageSearchController',
+                controllerAs: 'model'
+            })
+
             .otherwise({
                 templateUrl: 'views/user/template/login.view.client.html',
                 controller: 'loginController',

@@ -24,8 +24,8 @@
 
         function createWidget(widgetType) {
             newWidget = {};
-            newWidget._id = (new Date()).getTime().toString();
-            newWidget.widgetType = widgetType;
+            //newWidget._id = (new Date()).getTime().toString();
+            newWidget.type = widgetType;
             newWidget.pageId = vm.pageId;
             switch (widgetType) {
                 case "heading":
@@ -37,7 +37,7 @@
                     newWidget.width = "100%";
                     break;
                 case "youtube":
-                    newWidget.url = "https://i.ytimg.com/vi/fFi4BhD_DUw/maxresdefault.jpg";
+                    newWidget.url = "https://youtu.be/AM2Ivdi9c4E";
                     newWidget.width = "100%";
                     break;
                 case "html":
@@ -47,7 +47,7 @@
             var promise = WidgetService
                 .createWidget(vm.pageId, newWidget)
                 .success(function (widget) {
-                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + widget._id);
                 });
         }
     }

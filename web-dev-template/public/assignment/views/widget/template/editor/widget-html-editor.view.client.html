@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top page-list">
-    <div class="container-fluid">
+    <div class="container-fluid bg-primary">
         <div class="navbar-text pull-left page-text">
             <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -19,16 +19,20 @@
 
 <div class="container-fluid sb-form-padding">
     <form>
-        <div class="form-group">
-            <label for="text_id" >Text</label>
-            <textarea ng-model="model.widget.text" id="text_id" rows="3" class="form-control" value="US senate will decide the fate of this new bill"></textarea>
-        </div>
-        <!--<a ng-click="model.updateWidget(model.widget)" class="btn btn-primary  btn-block" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">Update</a>
-        --><a ng-click="model.deleteWidget()" class="btn btn-danger  btn-block">Delete</a>
+
+                <div ng-model="model.widget.text"
+                     text-angular
+                     ta-toolbar="[['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'quote'],
+            ['bold','italics','underline','strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+            ['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+            ['indent','outdent'],['html', 'insertImage','insertLink', 'wordcount', 'charcount']]">
+                </div>
+
+            <a class="btn btn-danger btn-block" ng-click="model.deleteWidget()">Delete</a>
     </form>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom page-list">
-    <div class="container-fluid">
+    <div class="container-fluid bg-primary">
         <div class="navbar-text pull-right page-text">
             <a href="#/user/{{model.userId}}">
                 <span class="glyphicon glyphicon-user"></span>
