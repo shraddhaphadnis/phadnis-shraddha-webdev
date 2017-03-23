@@ -21,8 +21,6 @@ module.exports = function () {
     return api;
 
     function createUser(user){
-        console.log("createuser->model.server");
-        console.log(user);
         return UserModel.create(user);
     }
 
@@ -61,7 +59,7 @@ module.exports = function () {
     }
 
     function deleteUser(userId) {
-        return userModel.findByIdAndRemove(userId, function (err, user) {
+        return UserModel.findByIdAndRemove(userId, function (err, user) {
            if (user != null)
            {
                user.remove();

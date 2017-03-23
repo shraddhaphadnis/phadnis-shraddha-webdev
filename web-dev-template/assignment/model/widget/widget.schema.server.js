@@ -7,7 +7,7 @@ module.exports = function (model) {
     var WidgetsSchema = mongoose.Schema({
         _page: {type: mongoose.Schema.Types.ObjectId, ref: 'PageModel'},
         type: {type: String, enum: ['heading', 'image', 'youtube', 'html', 'text']},
-        //name: {type: String, required: true},
+        name: String,
         text: String,
         placeholder: String,
         description: String,
@@ -23,7 +23,8 @@ module.exports = function (model) {
         dateCreated: {
             type: Date,
             default: Date.now()
-        }
+        },
+        index: Number
     }, {collection: "assignment.widget"});
 
     WidgetsSchema.post('remove', function(next) {
@@ -40,4 +41,4 @@ module.exports = function (model) {
     });
 
      return WidgetsSchema;
-}
+};

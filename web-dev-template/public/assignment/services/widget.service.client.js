@@ -10,7 +10,7 @@
             "findWidgetById": findWidgetById,
             "updateWidget": updateWidget,
             "deleteWidget":deleteWidget,
-            "sortWidgets": sortWidgets
+            "updateWidgetOrder": updateWidgetOrder
         };
         return api;
 
@@ -34,8 +34,8 @@
             return $http.get("/api/widget/"+widgetId);
         }
 
-        function sortWidgets(pageId, index1, index2) {
-            return $http.put("/page/" + pageId + "/widget?initial=" + index1 + "&final=" + index2);
+        function updateWidgetOrder(pageId, startIndex, endIndex) {
+            return $http.put("/page/" + pageId + "/widget?initial=" + startIndex + "&final=" + endIndex);
         }
     }
 })();

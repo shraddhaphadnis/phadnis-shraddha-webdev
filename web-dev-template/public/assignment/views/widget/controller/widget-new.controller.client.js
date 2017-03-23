@@ -24,8 +24,6 @@
 
         function createWidget(widgetType) {
             newWidget = {};
-            console.log(widgetType);
-            //newWidget._id = (new Date()).getTime().toString();
             newWidget.type = widgetType;
             newWidget.pageId = vm.pageId;
             switch (widgetType) {
@@ -51,7 +49,6 @@
             var promise = WidgetService
                 .createWidget(vm.pageId, newWidget)
                 .success(function (widget) {
-                    console.log("create widget success"+widget._id);
                     $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + widget._id);
                 });
         }

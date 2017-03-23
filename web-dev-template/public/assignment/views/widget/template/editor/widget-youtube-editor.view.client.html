@@ -19,11 +19,13 @@
 
 <div class="container-fluid">
     <label for="page-name">Name</label>
-    <input class = "form-control"
+    <input ng-model = "model.widget.name"
+            class = "form-control"
            id="page-name"/>
 
     <label for="Text">Text</label>
-    <textarea class="form-control"
+    <textarea ng-model = "model.widget.text"
+            class="form-control"
               id="Text"></textarea>
 
     <div class="form-group">
@@ -36,7 +38,8 @@
     </div>
 
     <label for="width">Width</label>
-    <input class="form-control"
+    <input ng-model="model.widget.width"
+            class="form-control"
            id="width"/>
 
     <a class="btn btn-danger btn-block"

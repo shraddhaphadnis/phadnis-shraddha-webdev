@@ -2,9 +2,9 @@ module.exports = function (app,widgetModel) {
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.post("/api/page/:pageId/widget", createWidget);
     app.get("/api/widget/:widgetId", findWidgetById);
-    app.put("/api/widget/:widgetId", updateWidget);
+    app.put("/page/:pageId/widget", updateWidgetOrder);
+    app.put("/api/widget/:widgetId",updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
-    //app.put("/page/:pageId/widget", sortWidget);
 
     var multer = require('multer');
 
@@ -102,12 +102,9 @@ module.exports = function (app,widgetModel) {
             width: width,
             _id:widgetId
         };
-        console.log(req.protocol);
-        console.log(req.get('host'));
         if (req.file != null) {
             var myFile = req.file;
             var destination = myFile.destination; // folder where file is saved to
-            console.log(myFile.filename);
             imagewidget.url = req.protocol + '://' + req.get('host') + "/uploads/" + myFile.filename;
             widgetModel
                 .updateWidget(widgetId,imagewidget)
@@ -116,8 +113,6 @@ module.exports = function (app,widgetModel) {
                         widgetModel
                             .findWidgetById(widgetId)
                             .then(function (newresponse) {
-                               // newresponse.url = req.protocol + '://' + req.get('host') + "/uploads/" + myFile.filename;
-                                //response.save();
                                 pageId = newresponse._page;
                                 res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
                             })
@@ -135,29 +130,20 @@ module.exports = function (app,widgetModel) {
             }
     }
 
-    function sortWidget(req, res) {
-        var pid = req.params['pageId'];
-        var i1 = parseInt(req.query.initial);
-        var i2 = parseInt(req.query.final);
+    function updateWidgetOrder(req, res) {
+        var pageId = req.params.pageId;
+        var start = parseInt(req.query.initial);
+        var end = parseInt(req.query.final);
 
-        var widgetsForGivenPage = [];
-        for (var index in widgets) {
-            if (widgets[index].pageId == pid) {
-                widgetsForGivenPage.push(index);
-            }
-        }
-        for (var i = i1; i < i2; i++) {
-            var temp = widgets[widgetsForGivenPage[i]];
-            widgets[widgetsForGivenPage[i]] = widgets[widgetsForGivenPage[i+1]];
-            widgets[widgetsForGivenPage[i+1]] = temp;
-        }
-
-        for (var i = i1; i > i2; i--) {
-            var temp = widgets[widgetsForGivenPage[i]];
-            widgets[widgetsForGivenPage[i]] = widgets[widgetsForGivenPage[i-1]];
-            widgets[widgetsForGivenPage[i-1]] = temp;
-        }
-        res.sendStatus(200);
+        widgetModel
+            .resortWidget(pageId, start, end)
+            .then(
+                function (stats) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.sendStatus(400);
+                });
     }
 };
 

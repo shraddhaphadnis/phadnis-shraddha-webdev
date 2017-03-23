@@ -7,7 +7,6 @@ module.exports = function (app,websiteModel) {
 
     function deleteWebsite(req, res) {
         var websiteId = req.params.websiteId;
-        console.log(websiteId);
         websiteModel
             .deleteWebsite(websiteId)
             .then(function (website) {
@@ -19,7 +18,6 @@ module.exports = function (app,websiteModel) {
     function updateWebsite(req,res) {
         var websiteId = req.params['websiteId'];
         var website = req.body;
-        console.log("website update called");
         websiteModel
             .updateWebsite(websiteId, website)
             .then(function (response) {
@@ -57,15 +55,12 @@ module.exports = function (app,websiteModel) {
             });
     }
     function createWebsite(req, res) {
-        console.log("inside create user website.service.server");
         var userId = req.params.userId;
         var website = req.body;
-        console.log(website);
         var newWebsite = {
             name :website.name,
             description: website.description
         };
-        console.log(newWebsite);
         websiteModel
             .createWebsiteForUser(userId,newWebsite)
             .then(function (newWebsite) {

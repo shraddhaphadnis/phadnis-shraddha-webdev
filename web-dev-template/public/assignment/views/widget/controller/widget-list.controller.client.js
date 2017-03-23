@@ -15,7 +15,6 @@
         var promise = WidgetService
             .findAllWidgetsForPage(vm.pageId)
             .success(function (widget) {
-                console.log(widget);
                 vm.widgets = widget;
             });
 

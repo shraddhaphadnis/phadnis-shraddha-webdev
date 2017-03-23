@@ -52,9 +52,7 @@ module.exports = function (app,userModel) {
     }
 
     function createUser(req, res) {
-        console.log("inside create user user.service.server");
         var user = req.body;
-        console.log(user);
         var newUser = {
             username: user.username,
             password: user.password,
@@ -72,7 +70,6 @@ module.exports = function (app,userModel) {
     }
     function findUserById(req,res) {
         var userId = req.params.userId;
-        console.log(userId);
         userModel
             .findUserById(userId)
             .then(function (user) {

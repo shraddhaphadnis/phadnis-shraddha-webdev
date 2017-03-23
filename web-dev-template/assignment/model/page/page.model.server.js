@@ -19,15 +19,12 @@ module.exports = function () {
     return api;
 
     function createPage(websiteId, page) {
-        console.log(page);
         return PageModel
             .create({name:page.name,description:page.description,_website: websiteId})
             .then(function (pageObj) {
-                console.log(websiteId);
                 model.websiteModel
                     .findWebsiteById(websiteId)
                     .then(function (websiteObj) {
-                        console.log(pageObj);
                         websiteObj.pages.push(pageObj);
                         websiteObj.save();
 

@@ -12,8 +12,6 @@
             promise
                 .success(function (user) {
                     var loginuser = user;
-                    console.log("hello");
-                    console.log(loginuser._id);
                     if (loginuser != null) {
                         $location.url("/user/" + loginuser._id);
                     }

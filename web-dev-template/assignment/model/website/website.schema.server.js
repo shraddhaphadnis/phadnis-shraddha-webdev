@@ -14,7 +14,6 @@ module.exports = function (model) {
         var widgetModel = model.widgetModel.getModel();
         var userModel = model.userModel.getModel();
         var website = this;
-        console.log(website._id);
         userModel.findById(website._user)
             .then(function (user) {
                 var index = user.websites.indexOf(website._id);
@@ -25,22 +24,6 @@ module.exports = function (model) {
             });
         widgetModel.remove({_page: {$in: website.pages}}).exec();
         pageModel.remove({_id: {$in: website.pages}}).exec();
-        // pageModel.find({_website: website._id}, '_id', function (err, pages) {
-        //     if (err == null) {
-        //         console.log("Pages" + pages);
-        //         widgetModel.remove({_page: {$in: pages}}).exec();
-        //         pageModel.remove({_id: {$in: pages}}).exec();
-        //         var index = userModel.widgets.indexOf(website._id);
-        //         if (index > -1) {
-        //             page.widgets.splice(index, 1);
-        //             page.save();
-        //         }
-        //         console.log(website._id);
-        //         userModel.remove({_websites: website._id}).exec();
-        //         console.log(website._id);
-        //     }
-        // });
-
     });
 
     return websiteSchema;
