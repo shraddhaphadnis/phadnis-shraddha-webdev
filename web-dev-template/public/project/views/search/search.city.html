@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="row">
+            <a class="" href="#/user/{{model.userId}}/home"><span class="glyphicon glyphicon-chevron-left white-glyphicon">
+              </span></a>
+            <a class=" navbar-text-decor" href="#">
+                HAPPY STAY
+            </a>
+            <a href="#" class="">
+
+              <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
+              </span>
+            </a>
+        </div>
+    </div>
+</nav>
+<div class="input-group">
+    <input ng-model="searchText" type="text" class="form-control">
+    <span class="input-group-btn">
+        <a ng-click="model.findCityIdByCityName(searchText)" class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+        </a>
+    </span>
+</div>

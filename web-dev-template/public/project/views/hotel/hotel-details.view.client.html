@@ -1,0 +1,111 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="row">
+            <a class="" href="#/user/{{model.userId}}/city/{{model.cityId}}"><span class="glyphicon glyphicon-chevron-left white-glyphicon">
+              </span></a>
+            <a class=" navbar-text-decor" href="#">
+                HOTEL MANIA
+            </a>
+            <a href="#" class="">
+
+              <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
+              </span>
+            </a>
+        </div>
+    </div>
+    </div>
+</nav>
+<div class="container-fluid padding-navbar">
+    <div>
+        <div class="row">
+            <img ng-src="{{model.hotelDetails.img_selected.fs.l}}" width="100%" height="400px">
+        </div>
+        <div class="row container">
+            <div class="col-xs-12 col-lg-6">
+                <h1 class="heading-color">Details</h1>
+                <h3>{{model.hotelDetails.name}}</h3>
+                <br>
+                <hr>
+                <div class="container">
+                    <h2 class="heading-color">Facilities</h2>
+                    <div class="row">
+                        <i class="fa fa-wifi col-lg-2 col-xs-2" aria-hidden="true"></i>
+                        <i class="fa fa-cutlery col-lg-2 col-xs-2" aria-hidden="true"></i>
+                        <i class="fa fa-snowflake-o col-lg-2 col-xs-2" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <hr>
+                <div class="container">
+                    <h2 class="heading-color">Location</h2>
+                    <div class="row">
+                        <i class="fa fa-map-marker fa-lg col-xs-2">
+                        </i>
+                        <label>{{model.hotelDetails.loc.city}}</label>
+                    </div>
+                    <div class="col-lg-4 col-xs-4" id="map">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-6">
+                <div>
+                    <div class="row">
+                        <h1 class="heading-color">Reviews</h1>
+                        <a type="button" class="btn btn-success"  href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/new">Add Review</a>
+                    </div>
+                    <ol class="comment-list">
+
+                        <li ng-repeat="userReview in model.Reviews" class="comment">
+                            <article class="comment-body">
+                                <footer class="comment-meta">
+                                    <div class="comment-author vcard">
+                                        <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
+                                        <b class="fn">{{userReview.username}}</b> <span class="says"> says:</span>
+                                        <a ng-click="model.addFollower(model.userId, userReview._user)">
+                                            <span class="fa fa-plus fa-lg pull-right"> Follow </span>
+                                        </a>
+                                    </div><!-- .comment-author -->
+
+                                    <div class="comment-metadata">
+                                        <a href="#">
+
+                                        </a>
+                                    </div><!-- .comment-metadata -->
+
+                                    <!--<star-rating ng-model="rating.rating2" readonly="rating.isReadonly"></star-rating>-->
+
+                                </footer><!-- .comment-meta -->
+
+                                <div class="comment-content">
+                                    <p>{{userReview.comment}}</p>
+                                </div><!-- .comment-content -->
+                                <a ng-show="model.userId == userReview._user" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/review/{{userReview._id}}/edit">
+                                    <span class="fa fa-pencil fa-lg pull-right"></span>
+                                </a>
+
+                            </article>
+
+                            <!--<div class="reply"><a rel="nofollow" class="comment-reply-link btn btn-sm btn-default" href="https://indiahikes.com/top-6-winter-treks-in-india-that-you-must-do/?replytocom=908#respond" onclick="return addComment.moveForm( &quot;div-comment-908&quot;, &quot;908&quot;, &quot;respond&quot;, &quot;21636&quot; )" aria-label="Reply to Amit Chaudhary" style="display: inline;">Reply</a></div>			</article>&lt;!&ndash; .comment-body &ndash;&gt;-->
+                        </li><!-- #comment-## -->
+
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid padding-navbar">
+            <div class="col-lg-4 col-xs-12" style="padding:10px" ng-repeat="hotelImage in model.hotelDetails.img">
+                <img ng-src="{{hotelImage.l}}" height="200px" width="100%"/>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <a href="#/user/{{model.userId}}">
+                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+            </a>
+        </div>
+    </div>
+</nav>
