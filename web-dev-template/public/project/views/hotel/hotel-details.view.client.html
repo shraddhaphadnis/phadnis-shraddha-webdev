@@ -4,7 +4,7 @@
             <a class="" href="#/user/{{model.userId}}/city/{{model.cityId}}"><span class="glyphicon glyphicon-chevron-left white-glyphicon">
               </span></a>
             <a class=" navbar-text-decor" href="#">
-                HOTEL MANIA
+                HAPPY STAY
             </a>
             <a href="#" class="">
 
@@ -46,6 +46,28 @@
                     </div>
                 </div>
             </div>
+            <h2 class="ng-binding">
+                {{model.isLiked}}
+                <div ng-switch="model.isLiked">
+                    <span>
+                        <div ng-switch-when=true
+                             ng-click="model.undoLikeHotel()">
+                                <span class="glyphicon glyphicon-heart like-button-color"></span>
+
+                        </div>
+                    </span>
+                    <span>
+                        <div ng-switch-when=false
+                             ng-click="model.likeHotel()">
+                                <span class="glyphicon glyphicon-heart-empty like-button-color"></span>
+
+                        </div>
+                    </span>
+
+                </div>
+
+            </h2>
+
             <div class="col-xs-12 col-lg-6">
                 <div>
                     <div class="row">
@@ -59,8 +81,10 @@
                                 <footer class="comment-meta">
                                     <div class="comment-author vcard">
                                         <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
-                                        <b class="fn">{{userReview.username}}</b> <span class="says"> says:</span>
-                                        <a ng-click="model.addFollower(model.userId, userReview._user)">
+                                        <b class="fn">{{userReview.username}}</b> <span class="says"> commented:</span>
+                                        {{model.userId}}
+                                        {{userReview._user}}
+                                        <a ng-click="model.FollowUser(model.userId, userReview._user)">
                                             <span class="fa fa-plus fa-lg pull-right"> Follow </span>
                                         </a>
                                     </div><!-- .comment-author -->
@@ -83,7 +107,6 @@
                                 </a>
 
                             </article>
-
                             <!--<div class="reply"><a rel="nofollow" class="comment-reply-link btn btn-sm btn-default" href="https://indiahikes.com/top-6-winter-treks-in-india-that-you-must-do/?replytocom=908#respond" onclick="return addComment.moveForm( &quot;div-comment-908&quot;, &quot;908&quot;, &quot;respond&quot;, &quot;21636&quot; )" aria-label="Reply to Amit Chaudhary" style="display: inline;">Reply</a></div>			</article>&lt;!&ndash; .comment-body &ndash;&gt;-->
                         </li><!-- #comment-## -->
 

@@ -35,30 +35,22 @@
         vm.hotelId = $routeParams.hid;
         vm.userId = $routeParams.uid;
         vm.cityId = $routeParams.cid;
+        vm.FollowUser = FollowUser;
+       // vm.setLikeStatus = setLikeStatus;
+       // vm.isHotelLiked = isHotelLiked;
+        vm.likeHotel = likeHotel;
+        vm.undoLikeHotel = undoLikeHotel;
 
-        vm.addFollower = addFollower;
-
-
-        function addFollower(followerId, followeeId) {
-            var promise = UserService.addFollower(followerId, followeeId);
-            promise
-                .success(function (user) {
-                    console.log(user);
-                    //$location.url("/user/"+vm.userId+"/hotelDetails/"+vm.hotelId);
-                })
-                .error(function (err) {
-                    console.log(err);
-                })
-        }
-
-        //console.log(vm.hotelId);
         function init() {
             var promise = HotelService.findHotelById(vm.hotelId);
             promise
                 .success(function (hotelDetails) {
+                    console.log("hotel details in success!!!!" + hotelDetails.data[vm.hotelId]);
                     vm.hotelDetails = hotelDetails.data[vm.hotelId].hotel_data_node;
-                    HotelService.createHotel(vm.hotelId);
-
+                    vm.hotelName = vm.hotelDetails.name;
+                    vm.city = vm.hotelDetails.loc.city;
+                    console.log(vm.city);
+                    console.log(vm.hotelName);
                     var prom = ReviewService.findReviewByHotelId(vm.hotelId);
                     prom
                         .success(function (UserReviews) {
@@ -76,9 +68,133 @@
             promise1
                 .success(function (user) {
                     vm.user = user;
-                })
+                });
+            isHotelLiked();
         }
         init();
+            function likeHotel() {
+                UserService
+                    .likeHotel(vm.userId,vm.hotelId,vm.cityId)
+                    .then(function (like) {
+                        var status = like.data;
+                        console.log("status shown ****" + status);
+                        if ((status.n == 1 || status.nModified == 1) && status.ok == 1) {
+                            vm.isLiked = true;
+                            console.log("hotel create");
+                            return HotelService.createHotel(vm.hotelId);
+                        }
+                    })
+             }
+
+            function undoLikeHotel() {
+                UserService
+                    .undoLikeHotel(vm.userId,vm.hotelId,vm.cityId)
+                    .then(function (undo) {
+                        var status = undo.data;
+                        console.log(status);
+                        if ((status.n == 1 || status.nModified == 1) && status.ok == 1) {
+                            vm.isLiked = false;
+                        }
+                    });
+            }
+
+        function isHotelLiked() {
+            UserService
+                .isHotelLiked(vm.userId, vm.hotelId,vm.cityId)
+                .then(function (response) {
+                    var user = response.data;
+                    if (user) {
+                        console.log(user);
+                        vm.isLiked = true;
+                        console.log(vm.isLiked);
+                    }
+                    else {
+                        vm.isLiked = false;
+                        console.log(vm.isLiked);
+                    }
+                });
+        }
+
+        /*function setLikeStatus(likeStatus) {
+            UserService
+                .setLikeStatus(likeStatus,vm.userId,vm.hotelId,vm.cityId)
+                .then(function (response) {
+                    var status = response.data;
+
+                    if ((status.n == 1 || status.nModified == 1) && status.ok == 1) {
+                        vm.user.status=likeStatus;
+                        return HotelService.createHotel(vm.hotelId);
+                    }
+                })
+                .then(function (response) {
+                    console.log("Hotel created !");
+                });
+            //vm.user.status=status;
+        }
+
+        function isHotelLiked(userId,HotelId,CityId) {
+            UserService
+                .isHotelLiked(vm.userId,HotelId,vm.cityId)
+                .then(function (response) {
+                    var user = response.data;
+                    if (user) {
+                        console.log(user);
+                       // vm.user.status = 'like';
+                        console.log(vm.user.status);
+                    }
+                    else {
+                        vm.user.status = 'unlike';
+                        console.log(vm.user.status);
+                    }
+                });
+        }
+*/
+
+        function FollowUser(followerId,followeeId) {
+            console.log("followeeId"+followeeId);
+            console.log("followerId"+followerId);
+            UserService
+                .FollowUser(followerId, followeeId)
+                .then(function (response) {
+                    var status = response.data;
+                    console.log(status);
+                    if ((status.n == 1 || status.nModified == 1) && status.ok == 1) {
+                        vm.alreadyFollowing = true;
+                    }
+                    else {
+                        vm.alreadyFollowing = false;
+                    }
+                });
+        }
+    /*    function init() {
+            var promise = HotelService.findHotelById(vm.hotelId);
+            promise
+                .success(function (hotelDetails) {
+                    vm.hotelDetails = hotelDetails.data[vm.hotelId].hotel_data_node;
+                    console.log("inside init controller"+vm.hotelId);
+                    HotelService.createHotel(vm.hotelId);
+
+                    var prom = ReviewService.findReviewByHotelId(vm.hotelId);
+                    prom
+                        .success(function (UserReviews) {
+                            vm.Reviews = UserReviews;
+                            console.log(UserReviews);
+                        })
+                        .error(function (err) {
+                            console.log(err);
+                        });
+                })
+                .error(function (err) {
+                    console.log("could not create hotel");
+                    console.log(err);
+                });
+            var promise1 = UserService.findUserById(vm.userId);
+            promise1
+                .success(function (user) {
+                    vm.user = user;
+                })
+        }
+        init();*/
 
     }
 

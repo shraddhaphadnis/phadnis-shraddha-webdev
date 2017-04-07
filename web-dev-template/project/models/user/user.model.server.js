@@ -12,32 +12,49 @@ module.exports = function () {
         findAllUsers:findAllUsers,
         deleteUser : deleteUser,
         findUserByFacebookId: findUserByFacebookId,
-        addFollower: addFollower,
-        setModel: setModel //,
-        //findWebsitesForUser: findWebsitesForUser
+        //FollowUser: FollowUser,
+        setModel: setModel,
+        following: following,
+        followers: followers,
+        updatelikeStatus: updatelikeStatus,
+        isHotelLiked: isHotelLiked
     };
     return api;
+
+    function updatelikeStatus(userId,HotelId,status) {
+        console.log("inside update status");
+        console.log(status);
+        if(status == true) {
+            console.log("status is true");
+            return UserModel.update({_id: userId}, {$addToSet: {likes: HotelId}});
+        }
+        else if(status == false) {
+            console.log("status is false");
+            return UserModel.update({_id: userId}, {$pullAll: {likes: [HotelId]}});
+        }
+    }
+
+    function isHotelLiked(userId, HotelId) {
+        console.log(userId + " " + HotelId);
+        return UserModel.findOne({_id: userId, likes: {$in: [HotelId]}});
+    }
 
     function findAllUsers() {
         return UserModel.find();
     }
-    function addFollower(followerId, followeeId) {
-        return model.userModel
-            .findUserById(followerId)
-            .then(function (followerUserObj) {
-                followerUserObj.following.push(followeeId);
-                followerUserObj.save();
-                return model.userModel
-                    .findUserById(followeeId)
-                    .then(function (followeeUserObj) {
-                        followeeUserObj.followers.push(followerId);
-                        followeeUserObj.followerNames.push(followerUserObj.username);
-                        followerUserObj.followingNames.push(followeeUserObj.username);
-                        followerUserObj.save();
-                        return followeeUserObj.save();
-                    })
-            })
+
+    function following(loggedInUserId, navigateUserId) {
+        return UserModel.update({_id: loggedInUserId},
+            {$addToSet: {following: navigateUserId}});
     }
+
+    function followers(navigateUserId, loggedInUserId) {
+        return UserModel.update({_id: navigateUserId},
+            {$addToSet:
+            {followers: loggedInUserId}
+            });
+    }
+
 
     function findUserByFacebookId(facebookId) {
         return UserModel.findOne({'facebook.id': facebookId});
@@ -49,7 +66,6 @@ module.exports = function () {
 
 
     function findUserById(userId) {
-
         return UserModel.findById(userId)
             .then(function (user) {
                 return user;
@@ -57,7 +73,6 @@ module.exports = function () {
     }
 
     function createUser(user) {
-
         return UserModel.create(user);
     }
 
@@ -95,15 +110,5 @@ module.exports = function () {
         })
 
     }
-
-    // function findWebsitesForUser(userId) {
-    //     return UserModel.findById(userId)
-    //         .then(function(user){
-    //             return user.websites;
-    //         });
-    //         // .then(function(user){
-    //         //     return user.websites;
-    //         //});
-    // }
 
 };

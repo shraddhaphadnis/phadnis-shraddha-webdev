@@ -13,9 +13,26 @@
     </div>
 </nav>
     <div class="container-fluid padding-navbar">
-        <div>
-
+        <div class="block">
+            <a ng-click = "model.getUserByIds(model.user.followers)" class="">
+              <span class="glyphicon glyphicon-star">
+              </span>
+                <label>Followers - {{model.followerSize}}</label>
+                <ul><li ng-repeat = "user in model.res">
+                    {{user.username}}
+                </li></ul>
+            </a>
         </div>
+    <div>
+        <a ng-click = "model.getfollowingByIds(model.user.following)" class="">
+              <span class="glyphicon glyphicon-bookmark">
+              </span>
+            <label>Following - {{model.followingSize}}</label>
+            <ul><li ng-repeat = "user in model.flw">
+                {{user.username}}
+            </li></ul>
+        </a>
+    </div>
         <form>
             <div class="form-group">
                 <label for="username">Username</label>

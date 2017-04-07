@@ -7,12 +7,15 @@ module.exports = function () {
         createHotel:createHotel,
         findHotelById: findHotelById,
         findHotelByIbiboHotelId : findHotelByIbiboHotelId,
-        //deleteUserReview : deleteUserReview,
-        setModel: setModel //,
-        //findWebsitesForUser: findWebsitesForUser
+        setModel: setModel,
+        findAllHotels:findAllHotels
+
     };
     return api;
 
+    function findAllHotels() {
+        return HotelModel.find();
+    }
 
     function setModel(_model) {
         model = _model;
@@ -20,9 +23,9 @@ module.exports = function () {
 
 
     function findHotelById(hotelId) {
-
         return HotelModel.findById(hotelId)
             .then(function (hotel) {
+                console.log("find hotel by id model server"+hotel);
                 return hotel;
             })
     }

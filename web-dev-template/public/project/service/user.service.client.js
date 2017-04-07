@@ -8,37 +8,55 @@
         .factory("UserService", UserService)
     function UserService($http){
         var api = {
-            createUser   : createUser,
+            createUser:createUser,
+            createUserAdmin : createUserAdmin,
             findUserById : findUserById,
             findCurrentUser: findCurrentUser,
             findUserByUsername : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
             updateUser : updateUser,
             deleteUser : deleteUser,
-            getAllUsers: getAllUsers,
+            deleteUserAdmin: deleteUserAdmin,
+            getAllRegUsers: getAllRegUsers,
             login:login,
             logout:logout,
             register:register,
             checkLogin: checkLogin,
             checkAdmin: checkAdmin,
-            addFollower:addFollower
+            FollowUser:FollowUser,
+            findUserByIds: findUserByIds,
+            likeHotel: likeHotel,
+            undoLikeHotel: undoLikeHotel,
+            isHotelLiked: isHotelLiked
 
         };
         return api;
 
-        function getAllUsers() {
+        function likeHotel(userId,HotelId,cityId) {
+            console.log("like hotel called"+ HotelId);
+            return $http.put("/api/user/" + userId + "/city/" + cityId + "/hotelDetails/" + HotelId + "/like");
+        }
+
+        function undoLikeHotel(userId,HotelId,cityId) {
+            console.log("unlike hotel called");
+            return $http.put("/api/user/" + userId + "/city/" + cityId + "/hotelDetails/" + HotelId + "/undolike");
+        }
+
+        function isHotelLiked(userId,HotelId,cityId) {
+            console.log("service client called"+HotelId);
+            return $http.get("/api/user/" + userId + "/city/" + cityId + "/hotelDetails/" + HotelId + "/isHotelliked");
+        }
+
+
+        function getAllRegUsers() {
             var url = '/api/getAllUsers/';
             return $http.get(url);
         }
 
-
-        function addFollower(followerId, followeeId) {
-            var url = '/api/follower/';
-            var follow = {
-                followerId:followerId,
-                followeeId:followeeId
-            }
-            return $http.put(url,follow);
+        function FollowUser(followerId, followeeId) {
+            console.log("followerId"+followerId);
+            console.log("followeeId"+followeeId);
+            return $http.put("/api/user/" + followerId + "/follows/" + followeeId);
         }
 
         function findCurrentUser() {
@@ -65,14 +83,11 @@
         }
 
         function login(username,password) {
-
             var user ={
                 username:username,
                 password:password
             }
             console.log(user);
-
-            //console.log("IN client service login"+user);
             return $http.post('/api/login', user);
         }
 
@@ -81,52 +96,41 @@
             return $http.post(url,user);
         }
 
-        function findUserById(userId) {
+        function createUserAdmin(user) {
+            return $http.post('/api/project/admin/user', user);
+        }
 
+        function findUserById(userId) {
             var url = '/api/user/' +  userId;
             return $http.get(url);
 
         }
+        function findUserByIds(userIds) {
+            for (id in userIds) {
+                return findUserById(userIds)
+            }
+        }
         function findUserByUsername(username) {
-
             var url = '/api/user?username='+username;
             return $http.get(url);
         }
         function findUserByCredentials(username, password) {
-
             var url = '/api/user?username='+username+'&password='+password;
-            //console.log(url);
             return $http.get(url);
-            // var user;
-            // for( var u in user){
-            //     if(user[u].username === username && user[u].password === password){
-            //         user = user[u];
-            //         break;
-            //     }
-            // }
-            // return user;
         }
         function updateUser(userId,user) {
+            console.log("server client"+userId);
             var url = "/api/user/" + userId;
             return $http.put(url,user);
-            // for( var u in user){
-            //     if(user[u]._id === userId){
-            //         user[u] = userUpdated;
-            //         break;
-            //     }
-            // }
         }
         function deleteUser(userId) {
             var url = "/api/user/" + userId;
             return $http.delete(url);
-            // for( var u in user){
-            //     if(user[u]._id === userId.toString()){
-            //         user.splice(u, 1);
-            //         console.log(user)
-            //         break;
-            //     }
-            // }
 
+        }
+        function deleteUserAdmin(userId) {
+            console.log("delete user admin client");
+            return $http.delete('/api/admin/user/' + userId);
         }
     }
 })();

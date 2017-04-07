@@ -1,0 +1,158 @@
+<h1 class="page-header">Admin</h1>
+<h2 class="sub-header">Manage Users</h2>
+<button class="btn btn-success" ng-click="model.getAllRegUsers()">Get All users</button>
+<button class="btn btn-success" ng-click="model.getAllHotels()">Get All Hotels</button>
+<button class="btn btn-success" ng-click="model.getAllReviews()">Get All users</button>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr class="theadrow">
+            <th ng-click="model.order('username')" class="nowrap">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
+                          ng-show="(model.predicate == 'username') && (model.reverse == true)"></span>
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"
+                      ng-show="(model.predicate == 'username') && (model.reverse == false)"></span>
+                Username
+            </th>
+            <th>Password</th>
+            <th ng-click="model.order('firstName')" class="nowrap">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
+                          ng-show="(model.predicate == 'firstName') && (model.reverse == true)"></span>
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"
+                      ng-show="(model.predicate == 'firstName') && (model.reverse == false)"></span>
+                First Name
+            </th>
+            <th ng-click="model.order('lastName')" class="nowrap">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
+                          ng-show="(model.predicate == 'lastName') && (model.reverse == true)"></span>
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"
+                      ng-show="(model.predicate == 'lastName') && (model.reverse == false)"></span>
+                Last Name
+            </th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="forms-input-row">
+            <td>
+                <input type="text" class="form-control" id="username" placeholder="username"
+                       ng-model="model.inputUser.username">
+            </td>
+            <td>
+                <input type="password" class="form-control" id="password" placeholder="password"
+                       ng-model="model.inputUser.password">
+            </td>
+            <td>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name"
+                       ng-model="model.inputUser.firstName">
+            </td>
+            <td>
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name"
+                       ng-model="model.inputUser.lastName">
+            </td>
+            <td>
+                <input type="text" class="form-control" id="roles" placeholder="role1,role2"
+                       ng-model="model.inputUser.role">
+            </td>
+            <td>
+                <a href="" ng-click="model.AddNewUser(model.inputUser)"
+                   ng-hide="model.selected == -1">
+                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+                </a>
+                <a href="" ng-click="model.update(model.inputUser)"
+                   ng-hide="model.selected == -1">
+                    <span class="glyphicon glyphicon-ok okicon pull-right" aria-hidden="true"></span>
+                </a>
+            </td>
+        </tr>
+        <tr ng-repeat="u in model.users | orderBy:model.predicate:model.reverse">
+            <td>{{u.username}}</td>
+            <td>&nbsp;</td>
+            <td>{{u.firstName}}</td>
+            <td>{{u.lastName}}</td>
+            <td>{{u.roles}}</td>
+            <td>
+                <a href="" ng-click="model.deleteUserAdmin(u)"><span
+                        class="glyphicon glyphicon-remove removeicon pull-left"
+                        aria-hidden="true"></span>
+                </a>
+                <a href="" ng-click="model.select(u)"><span
+                        class="glyphicon glyphicon-cog pencilicon pull-right" aria-hidden="true"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr class="theadrow">
+            <th ng-click="model.order('hotelName')" class="nowrap">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
+                          ng-show="(model.predicate == 'hotelName') && (model.reverse == true)"></span>
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"
+                      ng-show="(model.predicate == 'hotelName') && (model.reverse == false)"></span>
+                Hotel Name
+            </th>
+            <th ng-click="model.order('model.hotelCity')" class="nowrap">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
+                          ng-show="(model.predicate == 'hotelCity') && (model.reverse == true)"></span>
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"
+                      ng-show="(model.predicate == 'hotelCity') && (model.reverse == false)"></span>
+                City
+            </th>
+            <th ng-click="model.order('model.hotelId')" class="nowrap">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
+                          ng-show="(model.predicate == 'hotelId') && (model.reverse == true)"></span>
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"
+                      ng-show="(model.predicate == 'hotelId') && (model.reverse == false)"></span>
+                Hotel Id
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="forms-input-row">
+            <td>
+                {{model.inputHotel.hotelName}}
+                <input type="text" class="form-control" id="hotelName" placeholder="hotelName"
+                       ng-model="model.inputHotel.hotelName">
+            </td>
+            <td>
+                <input type="text" class="form-control" id="hotelCity" placeholder="hotelCity"
+                       ng-model="model.inputHotel.hotelCity">
+            </td>
+            <td>
+                <input type="text" class="form-control" id="hotelId" placeholder="hotelId"
+                       ng-model="model.inputHotel.hotelId">
+            </td>
+            <td>
+                <a href="" ng-click="model.AddNewUser(model.inputUser)"
+                   ng-hide="model.selected == -1">
+                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+                </a>
+                <a href="" ng-click="model.update(model.inputUser)"
+                   ng-hide="model.selected == -1">
+                    <span class="glyphicon glyphicon-ok okicon pull-right" aria-hidden="true"></span>
+                </a>
+            </td>
+        </tr>
+        <tr ng-repeat="u in model.hotels | orderBy:model.predicate:model.reverse">
+            <td>{{u.hotelName}}</td>
+            <td>{{u.hotelCity}}</td>
+            <td>{{u.hotelId}}</td>
+            <td>
+                <a href="" ng-click="model.deleteHotelAdmin(u)"><span
+                        class="glyphicon glyphicon-remove removeicon pull-left"
+                        aria-hidden="true"></span>
+                </a>
+                <a href="" ng-click="model.select(u)"><span
+                        class="glyphicon glyphicon-cog pencilicon pull-right" aria-hidden="true"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

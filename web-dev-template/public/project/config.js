@@ -40,7 +40,7 @@
                 controllerAs: "model"
             })
             .when("/loginAdmin", {
-                templateUrl: "views/admin/admin-login.view.client.html",
+                templateUrl: "views/admin/admin.login.view.html",
                 controller: "AdminLoginController",
                 controllerAs: "model"
             })
@@ -50,7 +50,7 @@
                 controllerAs: "model"
             })
             .when("/registerAdmin", {
-                templateUrl: "views/admin/admin-register.view.client.html",
+                templateUrl: "views/admin/admin.register.view.html",
                 controller: "AdminRegisterController",
                 controllerAs: "model"
             })
@@ -63,7 +63,7 @@
                 }
             })
             .when("/userAdmin", {
-                templateUrl: "views/admin/admin-home.view.client.html",
+                templateUrl: "views/admin/admin.home.view.html",
                 controller: "AdminProfileController",
                 controllerAs: "model",
                 resolve: {
@@ -79,7 +79,7 @@
                 }
             })
             .when("/userAdmin/:uid", {
-                templateUrl: "views/admin/admin-home.view.client.html",
+                templateUrl: "views/admin/admin.home.view.html",
                 controller: "AdminProfileController",
                 controllerAs: "model",
                 resolve: {
@@ -117,7 +117,6 @@
                         deferred.reject();
                         $location.url("/login");
                     }
-
                 });
             return deferred._promise;
         }

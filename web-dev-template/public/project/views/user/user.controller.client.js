@@ -22,7 +22,7 @@
                 SearchService
                     .searchRestuarants(searchTerm)
                     .then(function (response) {
-                        data = response.data
+                        data = response.data;
                         data = JSON.parse(data);
                         vm.restaurants = data.restaurants;
                     });
@@ -69,8 +69,9 @@
         var vm = this;
 
         vm.createUser = createUser;
+
         function createUser(user) {
-            console.log($scope.register);
+            console.log("create user called");
             if(!$scope.register.$invalid && user.password == user.veryPassword){
                 UserService
                     .register(user)
@@ -96,13 +97,12 @@
             console.log(vm.userId);
             function init() {
                 UserService
-                    //.findUserById(vm.userId)
                     .findCurrentUser()
                     .success(function(user){
                         if(user != null){
                             vm.user = user;
-                            vm.followerSize = vm.user.followerNames.length;
-                            vm.followingSize = vm.user.followingNames.length;
+                            vm.followerSize = vm.user.followers.length;
+                            vm.followingSize = vm.user.following.length;
                             console.log(vm.followerSize);
                         }
                     })
@@ -114,8 +114,40 @@
             vm.updateUser = updateUser;
             vm.deleteUser = deleteUser;
             vm.logout = logout;
+            vm.getUserByIds = getUserByIds;
+            vm.getfollowingByIds = getfollowingByIds;
 
-            
+            function getUserByIds(followers) {
+                res = [];
+                console.log(followers);
+                for(id = 0;id<followers.length;id++) {
+                    console.log(followers[id]);
+                    UserService
+                        .findUserById(followers[id])
+                        .success(function (user) {
+                            res.push(user);
+                            console.log(res);
+                        });
+                }
+                vm.res = res;
+            }
+            function getfollowingByIds(following) {
+                flw = [];
+                console.log("getfollowingByIds"+following);
+                for(id = 0;id<following.length;id++) {
+                    console.log(following[id]);
+                    UserService
+                        .findUserById(following[id])
+                        .success(function (user) {
+                            if (user!=null) {
+                                flw.push(user);
+                                console.log(flw);
+                            }
+                        });
+                }
+                vm.flw = flw;
+            }
+
             function logout() {
                 UserService.logout()
                     .success(function () {
@@ -128,12 +160,9 @@
                         //console.log(user);
                         if(user != '0'){
                             vm.user = user;
-
                         }
-
                     })
                     .error(function(){
-
                     });
 
             }

@@ -26,7 +26,6 @@ module.exports = function () {
         });
     }
     function findReviewById(reviewId) {
-
         return ReviewModel.findById(reviewId)
             .then(function (review) {
                 return review;

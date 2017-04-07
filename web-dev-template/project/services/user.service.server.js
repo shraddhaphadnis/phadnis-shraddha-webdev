@@ -40,43 +40,101 @@ module.exports = function(app,model){
     app.post('/api/checkLogin', checkLogin);
     app.post('/api/checkAdmin', checkAdmin);
     app.post('/api/logout', logout);
-    app.get('/api/getAllUsers/', getAllUsers);
+    app.get('/api/getAllUsers/', getAllRegUsers);
     app.get('/api/user', findUser);
     app.post ('/api/register', register);
-    app.put('/api/follower/', addFollower);
+    app.put("/api/user/:followerId/follows/:followeeId", FollowUser);
+    //app.put("/api/project/user/:loggedInUserId/unfollows/:navigateUserId", unfollow);
     //app.get('/api/loggedin', loggedin);
     //app.get('/api/user?username=username&password=password',findUserByCredentials);
     app.get('/api/user/:userId',findUserById);
     app.post('/api/user',createUser);
-    app.put('/api/user/:userId',loggedInAndSelf, updateUser);
-    app.delete('/api/user/:userId', loggedInAndSelf, deleteUser);
+    app.post("/api/project/admin/user",createUserAdmin);
+    app.put('/api/user/:userId', updateUser);
+    app.delete('/api/user/:userId',deleteUser);
+    app.delete('/api/admin/user/:userId',deleteUserAdmin);
+    app.put("/api/user/:userId/city/:cityId/hotelDetails/:HotelId/like",likeHotel);
+    app.put("/api/user/:userId/city/:cityId/hotelDetails/:HotelId/undolike",undoLikeHotel);
+    app.get("/api/user/:userId/city/:cityId/hotelDetails/:HotelId/isHotelLiked",isHotelLiked);
+
+    function likeHotel(req, res) {
+        var HotelId = req.params.HotelId;
+        var userId = req.params.userId;
+        model.userModel.updatelikeStatus(userId,HotelId,true)
+            .then(function (response) {
+                    res.json(response);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+
+    }
+    function undoLikeHotel(req, res) {
+        var HotelId = req.params.HotelId;
+        console.log(HotelId);
+        var userId = req.params.userId;
+        model.userModel.updatelikeStatus(userId,HotelId,false)
+            .then(function (response) {
+                    res.json(response);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+
+            );
+    }
+
+    function isHotelLiked(req, res) {
+        console.log("server side liked hotel called");
+        var HotelId = req.params.HotelId;
+        console.log(HotelId);
+        var UserId = req.params.userId;
+        model.userModel
+            .isHotelLiked(UserId, HotelId)
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
 
-
-    function getAllUsers(req, res) {
+    function getAllRegUsers(req, res) {
         model.userModel.findAllUsers()
             .then(function (users) {
                 res.send(users);
             })
     }
-    function addFollower(req, res) {
-        var followerId = req.body.followerId;
-        var followeeId = req.body.followeeId;
 
-        model
-            .userModel
-            .addFollower(followerId, followeeId)
-            .then(function (status) {
-                    res.send(status);
+    function FollowUser(req, res) {
+        var followerId = req.params.followerId;
+        var followeeId = req.params.followeeId;
+        model.userModel
+            .following(followerId, followeeId)
+            .then(
+                function (response) {
+                    return model.userModel.followers(followeeId, followerId);
                 },
-                function (error) {
-                    res.sendStatus(400).send(error);
-                })
-
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (response) {
+                    res.json(response);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
     }
 
+
     function register(req, res) {
-        console.log("In project user service")
+        console.log("In project user service");
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
         model.userModel
@@ -108,7 +166,7 @@ module.exports = function(app,model){
     }
 
     function checkAdmin(req, res) {
-
+        console.log(req.user.role);
         var loggedIn = req.isAuthenticated();
         var isAdmin = req.user.role == 'ADMIN';
 
@@ -119,8 +177,6 @@ module.exports = function(app,model){
     }
 
     function facebookStrategy(token, refreshToken, profile, done) {
-        //console.log(profile);
-        //done(null, profile);
         model.userModel
             .findUserByFacebookId(profile.id)
             .then(
@@ -128,8 +184,6 @@ module.exports = function(app,model){
                     if(user) {
                         return done(null, user);
                     } else {
-                        // var email = profile.emails[0].value;
-                        // var emailParts = email.split("@");
                         var newFacebookUser = {
                             username:  profile.displayName.replace(/\s+/g, ''),
                             firstName: profile.displayName.split(" ")[0],
@@ -220,10 +274,45 @@ module.exports = function(app,model){
                         res.sendStatus(400).send("Error");
                     }
                 );
-
-
         }
 
+    function createUserAdmin(req, res) {
+        var newUser = req.body;
+        console.log(newUser);
+        model.userModel
+            .findUserByUsername(newUser.username)
+            .then(
+                function (user) {
+                    // if the user does not already exist
+                    if (user == null) {
+                        // create a new user
+                        return model.userModel.createUser(newUser)
+                            .then(
+                                function () {
+                                    return model.userModel.findAllUsers();
+                                },
+                                function (err) {
+                                    res.status(400).send(err);
+                                }
+                            );
+                        // if the user already exists, then just fetch all the users
+                    } else {
+                        return model.userModel.findAllUsers();
+                    }
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (users) {
+                    res.json(users);
+                },
+                function () {
+                    res.status(400).send(err);
+                }
+            );
+    }
         function findUser(req, res){
             //console.log("Inside find user")
             var params = req.params;
@@ -316,7 +405,8 @@ module.exports = function(app,model){
     function updateUser(req, res){
         var user = req.body;
         var uid = req.params.userId;
-        //console.log(uid);
+        console.log("service server"+uid);
+
         model
             .userModel
             .updateUser(uid, user)
@@ -326,11 +416,6 @@ module.exports = function(app,model){
             function (error) {
                 res.sendStatus(400).send(error);
             })
-        // for(var u in user){
-        //     if(user[u]._id == uid.toString()){
-        //         user[u] = user;
-        //     }
-        // }
         res.send('0');
     }
 
@@ -346,12 +431,26 @@ module.exports = function(app,model){
                     res.sendStatus(400).send(error);
                 }
             )
-        // for(var u in user){
-        //     if(user[u]._id == uid.toString()){
-        //         user.splice(u, 1);
-        //         res.send(200);
-        //     }
-        // }
-        //res.send('0');
     }
+
+    function deleteUserAdmin(req, res) {
+            model.userModel
+                .deleteUser(req.params.userId)
+                .then(
+                    function (user) {
+                        return model.userModel.findAllUsers();
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                )
+                .then(
+                    function (users) {
+                        res.json(users);
+                    },
+                    function (err) {
+                        res.status(400).send(err);
+                    }
+                );
+            }
 }
