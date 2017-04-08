@@ -72,7 +72,12 @@
                        placeholder="Last Name" name="LastName" />
                 </div>
                 <!--<div ng-show="register.LastName.$invalid && register.LastName.$submitted" class="error">Last Name is required</div>-->
-                <input type="submit" class="btn btn-primary btn-block" value="Register"/></form><br>
+                <!--input type="submit" class="btn btn-primary btn-block" value="Register"/!-->
+                <a ng-click="model.createUser(model.user)"
+                   class="btn btn-primary btn-block">
+                        Register
+                </a>
+        </form>
         <a class="btn btn-danger  btn-block"
            href="#/login">Cancel</a>
 </div>
