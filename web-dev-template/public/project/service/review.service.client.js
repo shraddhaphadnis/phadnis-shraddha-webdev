@@ -9,11 +9,18 @@
             findReviewByHotelId: findReviewByHotelId,
             createReview: createReview,
             updateReview: updateReview,
-            deleteReview: deleteReview
+            deleteReview: deleteReview,
+            getAllReviews: getAllReviews
 
         };
         return api;
 
+
+        function getAllReviews() {
+            console.log("getAll reviews client side");
+            var url = '/api/getAllReviews/';
+            return $http.get(url);
+        }
 
         function findReviewById(reviewId) {
             var url = '/api/review/' +  reviewId;

@@ -48,8 +48,8 @@
                     console.log("hotel details in success!!!!" + hotelDetails.data[vm.hotelId]);
                     vm.hotelDetails = hotelDetails.data[vm.hotelId].hotel_data_node;
                     vm.hotelName = vm.hotelDetails.name;
-                    vm.city = vm.hotelDetails.loc.city;
-                    console.log(vm.city);
+                    vm.hotelCity = vm.hotelDetails.loc.city;
+                    console.log(vm.hotelCity);
                     console.log(vm.hotelName);
                     var prom = ReviewService.findReviewByHotelId(vm.hotelId);
                     prom
@@ -73,6 +73,11 @@
         }
         init();
             function likeHotel() {
+                newhotel = {};
+                newhotel.hotelId = vm.hotelId;
+                newhotel.hotelName = vm.hotelName;
+                newhotel.hotelCity = vm.hotelCity;
+                console.log("like hotel new hotel object" + " " + newhotel);
                 UserService
                     .likeHotel(vm.userId,vm.hotelId,vm.cityId)
                     .then(function (like) {
@@ -81,7 +86,7 @@
                         if ((status.n == 1 || status.nModified == 1) && status.ok == 1) {
                             vm.isLiked = true;
                             console.log("hotel create");
-                            return HotelService.createHotel(vm.hotelId);
+                            return HotelService.createHotel(vm.hotelId,newhotel);
                         }
                     })
              }

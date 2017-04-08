@@ -58,20 +58,50 @@
                     });
         }
     }
-    function AdminProfileController($routeParams, UserService,$location,HotelService) {
+    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService) {
         var vm = this;
         var model = this;
         vm.userId = $routeParams["uid"];
         vm.getAllRegUsers = getAllRegUsers;
         vm.deleteUser = deleteUser;
         vm.AddNewUser = AddNewUser;
+        vm.AddNewHotel = AddNewHotel;
         vm.update = update;
         vm.select = select;
         vm.deleteUserAdmin = deleteUserAdmin;
+        vm.deleteHotelAdmin = deleteHotelAdmin;
         // Hotel details
         vm.getAllHotels = getAllHotels;
         vm.select_hotel = select_hotel;
+        vm.updateHotel = updateHotel;
+        vm.select_review = select_review;
 
+        // Review details
+        vm.getAllReviews = getAllReviews;
+
+        function getAllReviews() {
+            ReviewService
+                .getAllReviews()
+                .success(function (comments) {
+                    vm.comments = comments;
+                    console.log("vm.comments" + vm.comments);
+                })
+        }
+
+        function updateHotel(hotel) {
+            console.log(hotel._id);
+            HotelService.updateHotel(hotel._id,hotel)
+                .success(function (hotel) {
+                    vm.hotel = hotel;
+                })
+        }
+
+        function AddNewHotel(hotel) {
+             HotelService.createHotelAdmin(hotel)
+                .success(function (hotel) {
+                    vm.hotel = hotel;
+                })
+        }
         function getAllHotels() {
             HotelService.getAllHotels()
                 .success(function (hotels) {
@@ -79,6 +109,22 @@
                 })
         }
 
+        function deleteHotelAdmin(hotel) {
+            HotelService
+                .deleteHotelAdmin(hotel._id)
+                .then(function (hotel) {
+                    HotelService
+                        .getAllHotels()
+                        .then(function (hotels) {
+                         console.log("set hotels");
+                         vm.hotels = hotels;
+                        },function (err) {
+                        res.sendStatus(404).send(err);
+                    })
+                },function (err) {
+                res.sendStatus(err);
+            })
+        }
         function deleteUserAdmin(user) {
             UserService
                 .deleteUserAdmin(user._id)
@@ -88,12 +134,12 @@
                         .then(function (users) {
                          console.log("set user");
                          vm.users = users;
-                        }),function (err) {
+                        },function (err) {
                         res.sendStatus(404).send(err);
-                    }
-                }),function (err) {
+                    })
+                },function (err) {
                 res.sendStatus(err);
-            }
+            })
         }
         function select(user) {
             model.inputUser = angular.copy(user);
@@ -102,6 +148,10 @@
 
         function select_hotel(hotel) {
             model.inputHotel = angular.copy(hotel);
+            model.selected = 0;
+        }
+        function select_review(review) {
+            model.inputReview = angular.copy(review);
             model.selected = 0;
         }
         function update(user) {

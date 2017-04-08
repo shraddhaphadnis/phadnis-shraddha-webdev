@@ -1,9 +1,93 @@
 module.exports = function(app,model){
     var HotelModel = model.hotelModel;
     app.get('/api/city/:cityId/hotel',findHotelByCityId);
-    app.post('/api/hotelNew/:hid',createHotel);
+    app.post("/api/hotel/:hotelId/hotelnew/", createHotel);
     app.get('/api/getAllHotels/', getAllHotels);
     app.get('/api/hotel/',findHotel);
+    app.delete('/api/admin/hotel/:HotelId',deleteHotelAdmin);
+    app.post("/api/project/admin/hotel",createHotelAdmin);
+    app.put('/api/hotel/:hotelId', updateHotel);
+
+    function updateHotel(req, res){
+        var hotel = req.body;
+        var hid = req.params.hotelId;
+        console.log("service server"+hid);
+
+        model
+            .hotelModel
+            .updateHotel(hid, hotel)
+            .then(function (status) {
+                    res.send(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                })
+        res.send('0');
+    }
+
+    function createHotelAdmin(req, res) {
+        var newUser = req.body;
+        console.log(newUser);
+        model.hotelModel
+            .findHotelByIbiboHotelId(newUser.hotelId)
+            .then(function (user) {
+                    console.log("inside then"+ " " +user);
+                    // if the user does not already exist
+                    if (user == null) {
+                        console.log("hotel is null");
+                        // create a new user
+                        return model.hotelModel.createHotel(newUser.hotelId,newUser)
+                            .then(
+                                function () {
+                                    console.log("in side then findAllHotels");
+                                    return model.hotelModel.findAllHotels();
+                                },
+                                function (err) {
+                                    console.log("bugg");
+                                    res.status(400).send(err);
+                                }
+                            );
+                        // if the user already exists, then just fetch all the users
+                    } else {
+                        console.log("findallhotels");
+                        return model.hotelModel.findAllHotels();
+                    }
+                },
+                function (err) {
+                    console.log("error");
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (users) {
+                    res.json(users);
+                },
+                function () {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function deleteHotelAdmin(req, res) {
+        model.hotelModel
+            .deleteHotel(req.params.HotelId)
+            .then(
+                function (hotel) {
+                    return model.hotelModel.findAllUsers();
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (hotels) {
+                    res.json(hotels);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
     function findHotel() {
             //console.log("Inside find user")
@@ -29,17 +113,18 @@ module.exports = function(app,model){
 
     function createHotel(req, res) {
         //console.log(req.params.hid);
-        var hotelNew = {};
-        hotelNew["hotelId"] = req.params.hid;
-        model.hotelModel.findHotelByIbiboHotelId(req.params.hid)
-            .then(function (hotel) {
-                console.log("create hotel of server"+hotel);
-                if(!hotel){
-                    console.log("inside if");
-                    model.hotelModel.createHotel(hotelNew)
+        //var hotelNew = {};
+       // hotelNew["hotelId"] = req.params.hid;
+        newhotel = req.body;
+        console.log("create hotel req body" + newhotel);
+        id = req.param['hotelId'];
+        model.hotelModel.findHotelByIbiboHotelId(id)
+            .then(function (hotel1) {
+                if(!hotel1){
+           //        console.log("hotel inside create hotel server" + hotel);
+                    model.hotelModel.createHotel(id,newhotel)
                         .then(function (hotelObj) {
-                            console.log("inside create hotel response");
-                                console.log(hotelObj);
+                            console.log("inside create hotel response" + hotelObj);
                                 res.send(hotelObj);
                             },
                             function (err) {

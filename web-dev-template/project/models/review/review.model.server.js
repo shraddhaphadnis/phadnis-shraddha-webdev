@@ -9,11 +9,14 @@ module.exports = function () {
         findAllReviews: findAllReviews,
         updateReview : updateReview,
         deleteReview : deleteReview,
-        setModel: setModel //,
-        //findWebsitesForUser: findWebsitesForUser
+        setModel: setModel,
+        findReviews: findReviews
     };
     return api;
 
+    function findReviews() {
+        return ReviewModel.find();
+    }
 
     function setModel(_model) {
         model = _model;

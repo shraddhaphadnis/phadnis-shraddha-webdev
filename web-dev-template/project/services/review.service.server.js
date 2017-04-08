@@ -7,8 +7,15 @@ module.exports = function(app, model){
     app.post("/api/user/:uid/review", createReview);
     app.put("/api/editReview/:rid", updateReview);
     app.delete("/api/delReview/:rid", deleteReview);
+    app.get('/api/getAllReviews/', getAllReviews);
 
 
+    function getAllReviews(req, res) {
+        model.reviewModel.findReviews()
+            .then(function (reviews) {
+                res.send(reviews);
+            })
+    }
     function findReviewByHotelId(req, res) {
         //console.log("Found reviews");
         var hotelId = req.params.hid;

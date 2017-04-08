@@ -9,11 +9,27 @@
             findHotelById: findHotelById,
             createHotel: createHotel,
             getAllHotels: getAllHotels,
-            findCurrentHotel: findCurrentHotel
-
+            findCurrentHotel: findCurrentHotel,
+            deleteHotelAdmin:deleteHotelAdmin,
+            createHotelAdmin:createHotelAdmin,
+            updateHotel : updateHotel
         };
         return api;
 
+        function updateHotel(hotelId,hotel) {
+            console.log("server client"+hotelId);
+            var url = "/api/hotel/" + hotelId;
+            return $http.put(url,hotel);
+        }
+
+        function createHotelAdmin(hotel) {
+            return $http.post('/api/project/admin/hotel',hotel);
+        }
+
+        function deleteHotelAdmin(HotelId) {
+            console.log("delete Hotel admin client");
+            return $http.delete('/api/admin/hotel/' + HotelId);
+        }
 
         function findCurrentHotel() {
             var url = '/api/hotel/';
@@ -35,11 +51,10 @@
             console.log("inside hotelbyid client"+url);
             return $http.get(url);
         }
-        function createHotel(hotel) {
+        function createHotel(hotelId,hotelnew) {
             console.log("create hotel client called");
-            var url = "/api/hotelNew/"+hotel;
-            console.log(hotel);
-            return $http.post(url);
+            console.log(hotelnew);
+            return $http.post("/api/hotel/"+hotelId+"/hotelnew",hotelnew);
         }
     }
 })();

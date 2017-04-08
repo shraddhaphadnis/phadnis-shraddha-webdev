@@ -8,11 +8,31 @@ module.exports = function () {
         findHotelById: findHotelById,
         findHotelByIbiboHotelId : findHotelByIbiboHotelId,
         setModel: setModel,
-        findAllHotels:findAllHotels
+        findAllHotels:findAllHotels,
+        deleteHotel : deleteHotel,
+        updateHotel : updateHotel
 
     };
     return api;
 
+    function updateHotel(hotelId, hotel) {
+
+        return HotelModel.update(
+            {
+                _id: hotelId
+            },
+            {
+                $set:hotel
+            }
+        );
+    }
+
+    function deleteHotel(HotelId) {
+        return HotelModel.remove({
+            _id: HotelId
+        })
+
+    }
     function findAllHotels() {
         return HotelModel.find();
     }
@@ -23,16 +43,13 @@ module.exports = function () {
 
 
     function findHotelById(hotelId) {
-        return HotelModel.findById(hotelId)
-            .then(function (hotel) {
-                console.log("find hotel by id model server"+hotel);
-                return hotel;
-            })
+        console.log("hotel by id called" + hotelId);
+        return HotelModel.findById(hotelId);
     }
 
-    function createHotel(hotel) {
-        //console.log("In project");
-        return HotelModel.create(hotel);
+    function createHotel(hotelId,newhotel) {
+        console.log("In project" + newhotel);
+        return HotelModel.create(newhotel);
     }
 
     function findHotelByIbiboHotelId(ibiboHotelId) {

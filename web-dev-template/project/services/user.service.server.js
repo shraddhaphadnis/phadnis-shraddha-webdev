@@ -283,6 +283,7 @@ module.exports = function(app,model){
             .findUserByUsername(newUser.username)
             .then(
                 function (user) {
+                    console.log("*********"+user);
                     // if the user does not already exist
                     if (user == null) {
                         // create a new user
