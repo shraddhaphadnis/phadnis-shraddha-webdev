@@ -76,12 +76,15 @@ module.exports = function () {
         return UserModel.create(user);
     }
 
-    function findUserByCredentials(username, password) {
-        console.log("Login");
-        return UserModel.findOne({
-            username:username,
-            password:password
-        });
+    function findUserByCredentials(username,password) {
+        console.log("model server" + username + " " + password);
+        return UserModel
+            .find(
+                {
+                    username : username,
+                    password : password
+                }
+            );
     }
 
     function findUserByUsername(username) {

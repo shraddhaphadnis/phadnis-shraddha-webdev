@@ -66,7 +66,7 @@
 
         function register(user) {
             console.log("user called client");
-            var url = '/api/register/';
+            var url = '/api/user/';
             return $http.post(url,user);
         }
 
@@ -115,6 +115,7 @@
             return $http.get(url);
         }
         function findUserByCredentials(username, password) {
+            console.log("find user by credentials called"+username + " "+password);
             var url = '/api/user?username='+username+'&password='+password;
             return $http.get(url);
         }

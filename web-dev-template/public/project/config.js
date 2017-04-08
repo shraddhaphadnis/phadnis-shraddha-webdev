@@ -62,6 +62,23 @@
                     checkLogin: checkLogin
                 }
             })
+            .when("/user/:uid", {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model"
+
+            })
+            .when("/profile",{
+                templateUrl: 'views/user/profile.view.client.html',
+                controller: 'ProfileController',
+                controllerAs: 'model'
+            })
+            .when("/profile/:uid",{
+                templateUrl: 'views/user/profile.view.client.html',
+                controller: 'ProfileController',
+                controllerAs: 'model'
+            })
+
             .when("/userAdmin", {
                 templateUrl: "views/admin/admin.home.view.html",
                 controller: "AdminProfileController",
@@ -70,14 +87,7 @@
                     checkLogin: checkLogin
                 }
             })
-            .when("/user/:uid", {
-                templateUrl: "views/user/profile.view.client.html",
-                controller: "ProfileController",
-                controllerAs: "model",
-                resolve: {
-                    checkLogin: checkLogin
-                }
-            })
+
             .when("/userAdmin/:uid", {
                 templateUrl: "views/admin/admin.home.view.html",
                 controller: "AdminProfileController",

@@ -36,7 +36,7 @@ module.exports = function(app,model){
     passport.deserializeUser(deserializeUser);
 
     //console.log("Inside user service server js");
-    app.post('/api/login', passport.authenticate('local'),login);
+    app.post('/api/login',login);
     app.post('/api/checkLogin', checkLogin);
     app.post('/api/checkAdmin', checkAdmin);
     app.post('/api/logout', logout);
@@ -314,24 +314,16 @@ module.exports = function(app,model){
                 }
             );
     }
-        function findUser(req, res){
-            //console.log("Inside find user")
-            var params = req.params;
-            var query = req.query;
-            //console.log(query);
-            if(query.password && query.username){
-                //console.log("In if of creds");
-                findUserByCredentials(req, res);
-            } else if (query.username){
-                //console.log("In if of username");
-                findUserByUsername(req, res);
-            } else{
-                res.json(req.user);
-            }
-            // console.log(params);
-            // console.log(query);
-            //res.send(user);
+    function findUser(req,res) {
+        var username = req.query['username'];
+        var password = req.query['password'];
+        console.log("find user called" + " " + username + " " + password);
+        if (username && password) {
+            findUserByCredentials(req,res);
+        } else if (username) {
+            findUserByUsername(req,res);
         }
+    }
 
 
         function findUserByUsername(req,res) {
@@ -347,28 +339,26 @@ module.exports = function(app,model){
             }
             res.send('0');
         }
-        function findUserByCredentials(req,res) {
-
-            var user, username, password;
-            username = req.query.username;
-            password = req.query.password;
-
-            model
-                .userModel
-                .findUserByCredentials(username, password)
-                .then(
-                    function (user) {
-                        if(user)
-                            res.json(user);
-                        else
-                            res.send('0');
-                    },
-                    function (error) {
-                        res.sendStatus(400).send(error);
-                    }
-                );
-            //res.send('0');
-        }
+    function findUserByCredentials(req,res) {
+        var username = req.query['username'];
+        var password = req.query['password'];
+        console.log("find credentials called" + " " + username + " " + password);
+        model.userModel
+            .findUserByCredentials(username, password)
+            .then(function (user) {
+                if (user.length != 0) {
+                    console.log("response = "+user);
+                    res.json(user[0]);
+                }
+                else {
+                    console.log("error");
+                    res.sendStatus(404);
+                }
+            }, function (err) {
+                console.log("error !!!");
+                res.sendStatus(404).send(err);
+            });
+    }
 
     function findUserById(req,res) {
         //console.log("Inside ind user by id")

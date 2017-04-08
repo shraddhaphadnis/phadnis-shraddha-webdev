@@ -32,38 +32,26 @@
             var vm = this;
             vm.login = login;
 
-
-            function login(username,password){
-                if(!username){
-                    vm.alert = "Username required";
-                }
-                else if(!password){
-                    vm.alert = "Password required";
-                }
-                else if (!username && !password){
-                    vm.alert = "Username and Password required";
-                }
-                else{
-                    var promise = UserService.login(username, password);
-
-                    //var promise = UserService.findUserByCredentials(username,password);
-                    promise
-                        .success(function (user) {
-                            console.log("Inside success of login")
-
-                            if (user === '0') {
-                                vm.alert = "No such user";
-                            }
-                            else {
-                                $location.url("user/" + user._id);
-                            }
-                        })
-                        .error(function () {
-
-                        });
-                }
-
+            function login(user) {
+                console.log("login called");
+                var promise = UserService.findUserByCredentials(user.username, user.password);
+                promise
+                    .success(function (user) {
+                        var loginuser = user;
+                        console.log(loginuser);
+                        if (loginuser != null) {
+                            $location.url("/user/" + loginuser._id);
+                        }
+                        else {
+                            vm.error = "user not found";
+                        }
+                    })
+                    .error(function (err) {
+                        vm.error = "user not found";
+                        console.log(vm.error)
+                    });
             }
+
         }
     function RegisterController($scope,$rootScope,$location,UserService) {
         var vm = this;
@@ -93,11 +81,11 @@
         function ProfileController($routeParams, UserService,$location) {
             var vm = this;
             vm.userId = $routeParams["uid"];
-
+            console.log("Profile controller called");
             console.log(vm.userId);
             function init() {
                 UserService
-                    .findCurrentUser()
+                    .findUserById(vm.userId)
                     .success(function(user){
                         if(user != null){
                             vm.user = user;
