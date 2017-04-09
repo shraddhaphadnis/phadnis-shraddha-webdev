@@ -45,9 +45,8 @@
                     <div class="col-lg-4 col-xs-4" id="map">
                     </div>
                 </div>
-            </div>
-            <h2 class="ng-binding">
-                {{model.isLiked}}
+                <h2 class="heading-color">Like this Hotel?</h2>
+                <h2 class="ng-binding">
                 <div ng-switch="model.isLiked">
                     <span>
                         <div ng-switch-when=true
@@ -65,8 +64,8 @@
                     </span>
 
                 </div>
-
             </h2>
+            </div>
 
             <div class="col-xs-12 col-lg-6">
                 <div>
@@ -82,8 +81,6 @@
                                     <div class="comment-author vcard">
                                         <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
                                         <b class="fn">{{userReview.username}}</b> <span class="says"> commented:</span>
-                                        {{model.userId}}
-                                        {{userReview._user}}
                                         <a ng-click="model.FollowUser(model.userId, userReview._user)">
                                             <span class="fa fa-plus fa-lg pull-right"> Follow </span>
                                         </a>

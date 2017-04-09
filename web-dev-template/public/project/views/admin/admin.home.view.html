@@ -223,7 +223,8 @@
         </tr>
 
         <tr ng-repeat="u in model.comments | orderBy:model.predicate:model.reverse">
-            <td>{{model.hotelDetails.hotelName}}</td>
+            {{u.hotelName}}
+            <td>{{model.findHotelById(u.hotelId).hotelName}}</td>
             <td>{{u.hotelCity}}</td>
             <td>{{u.username}}</td>
             <td>{{u.comment}}</td>

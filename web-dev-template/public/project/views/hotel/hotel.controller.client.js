@@ -72,6 +72,7 @@
             isHotelLiked();
         }
         init();
+
             function likeHotel() {
                 newhotel = {};
                 newhotel.hotelId = vm.hotelId;

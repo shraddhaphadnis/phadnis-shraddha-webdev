@@ -63,7 +63,7 @@ module.exports = function () {
     }*/
 
     function createReview(userId,hotelId,reviewNew) {
-        //console.log(reviewNew);
+        console.log(">>>>>" + hotelId);
 
         return ReviewModel.create(reviewNew)
             .then(function(reviewObject){

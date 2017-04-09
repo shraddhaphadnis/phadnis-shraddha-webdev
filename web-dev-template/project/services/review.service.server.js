@@ -1,7 +1,6 @@
 module.exports = function(app, model){
 
     var ReviewModel = model.reviewModel;
-
     app.get("/api/hotel/review/:hid", findReviewByHotelId);
     app.get("/api/review/:rid", findReviewById);
     app.post("/api/user/:uid/review", createReview);
@@ -32,6 +31,7 @@ module.exports = function(app, model){
         var userId = req.params.uid;
         var hotelReview = req.body;
         var hotelId = hotelReview._hotel;
+
         var reviewNew = {
             comment:hotelReview.comment,
             hotelId: hotelId
