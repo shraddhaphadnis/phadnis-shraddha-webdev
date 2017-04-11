@@ -3,6 +3,7 @@ module.exports = function () {
     var HotelSchema = require("./hotel.schema.server.js")();
     var HotelModel = mongoose.model("HotelModel", HotelSchema);
 
+
     var api = {
         createHotel:createHotel,
         findHotelById: findHotelById,
@@ -10,10 +11,38 @@ module.exports = function () {
         setModel: setModel,
         findAllHotels:findAllHotels,
         deleteHotel : deleteHotel,
-        updateHotel : updateHotel
+        updateHotel : updateHotel,
+        updateBusiness: updateBusiness
 
     };
     return api;
+
+    function updateBusiness(hotelId,userId) {
+            console.log(">>>>>" + hotelId);
+        return model.userModel
+            .findUserById(userId)
+            .then(function(userObject) {
+                    console.log("inside userobject" + userObject);
+                    return HotelModel
+                        .find({ hotelId : hotelId})
+                        .then(function (hotelObj) {
+                            console.log("after hotel id" + hotelObj);
+                            console.log("after update####" + userObject);
+                            userObject.Business_owned.push(hotelObj);
+                            userObject.save();
+                            return HotelModel.update({hotelId: hotelId}, {$addToSet: {business_owner: userObject}});
+                            console.log("*******************" +  userId);
+                            userId = userId.toString();
+                        }, function(error){
+                                    console.log("in hotel object save error");
+                                    console.log(error);
+                                });
+                    },
+                    function(error){
+                        console.log("in model restaurant error");
+                        console.log(error);
+                    });
+        }
 
     function updateHotel(hotelId, hotel) {
 

@@ -7,6 +7,22 @@ module.exports = function(app,model){
     app.delete('/api/admin/hotel/:HotelId',deleteHotelAdmin);
     app.post("/api/project/admin/hotel",createHotelAdmin);
     app.put('/api/hotel/:hotelId', updateHotel);
+    app.put('/api/business/user/:userId/hotel/:hotelId',updateBusiness);
+
+    function updateBusiness(req,res) {
+        var hotelId = req.params.hotelId;
+        var userId = req.params.userId;
+        console.log("calling update business"+ hotelId + " " + userId);
+        model.hotelModel
+            .updateBusiness(hotelId,userId)
+            .then(function (status) {
+                res.send(200);
+            },
+            function (err) {
+                res.sendStatus(400).send(error);
+            });
+        res.send('0');
+    }
 
     function updateHotel(req, res){
         var hotel = req.body;

@@ -20,7 +20,9 @@ module.exports = function () {
         },
         role: {type:String, default:"CUSTOMER", enum:['ADMIN', 'CUSTOMER']},
         reviews : [{type : mongoose.Schema.Types.ObjectId, ref:'ReviewModel'}],
-        dateCreated: {type: Date, default: Date.now}
+        business : [{type : mongoose.Schema.Types.ObjectId, ref:'BusinessModel'}],
+        dateCreated: {type: Date, default: Date.now},
+        Business_owned : [String]
     },{collection:"user"});
     return UserSchema;
 }

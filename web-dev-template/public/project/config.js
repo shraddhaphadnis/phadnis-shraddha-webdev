@@ -34,6 +34,18 @@
                 controller: "EditReviewController",
                 controllerAs: "model"
             })
+
+            .when("/user/:uid/city/:cid/hotel/:hid/business",{
+                templateUrl: "views/business/new-business.view.client.html",
+                controller: "NewBusinessController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/city/:cid/hotel/:hid/business/:bid/edit",{
+                templateUrl: "views/business/edit-business.view.client.html",
+                controller: "EditBusinessController",
+                controllerAs: "model"
+            })
+
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
                 controller: "LoginController",
@@ -44,6 +56,11 @@
                 controller: "AdminLoginController",
                 controllerAs: "model"
             })
+           /* .when("/loginAgency", {
+                templateUrl: "views/agency/travel.agent.login.view.html",
+                controller: "AgencyLoginController",
+                controllerAs: "model"
+            })*/
             .when("/register", {
                 templateUrl: "views/user/register.view.client.html",
                 controller: "RegisterController",
@@ -54,6 +71,11 @@
                 controller: "AdminRegisterController",
                 controllerAs: "model"
             })
+           /* .when("/registerAgent", {
+                templateUrl: "views/agency/agent.register.view.html",
+                controller: "AgentRegisterController",
+                controllerAs: "model"
+            })*/
             .when("/user", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
@@ -87,6 +109,23 @@
                     checkLogin: checkLogin
                 }
             })
+           /* .when("/AgencyUser", {
+                templateUrl: "views/admin/agency.home.html",
+                controller: "AgencyProfileController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
+            .when("/AgencyUser/:uid", {
+                templateUrl: "views/agency/agency.home.view.html",
+                controller: "AgencyProfileController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })*/
+
 
             .when("/userAdmin/:uid", {
                 templateUrl: "views/admin/admin.home.view.html",

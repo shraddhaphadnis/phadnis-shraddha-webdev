@@ -6,7 +6,10 @@ module.exports = function () {
         hotelName: String,
         hotelCity: String,
         reviews:[{type : mongoose.Schema.Types.ObjectId, ref:'ReviewModel'}],
-        dateCreated: {type: Date, default: Date.now}
+        business_owner : [{type : mongoose.Schema.Types.ObjectId, ref:'UserModel'}],
+        business : [{type : mongoose.Schema.Types.ObjectId, ref:'BusinessModel'}],
+        dateCreated: {type: Date, default: Date.now},
+        owned : [Boolean]
     },{collection:"hotel"});
     return HotelSchema;
 }

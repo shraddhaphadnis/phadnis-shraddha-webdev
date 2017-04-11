@@ -12,9 +12,15 @@
             findCurrentHotel: findCurrentHotel,
             deleteHotelAdmin:deleteHotelAdmin,
             createHotelAdmin:createHotelAdmin,
-            updateHotel : updateHotel
+            updateHotel : updateHotel,
+            //updateBusiness: updateBusiness
         };
         return api;
+
+        function updateBusiness(hotelId, userId) {
+            var url = "/api/business/user/"+userId+"/hotel/" + hotelId;
+            return $http.put(url);
+        }
 
         function updateHotel(hotelId,hotel) {
             console.log("server client"+hotelId);

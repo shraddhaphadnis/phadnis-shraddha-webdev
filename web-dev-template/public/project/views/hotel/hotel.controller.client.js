@@ -30,7 +30,7 @@
                 });
         }
     }
-    function HotelDetailsController($location, $routeParams, HotelService, ReviewService, UserService) {
+    function HotelDetailsController($location, $routeParams, HotelService, ReviewService, UserService, BusinessService) {
         var vm = this;
         vm.hotelId = $routeParams.hid;
         vm.userId = $routeParams.uid;
@@ -40,6 +40,7 @@
        // vm.isHotelLiked = isHotelLiked;
         vm.likeHotel = likeHotel;
         vm.undoLikeHotel = undoLikeHotel;
+        vm.OwnBusiness = OwnBusiness;
 
         function init() {
             var promise = HotelService.findHotelById(vm.hotelId);
@@ -51,6 +52,15 @@
                     vm.hotelCity = vm.hotelDetails.loc.city;
                     console.log(vm.hotelCity);
                     console.log(vm.hotelName);
+                    var resp = BusinessService.findBusinessByHotelId(vm.hotelId);
+                    resp
+                        .success(function (discounts) {
+                            vm.Business = discounts;
+                            console.log(discounts);
+                        })
+                        .error(function (err) {
+                            console.log(err);
+                        });
                     var prom = ReviewService.findReviewByHotelId(vm.hotelId);
                     prom
                         .success(function (UserReviews) {
@@ -73,7 +83,28 @@
         }
         init();
 
-            function likeHotel() {
+        function OwnBusiness() {
+            newhotel = {};
+            newhotel.hotelId = vm.hotelId;
+            newhotel.hotelName = vm.hotelName;
+            newhotel.hotelCity = vm.hotelCity;
+            console.log("owned hotel new hotel object" + " " + newhotel);
+            HotelService
+                .findHotelByCityId(vm.cityId)
+                .then(function (hotel) {
+                    HotelService.updateBusiness(vm.hotelId,vm.userId)
+                },function () {
+                    HotelService
+                        .createHotel(vm.hotelId,newhotel)
+                        .then(function (hotel) {
+                            HotelService.updateBusiness(hotel,vm.userId)
+                        },function (err) {
+                            console.log("could not create the hotel");
+                        })
+                });
+        }
+
+        function likeHotel() {
                 newhotel = {};
                 newhotel.hotelId = vm.hotelId;
                 newhotel.hotelName = vm.hotelName;

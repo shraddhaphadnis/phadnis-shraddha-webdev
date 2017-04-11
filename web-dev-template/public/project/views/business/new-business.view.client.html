@@ -1,0 +1,35 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid row">
+        <div class="row">
+            <a class="" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotelDetails/{{model.hotelId}}"><span class="glyphicon glyphicon-chevron-left white-glyphicon">
+              </span></a>
+            <a class=" navbar-text-decor" href="#">
+                Post New Discounts
+            </a>
+            <a ng-click="model.addBusiness(model.userId,model.hotelId,model.business)" class="">
+              <span class="glyphicon glyphicon-ok white-glyphicon pull-right">
+              </span>
+            </a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="padding-navbar div-website-list">
+        <form>
+            <textarea type="text"
+                      ng-model="model.business.comment"
+                      class="form-control"
+                      placeholder="discounts if any?"/>
+        </form>
+    </div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <a href="#/user/{{model.userId}}">
+                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+            </a>
+        </div>
+    </div>
+</nav>

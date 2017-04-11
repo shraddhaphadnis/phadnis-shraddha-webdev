@@ -6,21 +6,13 @@
             <a class=" navbar-text-decor" href="#">
                 HAPPY STAY
             </a>
+            <a href="#" class="">
 
-            <ng-switch = model.isOwned>
-            <div ng-switch-when=true>
-                <a href = "#/user/{{model.userId}}/business" class="">
-                    <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
+              <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
               </span>
-                </a>
-            </div>
-            <div ng-switch-when=false>
-                    <a href="#/user/{{model.userId}}" class="">
-                    <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
-                </span>
-                    </a>
-            </div>
+            </a>
         </div>
+    </div>
     </div>
 </nav>
 <div class="container-fluid padding-navbar">
@@ -53,9 +45,9 @@
                     <div class="col-lg-4 col-xs-4" id="map">
                     </div>
                 </div>
-
+                <h2 class="heading-color">Like this Hotel?</h2>
                 <h2 class="ng-binding">
-                <div ng-switch="model.isLiked">
+                    <div ng-switch="model.isLiked">
                     <span>
                         <div ng-switch-when=true
                              ng-click="model.undoLikeHotel()">
@@ -63,7 +55,7 @@
 
                         </div>
                     </span>
-                    <span>
+                        <span>
                         <div ng-switch-when=false
                              ng-click="model.likeHotel()">
                                 <span class="glyphicon glyphicon-heart-empty like-button-color"></span>
@@ -71,62 +63,11 @@
                         </div>
                     </span>
 
-                </div>
-            </h2>
+                    </div>
+                </h2>
             </div>
 
-            <h2 class="heading-color">Own the hotel</h2>
-            <a type="button" class="btn btn-success" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/business">Own this Hotel</a>
-            </h2>
-            <ol class="comment-list">
-
-                <li ng-repeat="posts in model.Business" class="comment">
-                    <article class="comment-body">
-                        <footer class="comment-meta">
-                            <div class="comment-author vcard">
-                                <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
-                                <b class="fn">{{posts.username}}</b> <span class="says"> Posted:</span>
-                                <a ng-click="model.FollowUser(model.userId, posts._user)">
-                                    <span class="fa fa-plus fa-lg pull-right"> Follow </span>
-                                </a>
-                            </div><!-- .comment-author -->
-
-                            <div class="comment-metadata">
-                                <a href="#">
-
-                                </a>
-                            </div><!-- .comment-metadata -->
-
-                            <!--<star-rating ng-model="rating.rating2" readonly="rating.isReadonly"></star-rating>-->
-
-                        </footer><!-- .comment-meta -->
-
-                        <div class="alert-danger">
-                            <div class="card card-inverse card-primary mb-3 text-center">
-                                <div class="card-header">
-                                    DISCOUNTS
-                                </div>
-                                <div class="card-block">
-                                    <h4 class="card-title"></h4>
-                                    <p class="card-text">{{posts.discount}}</p>
-                                </div>
-                                <div class="card-footer text-muted">
-                                    Hurry
-                                </div>
-                            </div>
-                        </div>
-                        <!-- .comment-content -->
-                        <a ng-show="model.userId == posts._user" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/business/{{posts._id}}/edit">
-                            <span class="fa fa-pencil fa-lg pull-right"></span>
-                        </a>
-
-                    </article>
-                    <!--<div class="reply"><a rel="nofollow" class="comment-reply-link btn btn-sm btn-default" href="https://indiahikes.com/top-6-winter-treks-in-india-that-you-must-do/?replytocom=908#respond" onclick="return addComment.moveForm( &quot;div-comment-908&quot;, &quot;908&quot;, &quot;respond&quot;, &quot;21636&quot; )" aria-label="Reply to Amit Chaudhary" style="display: inline;">Reply</a></div>			</article>&lt;!&ndash; .comment-body &ndash;&gt;-->
-                </li><!-- #comment-## -->
-            </ol>
-        </div>
-
-        <div class="col-xs-12 col-lg-6">
+            <div class="col-xs-12 col-lg-6">
                 <div>
                     <div class="row">
                         <h1 class="heading-color">Reviews</h1>

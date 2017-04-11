@@ -1,15 +1,15 @@
 /**
- * Created by shrad on 4/4/2017.
+ * Created by shrad on 4/9/2017.
  */
 
 (function() {
     angular
         .module("MyHotelApp")
-        .controller("AdminLoginController", AdminLoginController)
-        .controller("AdminRegisterController", AdminRegisterController)
-        .controller("AdminProfileController", AdminProfileController)
+        .controller("AgencyLoginController", AgencyLoginController)
+        .controller("AgencyRegisterController", AgencyRegisterController)
+        .controller("AgencyProfileController", AgencyProfileController)
 
-    function AdminLoginController($location, UserService) {
+    function AgencyLoginController($location, AgencyService) {
         var vm = this;
         vm.login = login;
 
@@ -24,14 +24,14 @@
                 vm.alert = "Username and Password required";
             }
             else{
-                var promise = UserService.login(username, password);
+                var promise = AgencyService.login(username, password);
                 promise
                     .success(function (user) {
-                        if (user === '0' || user.role != 'ADMIN') {
-                            vm.alert = "No such Admin";
+                        if (user === '0') {
+                            vm.alert = "No such Agency";
                         }
                         else {
-                            $location.url("/userAdmin/" + user._id);
+                            $location.url("/AgencyUser/" + user._id);
                         }
                     })
                     .error(function () {
@@ -39,29 +39,28 @@
             }
         }
     }
-    function AdminRegisterController($rootScope,$location,UserService) {
+    function AgencyRegisterController($rootScope,$location,AgencyService) {
         var vm = this;
-        console.log("In project user controller");
+        console.log("In project agency controller");
 
-        vm.createUser = createUser;
-        function createUser(user) {
-            user.role = 'ADMIN';
-            UserService
+        vm.createAgency = createAgency;
+        function createAgency(user) {
+            AgencyService
                 .register(user)
                 .then(
                     function (response) {
                         console.log(response);
                         var user = response.data;
                         $rootScope.currentUser = user;
-                        $location.url("/userAdmin/" + user._id);
+                        $location.url("/AgencyUser/" + user._id);
                     });
         }
     }
-    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService) {
+    function AgencyProfileController($routeParams, UserService,$location,HotelService,ReviewService,AgencyService) {
         var vm = this;
         var model = this;
         vm.userId = $routeParams["uid"];
-        vm.getAllRegUsers = getAllRegUsers;
+     /*   vm.getAllRegUsers = getAllRegUsers;
         vm.deleteUser = deleteUser;
         vm.AddNewUser = AddNewUser;
         vm.AddNewHotel = AddNewHotel;
@@ -73,7 +72,7 @@
         vm.getAllHotels = getAllHotels;
         vm.select_hotel = select_hotel;
         vm.updateHotel = updateHotel;
-        vm.select_review = select_review;
+        vm.select_review = select_review;*/
 
         // Review details
         vm.getAllReviews = getAllReviews;
@@ -96,7 +95,7 @@
         }
 
         function AddNewHotel(hotel) {
-             HotelService.createHotelAdmin(hotel)
+            HotelService.createHotelAdmin(hotel)
                 .success(function (hotel) {
                     vm.hotel = hotel;
                 })
@@ -115,14 +114,14 @@
                     HotelService
                         .getAllHotels()
                         .then(function (hotels) {
-                         console.log("set hotels");
-                         vm.hotels = hotels;
+                            console.log("set hotels");
+                            vm.hotels = hotels;
                         },function (err) {
-                        res.sendStatus(404).send(err);
-                    })
+                            res.sendStatus(404).send(err);
+                        })
                 },function (err) {
-                res.sendStatus(err);
-            })
+                    res.sendStatus(err);
+                })
         }
         function deleteUserAdmin(user) {
             UserService
@@ -131,14 +130,14 @@
                     UserService
                         .getAllRegUsers()
                         .then(function (users) {
-                         console.log("set user");
-                         vm.users = users;
+                            console.log("set user");
+                            vm.users = users;
                         },function (err) {
-                        res.sendStatus(404).send(err);
-                    })
+                            res.sendStatus(404).send(err);
+                        })
                 },function (err) {
-                res.sendStatus(err);
-            })
+                    res.sendStatus(err);
+                })
         }
         function select(user) {
             model.inputUser = angular.copy(user);
@@ -198,16 +197,16 @@
                 })
                 .error(function () {
                 });
-           /* HotelService
-                .findCurrentHotel()
-                .success(function (hotel) {
-                    if(hotel != null) {
-                        vm.hotel = hotel;
-                    }
-                })
-                .error(function () {
+            /* HotelService
+             .findCurrentHotel()
+             .success(function (hotel) {
+             if(hotel != null) {
+             vm.hotel = hotel;
+             }
+             })
+             .error(function () {
 
-                });*/
+             });*/
         }
         init();
         vm.logout = logout;
@@ -215,7 +214,7 @@
         function logout() {
             UserService.logout()
                 .success(function () {
-                    $location.url("/loginAdmin");
+                    $location.url("/loginAgency");
                 })
         }
     }

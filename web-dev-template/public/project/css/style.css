@@ -108,7 +108,7 @@ a:hover {
 .comment-list{margin-bottom:40px !important;margin-left:0px !important;padding-left:0;}
 .comment-list,
 .comment-list .children{list-style:none;}
-.comment .comment-body{background-color:#ffffff;margin:0;overflow:hidden;padding:25px;margin-top:2em;padding-left:100px;position:relative;border:1px solid #E8E8E8;border-bottom:1px solid #DADADA;border-radius:4px;}
+.comment .comment-body{background-color:cadetblue;margin:0;overflow:hidden;padding:25px;margin-top:2em;padding-left:100px;position:relative;border:1px solid #E8E8E8;border-bottom:1px solid #DADADA;border-radius:4px;}
 .comment-list .children{margin-left:0px!important;padding-left:40px;border-left:1px solid #DADADA;background-repeat:no-repeat;background-position:left 20px;}
 .comment-list li.comment > div img.avatar{position:absolute;left:29px;top:29px;}
 #comment-form-title{font-size:24px;padding-bottom:10px;}
