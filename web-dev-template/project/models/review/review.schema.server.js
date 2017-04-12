@@ -7,6 +7,8 @@ module.exports = function () {
         username: String,
         hotelId: String,
         rating: String,
+        hotelName: String,
+        hotelCity: String,
         _user: {type : mongoose.Schema.Types.ObjectId, ref : 'UserModel'},
         dateCreated: {type: Date, default: Date.now}
     },{collection:"review"});

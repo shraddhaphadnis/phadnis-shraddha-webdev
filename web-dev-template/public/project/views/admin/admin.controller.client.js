@@ -73,10 +73,13 @@
         vm.getAllHotels = getAllHotels;
         vm.select_hotel = select_hotel;
         vm.updateHotel = updateHotel;
-        vm.select_review = select_review;
 
         // Review details
         vm.getAllReviews = getAllReviews;
+        vm.updateComment = updateComment;
+        vm.select_review = select_review;
+        vm.AddComment = AddComment;
+        vm.deleteCommentAdmin = deleteCommentAdmin;
 
         function getAllReviews() {
             ReviewService
@@ -92,6 +95,7 @@
             HotelService.updateHotel(hotel._id,hotel)
                 .success(function (hotel) {
                     vm.hotel = hotel;
+                    getAllHotels();
                 })
         }
 
@@ -99,6 +103,7 @@
              HotelService.createHotelAdmin(hotel)
                 .success(function (hotel) {
                     vm.hotel = hotel;
+                    getAllHotels();
                 })
         }
         function getAllHotels() {
@@ -108,6 +113,23 @@
                 })
         }
 
+        function deleteCommentAdmin(review) {
+            ReviewService
+                .deleteCommentAdmin(review._id)
+                .then(function (review) {
+                    ReviewService
+                        .getAllReviews()
+                        .then(function (reviews) {
+                            console.log("set reviews");
+                            vm.reviews = reviews;
+                            getAllReviews();
+                        },function (err) {
+                            res.sendStatus(404).send(err);
+                        })
+                },function (err) {
+                    res.sendStatus(err);
+                })
+        }
         function deleteHotelAdmin(hotel) {
             HotelService
                 .deleteHotelAdmin(hotel._id)
@@ -117,6 +139,7 @@
                         .then(function (hotels) {
                          console.log("set hotels");
                          vm.hotels = hotels;
+                         getAllHotels();
                         },function (err) {
                         res.sendStatus(404).send(err);
                     })
@@ -133,6 +156,7 @@
                         .then(function (users) {
                          console.log("set user");
                          vm.users = users;
+                         getAllRegUsers();
                         },function (err) {
                         res.sendStatus(404).send(err);
                     })
@@ -153,11 +177,21 @@
             model.inputReview = angular.copy(review);
             model.selected = 0;
         }
+
+        function updateComment(review) {
+            console.log(review._id);
+            ReviewService.updateReview(review._id,review)
+                .success(function (review) {
+                    vm.review = review;
+                    getAllReviews();
+                })
+        }
         function update(user) {
             console.log(user._id);
             UserService.updateUser(user._id,user)
                 .success(function (user) {
                     vm.user = user;
+                    getAllRegUsers();
                 })
         }
 
@@ -165,6 +199,14 @@
             UserService.createUserAdmin(user)
                 .success(function (user) {
                     vm.user = user;
+                    getAllRegUsers();
+                })
+        }
+
+        function AddComment(review) {
+            ReviewService.createAdminReview(review)
+                .success(function (review) {
+                    vm.review = review;
                 })
         }
 
@@ -176,7 +218,7 @@
                     UserService.getAllUsers()
                         .success(function (users) {
                             vm.users = users;
-
+                            getAllRegUsers();
                         })
                 })
         }
@@ -208,6 +250,9 @@
                 .error(function () {
 
                 });*/
+           getAllRegUsers();
+           getAllHotels();
+           getAllReviews();
         }
         init();
         vm.logout = logout;

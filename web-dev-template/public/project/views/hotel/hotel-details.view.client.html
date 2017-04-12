@@ -75,20 +75,32 @@
             </h2>
             </div>
 
-            <h2 class="heading-color">Own the hotel</h2>
-            <a type="button" class="btn btn-success" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/business">Own this Hotel</a>
-            </h2>
+            <div ng-switch="model.user.role">
+                <div ng-switch-when="OWNER">
+                    <h2 class="heading-color">Own the hotel</h2>
+                        <a type="button" class="btn btn-success" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/business">Own this Hotel</a>
+                    </h2>
+                </div>
+            </div>
             <ol class="comment-list">
-
                 <li ng-repeat="posts in model.Business" class="comment">
                     <article class="comment-body">
                         <footer class="comment-meta">
                             <div class="comment-author vcard">
                                 <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
-                                <b class="fn">{{posts.username}}</b> <span class="says"> Posted:</span>
-                                <a ng-click="model.FollowUser(model.userId, posts._user)">
-                                    <span class="fa fa-plus fa-lg pull-right"> Follow </span>
-                                </a>
+                                <div ng-switch=posts._user>
+                                    <div ng-switch-when=model.userId>
+                                        <h3>
+                                            <a href="#/user/{{model.userId}}">{{posts.username}}</a>
+                                        </h3>
+                                    </div>
+                                    <div ng-switch-when!=model.userId>
+                                        <h3><span class="glyphicon glyphicon-user"></span>
+                                            <a href="#/user1/{{model.userId}}/secondUser/{{posts._user}}">{{posts.username}}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
                             </div><!-- .comment-author -->
 
                             <div class="comment-metadata">
@@ -96,8 +108,6 @@
 
                                 </a>
                             </div><!-- .comment-metadata -->
-
-                            <!--<star-rating ng-model="rating.rating2" readonly="rating.isReadonly"></star-rating>-->
 
                         </footer><!-- .comment-meta -->
 
@@ -148,7 +158,6 @@
                                             <div ng-switch-when!=model.userId>
                                                 <h3><span class="glyphicon glyphicon-user"></span>
                                                     <a href="#/user1/{{model.userId}}/secondUser/{{userReview._user}}">{{userReview.username}}
-                                                        <span class="glyphicon glyphicon-user"></span>
                                                     </a>
                                                 </h3>
                                             </div>

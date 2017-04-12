@@ -10,12 +10,24 @@
         vm.hotelId = $routeParams.hid;
         vm.userId = $routeParams.uid;
         vm.cityId = $routeParams.cid;
-       /* HotelService
-            .findHotelById(vm.hotelId)
-            .success(function (hotel) {
-                vm.hotelName = hotel.hotelName;
-                vm.hotelCity = hotel.hotelCity;
-            });*/
+
+        var promise1 = HotelService.findHotelById(vm.hotelId);
+        promise1
+            .success(function (hotelDetails) {
+                console.log("hotel details in success!!!!" + hotelDetails.data[vm.hotelId]);
+                vm.hotelDetails = hotelDetails.data[vm.hotelId].hotel_data_node;
+                vm.hotelName = vm.hotelDetails.name;
+                vm.hotelCity = vm.hotelDetails.loc.city;
+                console.log("hotel city" + vm.hotelCity);
+                console.log("hotel Name" + vm.hotelName);
+            });
+
+        /* HotelService
+             .findHotelById(vm.hotelId)
+             .success(function (hotel) {
+                 vm.hotelName = hotel.hotelName;
+                 vm.hotelCity = hotel.hotelCity;
+             });*/
 
         console.log(vm.userId);
         vm.addReview = addReview;
@@ -26,14 +38,14 @@
             vm.hotelId = $routeParams.hid;
             vm.userId = $routeParams.uid;
             vm.cityId = $routeParams.cid;
+            hotelReview.hotelName = vm.hotelName;
+            console.log("(((((((((("+hotelReview.hotelName);
+            hotelReview.hotelCity = vm.hotelCity;
+
+
             console.log(hotelReview);
 
-            newhotel = {};
-            newhotel.hotelId = hotelId;
-            newhotel.hotelName = vm.hotelName;
-            newhotel.hotelCity = vm.hotelCity;
 
-           // HotelService.createHotel(vm.hotelId,newhotel);
             var promise = ReviewService.createReview(vm.userId, vm.hotelId, hotelReview);
             promise
                 .success(function (data) {
@@ -86,6 +98,7 @@
 
         function init() {
             //console.log("Hi");
+
             var promise = ReviewService.findReviewById(vm.reviewId);
             promise
                 .success(function (review) {

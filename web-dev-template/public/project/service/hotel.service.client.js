@@ -54,13 +54,13 @@
         }
 
         function findHotelByCityId(cityId) {
-            var url = "http://developer.goibibo.com/api/voyager/get_hotels_by_cityid/?app_id=14654cdf&app_key=1e64496250cc0415a50feda5b07a1c45&city_id="+cityId.toString();
+            var url = "http://developer.goibibo.com/api/voyager/get_hotels_by_cityid/?app_id=e1e40a89&app_key=8b99fb1c463f41bcf525d9fedc927589&city_id="+cityId.toString();
             //console.log(url);
             return $http.get(url);
         }
 
         function findHotelById(hotelId) {
-            var url = "http://developer.goibibo.com/api/voyager/?app_id=14654cdf&app_key=1e64496250cc0415a50feda5b07a1c45&method=hotels.get_hotels_data&id_list=%5B"+hotelId+"%5D&id_type=_id";
+            var url = "http://developer.goibibo.com/api/voyager/?app_id=e1e40a89&app_key=8b99fb1c463f41bcf525d9fedc927589&method=hotels.get_hotels_data&id_list=%5B"+hotelId+"%5D&id_type=_id";
             console.log("inside hotelbyid client"+url);
             return $http.get(url);
         }

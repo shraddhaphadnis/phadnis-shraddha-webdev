@@ -7,11 +7,74 @@ module.exports = function(app, model){
     app.put("/api/editReview/:rid", updateReview);
     app.delete("/api/delReview/:rid", deleteReview);
     app.get('/api/getAllReviews/', getAllReviews);
+    app.delete('/api/admin/review/:reviewId',deleteCommentAdmin);
+    app.post("/api/project/admin/review",createAdminReview);
 
+
+    function createAdminReview(req, res) {
+        var newUser = req.body;
+        console.log(newUser);
+        model.userModel
+            .findUse(newUser.username)
+            .then(
+                function (user) {
+                    console.log("*********"+user);
+                    // if the user does not already exist
+                    if (user == null) {
+                        // create a new user
+                        return model.userModel.createUser(newUser)
+                            .then(
+                                function () {
+                                    return model.userModel.findAllUsers();
+                                },
+                                function (err) {
+                                    res.status(400).send(err);
+                                }
+                            );
+                        // if the user already exists, then just fetch all the users
+                    } else {
+                        return model.userModel.findAllUsers();
+                    }
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (users) {
+                    res.json(users);
+                },
+                function () {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function deleteCommentAdmin(req, res) {
+        model.reviewModel
+            .deleteReview(req.params.reviewId)
+            .then(
+                function (review) {
+                    return model.reviewModel.findAllReviews();
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (reviews) {
+                    res.json(reviews);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
     function getAllReviews(req, res) {
         model.reviewModel.findReviews()
             .then(function (reviews) {
+                console.log("response reviews" +reviews);
                 res.send(reviews);
             })
     }
@@ -34,7 +97,9 @@ module.exports = function(app, model){
 
         var reviewNew = {
             comment:hotelReview.comment,
-            hotelId: hotelId
+            hotelId: hotelId,
+            hotelName : hotelReview.hotelName,
+            hotelCity:hotelReview.hotelCity
         }
         return ReviewModel
             .createReview(userId,hotelId,reviewNew)

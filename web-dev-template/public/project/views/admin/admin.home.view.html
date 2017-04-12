@@ -3,6 +3,7 @@
 <button class="btn btn-success" ng-click="model.getAllRegUsers()">Get All users</button>
 <button class="btn btn-success" ng-click="model.getAllHotels()">Get All Hotels</button>
 <button class="btn btn-success" ng-click="model.getAllReviews()">Get All Reviews</button>
+<h1>User Details</h1>
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
@@ -85,7 +86,7 @@
         </tbody>
     </table>
 </div>
-
+<h1>Hotel Details</h1>
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
@@ -157,6 +158,7 @@
 </div>
 
 <!--- Review -->
+<h1>Review Details</h1>
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
@@ -196,26 +198,26 @@
         <tr class="forms-input-row">
             <td>
                 <input type="text" class="form-control" id="hotelName" placeholder="hotelName"
-                       ng-model="model.inputHotel.hotelName">
+                       ng-model="model.inputReview.hotelName">
             </td>
             <td>
                 <input type="text" class="form-control" id="hotelCity" placeholder="hotelCity"
-                       ng-model="model.inputHotel.hotelCity">
+                       ng-model="model.inputReview.hotelCity">
             </td>
             <td>
                 <input type="text" class="form-control" id="username" placeholder="username"
-                       ng-model="model.inputHotel.hotelId">
+                       ng-model="model.inputReview.username">
             </td>
             <td>
                 <input type="text" class="form-control" id="comment" placeholder="comment"
                        ng-model="model.inputReview.comment">
             </td>
             <td>
-                <a href="" ng-click="model.AddNewComment(model.inputComment)"
+                <a href="" ng-click="model.AddComment(model.inputReview)"
                    ng-hide="model.selected == -1">
                     <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
                 </a>
-                <a href="" ng-click="model.updateComment(model.inputComment)"
+                <a href="" ng-click="model.updateComment(model.inputReview)"
                    ng-hide="model.selected == -1">
                     <span class="glyphicon glyphicon-ok okicon pull-right" aria-hidden="true"></span>
                 </a>
@@ -224,7 +226,7 @@
 
         <tr ng-repeat="u in model.comments | orderBy:model.predicate:model.reverse">
             {{u.hotelName}}
-            <td>{{model.findHotelById(u.hotelId).hotelName}}</td>
+            <td>{{u.hotelName}}</td>
             <td>{{u.hotelCity}}</td>
             <td>{{u.username}}</td>
             <td>{{u.comment}}</td>
@@ -233,7 +235,7 @@
                         class="glyphicon glyphicon-remove removeicon pull-left"
                         aria-hidden="true"></span>
                 </a>
-                <a href="" ng-click="model.select_comment(u)"><span
+                <a href="" ng-click="model.select_review(u)"><span
                         class="glyphicon glyphicon-cog pencilicon pull-right" aria-hidden="true"></span>
                 </a>
             </td>

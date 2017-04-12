@@ -70,11 +70,18 @@ module.exports = function () {
                     return model.userModel
                         .findUserById(userId)
                         .then(function(userObject) {
-                                console.log("inside userobject");
-                                reviewObject._user = userObject._id;
-                                reviewObject.username = userObject.username;
-                                reviewObject._hotel = hotelId;
-                                return reviewObject.save();
+                            return model.hotelModel
+                                .findHotelByHotelId(hotelId)
+                                .then(function (hotel) {
+                                    console.log("inside userobject" + hotel);
+                                    reviewObject._user = userObject._id;
+                                    reviewObject.username = userObject.username;
+                                    reviewObject._hotel = hotelId;
+                                  //  reviewObject.hotelName = hotel.hotelName;
+                                  //  reviewObject.hotelCity = hotel.hotelCity;
+                                    return reviewObject.save();
+                                })
+
                             },
                             function(error){
                                 console.log("in model restaurant error");

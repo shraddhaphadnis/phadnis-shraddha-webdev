@@ -10,11 +10,21 @@
             createReview: createReview,
             updateReview: updateReview,
             deleteReview: deleteReview,
-            getAllReviews: getAllReviews
+            getAllReviews: getAllReviews,
+            deleteCommentAdmin : deleteCommentAdmin,
+            createAdminReview :createAdminReview
 
         };
         return api;
 
+        function createAdminReview(review) {
+            return $http.post('/api/project/admin/review', review);
+        }
+
+        function deleteCommentAdmin(reviewId) {
+            console.log("delete user admin client");
+            return $http.delete('/api/admin/review/' + reviewId);
+        }
 
         function getAllReviews() {
             console.log("getAll reviews client side");
