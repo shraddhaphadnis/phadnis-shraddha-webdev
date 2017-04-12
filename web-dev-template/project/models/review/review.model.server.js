@@ -71,25 +71,10 @@ module.exports = function () {
                         .findUserById(userId)
                         .then(function(userObject) {
                                 console.log("inside userobject");
-                                return model.hotelModel
-                                    .findHotelByIbiboHotelId(hotelId)
-                                    .then(function (hotelObj) {
-                                            console.log("after hotel id" + hotelObj);
-                                            userObject.reviews.push(reviewObject);
-                                            userObject.save();
-                                            hotelObj.reviews.push(reviewObject);
-                                            console.log(hotelObj);
-                                            hotelObj.save();
-                                            reviewObject._user = userObject._id;
-                                            reviewObject.username = userObject.username;
-                                            reviewObject._hotel = hotelObj._id;
-                                            reviewObject.save();
-                                            return reviewObject.save();
-                                        },
-                                        function(error){
-                                            console.log("in model restaurant error");
-                                            console.log(error);
-                                        });
+                                reviewObject._user = userObject._id;
+                                reviewObject.username = userObject.username;
+                                reviewObject._hotel = hotelId;
+                                return reviewObject.save();
                             },
                             function(error){
                                 console.log("in model restaurant error");

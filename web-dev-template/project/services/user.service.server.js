@@ -56,6 +56,58 @@ module.exports = function(app,model){
     app.put("/api/user/:userId/city/:cityId/hotelDetails/:HotelId/like",likeHotel);
     app.put("/api/user/:userId/city/:cityId/hotelDetails/:HotelId/undolike",undoLikeHotel);
     app.get("/api/user/:userId/city/:cityId/hotelDetails/:HotelId/isHotelLiked",isHotelLiked);
+    app.put("/api/user/:loggedInUserId/user2/:secondUserId",follow);
+    app.put("/api/user/:loggedInUserId/user2/:secondUserId/unfollow",unfollow);
+
+    function follow(req, res){
+        var loggedInUserId = req.params.loggedInUserId;
+        var secondUserId = req.params.secondUserId;
+
+        model.userModel
+            .addToFollowing(loggedInUserId, secondUserId)
+            .then(
+                function (response) {
+
+                    return model.userModel.addToFollowers(secondUserId, loggedInUserId);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (response) {
+                    res.json(response);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
+    }
+
+    function unfollow(req,res) {
+        var loggedInUserId = req.params.loggedInUserId;
+        var secondUserId = req.params.secondUserId;
+        console.log("im unfollowing");
+        model.userModel
+            .removeFromFollowing(loggedInUserId, secondUserId)
+            .then(
+                function (response) {
+                    console.log("removed from following..");
+                    return model.userModel.removeFromFollowers(secondUserId, loggedInUserId);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (response) {
+                    res.json(response);
+
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
+    }
+
 
     function likeHotel(req, res) {
         var HotelId = req.params.HotelId;

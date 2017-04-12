@@ -139,10 +139,20 @@
                                 <footer class="comment-meta">
                                     <div class="comment-author vcard">
                                         <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
-                                        <b class="fn">{{userReview.username}}</b> <span class="says"> commented:</span>
-                                        <a ng-click="model.FollowUser(model.userId, userReview._user)">
-                                            <span class="fa fa-plus fa-lg pull-right"> Follow </span>
-                                        </a>
+                                        <div ng-switch=userReview._user>
+                                            <div ng-switch-when=model.userId>
+                                                <h3>
+                                                    <a href="#/user/{{model.userId}}">{{userReview.username}}</a>
+                                                </h3>
+                                            </div>
+                                            <div ng-switch-when!=model.userId>
+                                                <h3><span class="glyphicon glyphicon-user"></span>
+                                                    <a href="#/user1/{{model.userId}}/secondUser/{{userReview._user}}">{{userReview.username}}
+                                                        <span class="glyphicon glyphicon-user"></span>
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                        </div>
                                     </div><!-- .comment-author -->
 
                                     <div class="comment-metadata">

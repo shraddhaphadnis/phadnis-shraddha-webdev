@@ -12,11 +12,18 @@ module.exports = function () {
         findAllHotels:findAllHotels,
         deleteHotel : deleteHotel,
         updateHotel : updateHotel,
-        updateBusiness: updateBusiness
+        updateBusiness: updateBusiness,
+        findHotelByHotelId : findHotelByHotelId
 
     };
     return api;
 
+    function findHotelByHotelId(hotelId) {
+        console.log(hotelId);
+        return HotelModel.find({
+            hotelId : hotelId
+        });
+    }
     function updateBusiness(hotelId,userId) {
             console.log(">>>>>" + hotelId);
         return model.userModel

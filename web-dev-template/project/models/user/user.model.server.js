@@ -17,9 +17,41 @@ module.exports = function () {
         following: following,
         followers: followers,
         updatelikeStatus: updatelikeStatus,
-        isHotelLiked: isHotelLiked
+        isHotelLiked: isHotelLiked,
+        addToFollowing:addToFollowing,
+        addToFollowers:addToFollowers,
+        removeFromFollowing:removeFromFollowing,
+        removeFromFollowers:removeFromFollowers
     };
     return api;
+
+    function addToFollowing(loggedInUserId,secondUserId) {
+
+        return UserModel.update({_id: loggedInUserId}, {$addToSet: {following: secondUserId}});
+
+
+    }
+
+    function addToFollowers(secondUserId,loggedInUserId) {
+
+
+        return UserModel.update({_id: secondUserId}, {$addToSet: {followers: loggedInUserId}});
+
+    }
+
+    function removeFromFollowing(loggedInUserId,secondUserId) {
+        console.log("user1:"+loggedInUserId+" user2: "+secondUserId);
+        return UserModel.update({_id: loggedInUserId}, {$pullAll: {following: [secondUserId]}});
+
+
+    }
+
+    function removeFromFollowers(secondUserId,loggedInUserId) {
+        console.log("user1:"+loggedInUserId+" user2: "+secondUserId);
+
+        return UserModel.update({_id: secondUserId}, {$pullAll: {followers: [loggedInUserId]}});
+
+    }
 
     function updatelikeStatus(userId,HotelId,status) {
         console.log("inside update status");

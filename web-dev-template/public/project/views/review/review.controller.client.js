@@ -33,8 +33,8 @@
             newhotel.hotelName = vm.hotelName;
             newhotel.hotelCity = vm.hotelCity;
 
-            HotelService.createHotel(vm.hotelId,newhotel);
-            var promise = ReviewService.createReview(userId, hotelReview);
+           // HotelService.createHotel(vm.hotelId,newhotel);
+            var promise = ReviewService.createReview(vm.userId, vm.hotelId, hotelReview);
             promise
                 .success(function (data) {
                     var URL = "/user/" + vm.userId + "/city/" + vm.cityId + "/hotelDetails/" + vm.hotelId;

@@ -32,8 +32,8 @@
             return $http.get(url);
         }
 
-        function createReview(userId, hotelReview) {
-            var url = '/api/user/'+userId+'/review';
+        function createReview(userId, hotelId, hotelReview) {
+            var url = '/api/user/'+userId+'/hotel/'+hotelId+'/review';
             console.log(hotelReview);
             return $http.post(url,hotelReview);
         }

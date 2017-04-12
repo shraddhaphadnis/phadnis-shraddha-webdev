@@ -1,0 +1,29 @@
+<div ng-controller="profileOtherController as model">
+    <h2>Following <a href="">
+        <span class="glyphicon glyphicon-eye-open follower-button-color"></span>
+    </a></h2>
+    <br>
+    <div class="container-fluid">
+        <div class="row col-sm-6 well">
+            <div ng-switch="model.following_users.length">
+                <div ng-switch-when=0>
+                    <div class="well col-sm-8">
+                        <p class="bg-info">Sorry you are not following anyone!!</p>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <div ng-repeat="f in model.following_users">
+                        <h3><span class="glyphicon glyphicon-user"></span>
+                            <div ng-if="model.user._id!=f._id">
+                                <a href="#/user1/{{model.user._id}}/secondUser/{{f._id}}">{{f.firstName}}</a>
+                            </div>
+                            <div ng-if="model.user._id==f._id">
+                                <a href="#/user/{{model.user._id}}">{{f.firstName}}</a>
+                            </div>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

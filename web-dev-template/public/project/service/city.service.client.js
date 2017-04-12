@@ -21,6 +21,7 @@
         }
 
         function findCityIdByCityName(city) {
+            console.log(city);
             return $http.get("/api/"+city);
         }
     }

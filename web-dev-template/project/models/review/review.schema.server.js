@@ -2,7 +2,7 @@ module.exports = function () {
     var mongoose = require("mongoose");
     var UserSchema = require("../user/user.schema.server")();
     var ReviewSchema = mongoose.Schema({
-        _hotel:{type: mongoose.Schema.Types.ObjectId, ref:"HotelModel"},
+        _hotel: String,
         comment: String,
         username: String,
         hotelId: String,

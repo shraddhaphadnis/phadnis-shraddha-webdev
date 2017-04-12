@@ -1,0 +1,73 @@
+<h2>PROFILE</h2>
+<div>
+    <div class="alert alert-danger" ng-show="model.error">
+        {{model.error}}
+    </div>
+
+    <div class="alert alert-success" ng-show="model.message">
+        {{model.message}}
+    </div>
+
+    <div class="container-fluid padding-navbar">
+    <div class="block">
+        <a ng-click = "model.getUserByIds(model.user.followers)" class="">
+              <span class="glyphicon glyphicon-star">
+              </span>
+            <label>Followers - {{model.followerSize}}</label>
+            <ul><li ng-repeat = "user in model.res">
+                {{user.username}}
+            </li></ul>
+        </a>
+    </div>
+    <div>
+        <a ng-click = "model.getfollowingByIds(model.user.following)" class="">
+              <span class="glyphicon glyphicon-bookmark">
+              </span>
+            <label>Following - {{model.followingSize}}</label>
+            <ul><li ng-repeat = "user in model.flw">
+                {{user.username}}
+            </li></ul>
+        </a>
+    </div>
+    <form>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" ng-model="model.user.username" class="form-control" id="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" ng-model="model.user.email" class="form-control" id="email" placeholder="email Id">
+        </div>
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input type="text" ng-model="model.user.firstName" class="form-control" id="first-name" placeholder="First name">
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" ng-model="model.user.lastName" class="form-control" id="last-name" placeholder="Lats Name">
+        </div>
+    </form>
+
+    <a class="btn btn-primary btn-block"
+       href="#/user/{{model.userId}}/home">Home</a>
+    <a class="btn btn-danger  btn-block"
+       ng-click="model.deleteUser(model.userId)">Delete
+    </a>
+        <a ng-click="model.update(model.user)"
+           class="btn btn-success btn-block">
+            Update
+        </a>
+    <a class="btn btn-warning  btn-block" ng-show="user.role == 'ADMIN'"
+       ng-click="#/admin">LogIn as Admin</a>
+    <a class="btn btn-success  btn-block" ng-click="model.logout()"
+       href="#/login">Logout</a>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <a href="#/user/{{model.userId}}">
+                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+            </a>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,31 @@
+<div ng-controller="ProfileController as model">
+    <h2>LIKES <a href="">
+        <span class="glyphicon glyphicon-heart like-button-color"></span>
+    </a></h2>
+    <br>
+    <div class="container-fluid">
+        <div class="row col-sm-6 well">
+            <div ng-switch="model.hotels.length">
+                <div ng-switch-when=0>
+
+                    <div class="well col-sm-8">
+                        <p class="bg-info">Sorry you have not liked anything yet!!</p>
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <div ng-repeat="hotel in model.hotels">
+                        <div class="well media center-block">
+                            <div class="media-object center-block">
+                                <a href="" ng-click="model.searchHotel(hotel.data[0].hotelCity,hotel.data[0].hotelId)">
+                                    <h4 class="media-heading text-center">
+                                        {{hotel.data[0].hotelName}}
+                                    </h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

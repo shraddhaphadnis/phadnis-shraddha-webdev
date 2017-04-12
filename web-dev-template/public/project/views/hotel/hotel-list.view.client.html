@@ -27,9 +27,19 @@
                 </div>
                 <div class="  col-md-12 col-lg-8" >
                     <div>
-                        <h3><a href="#/user/{{model.userId}}/city/{{model.cityId}}/hotelDetails/{{hotel.hotel_data_node._id}}">{{hotel.hotel_data_node.name}}</a></h3>
-                        <h4>{{hotel.hotel_data_node.loc.city}}, {{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
-                        <h4>Rating: {{hotel.hotel_data_node.rating}}</h4>
+                        <div ng-switch = model.user.userId>
+                            <div ng-switch-when != "undefined">
+                                <h3><a href="#/user/{{model.userId}}/city/{{model.cityId}}/hotelDetails/{{hotel.hotel_data_node._id}}">{{hotel.hotel_data_node.name}}</a></h3>
+                                <h4>{{hotel.hotel_data_node.loc.city}}, {{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
+                                <h4>Rating: {{hotel.hotel_data_node.rating}}</h4>
+                                <!-- code to render a large video block-->
+                            </div>
+                            <div ng-switch-when="undefined">
+                                <h3><a href="#/user/{{model.userId}}/city/{{model.cityId}}/hotelDetails/{{hotel.hotel_data_node._id}}">{{hotel.hotel_data_node.name}}</a></h3>
+                                <h4>{{hotel.hotel_data_node.loc.city}}, {{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
+                                <h4>Rating: {{hotel.hotel_data_node.rating}}</h4>
+                                <!-- code to render the regular video block -->
+                        </div>
                     </div>
                 </div>
             </section>

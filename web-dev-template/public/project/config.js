@@ -4,14 +4,47 @@
         .config(Config);
     function Config($routeProvider) {
         $routeProvider
+            .when("/home", {
+                templateUrl: 'views/user/homepage.html',
+                controller: "CityListController",
+                controllerAs: "model"
+            })
+
             .when("/user/:uid/search",{
                 templateUrl: "views/search/search.city.html",
                 controller: "CityListController",
                 controllerAs: "model"
             })
+            .when("/hotel/:searchTerm", {
+                templateUrl: 'views/user/homepage.html',
+                controller: "CityListController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/city/:cid/hotel/:searchTerm", {
+                templateUrl: 'views/user/homepage.html',
+                controller: "CityListController",
+                controllerAs: "model"
+            })
+
+            .when("/user/home",{
+                templateUrl: "views/user/homepage.html",
+                controller: "CityListController",
+                controllerAs: "model"
+            })
+
             .when("/user/:uid/home", {
                 templateUrl: "views/user/user_home.html",
                 controller: "CityListController",
+                controllerAs: "model"
+            })
+            .when("/user/city/:cid", {
+                templateUrl: "views/hotel/hotel-list.view.client.html",
+                controller: "HotelListController",
+                controllerAs: "model"
+            })
+            .when("/user/city/:cid/hotelDetails/:hid",{
+                templateUrl: "views/hotel/hotel-details.view.client.html",
+                controller: "HotelDetailsController",
                 controllerAs: "model"
             })
             .when("/user/:uid/city/:cid/hotelDetails/:hid",{
@@ -32,6 +65,22 @@
             .when("/user/:uid/city/:cid/hotel/:hid/review/:rid/edit",{
                 templateUrl: "views/review/edit-review.view.client.html",
                 controller: "EditReviewController",
+                controllerAs: "model"
+            })
+            .when("/city/:cid/hotel/:hid", {
+                templateUrl: 'views/hotel/hotel-details.view.client.html',
+                controller: "HotelDetailsController",
+                controllerAs: "model"
+            })
+
+            .when("/user/:uid/city/:cid/hotel/:hid", {
+                templateUrl: 'views/hotel/hotel-details.view.client.html',
+                controller: "HotelDetailsController",
+                controllerAs: "model"
+            })
+            .when("/user1/:uid1/secondUser/:uid2", {
+                templateUrl: 'views/user/profile-other-user-view.client.html',
+                controller: "profileOtherController",
                 controllerAs: "model"
             })
 

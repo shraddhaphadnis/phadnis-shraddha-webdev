@@ -11,13 +11,16 @@
         vm.findCityIdByCityName = findCityIdByCityName;
         function init() {
             vm.userId = $routeParams.uid;
-            var promise = UserService.findUserById(vm.userId);
-            promise
-                .success(function (user) {
-                    vm.user = user;
-                    console.log(vm.user);
-                })
+            if (vm.userId != null) {
+                var promise = UserService.findUserById(vm.userId);
+                promise
+                    .success(function (user) {
+                        vm.user = user;
+                        console.log(vm.user);
+                    })
+            }
         }
+
         init();
         function findCityIdByCityName(city) {
             var promise = CityService
@@ -26,13 +29,19 @@
                     console.log(city);
                     vm.cityId = city["City ID"];
                     console.log(vm.cityId);
-                    $location.url("/user/"+vm.userId+"/city/"+vm.cityId);
+                    if (vm.userId != null) {
+                        $location.url("/user/" + vm.userId + "/city/" + vm.cityId);
+                    }
+                    else {
+                        $location.url("/user/city/" + vm.cityId);
+                    }
                 });
         }
     }
     function HotelDetailsController($location, $routeParams, HotelService, ReviewService, UserService, BusinessService) {
         var vm = this;
         vm.hotelId = $routeParams.hid;
+        console.log(vm.hotelId);
         vm.userId = $routeParams.uid;
         vm.cityId = $routeParams.cid;
         vm.FollowUser = FollowUser;
@@ -77,7 +86,9 @@
             var promise1 = UserService.findUserById(vm.userId);
             promise1
                 .success(function (user) {
-                    vm.user = user;
+                    if(user != null) {
+                        vm.user = user;
+                    }
                 });
             isHotelLiked();
         }
@@ -152,40 +163,7 @@
                 });
         }
 
-        /*function setLikeStatus(likeStatus) {
-            UserService
-                .setLikeStatus(likeStatus,vm.userId,vm.hotelId,vm.cityId)
-                .then(function (response) {
-                    var status = response.data;
 
-                    if ((status.n == 1 || status.nModified == 1) && status.ok == 1) {
-                        vm.user.status=likeStatus;
-                        return HotelService.createHotel(vm.hotelId);
-                    }
-                })
-                .then(function (response) {
-                    console.log("Hotel created !");
-                });
-            //vm.user.status=status;
-        }
-
-        function isHotelLiked(userId,HotelId,CityId) {
-            UserService
-                .isHotelLiked(vm.userId,HotelId,vm.cityId)
-                .then(function (response) {
-                    var user = response.data;
-                    if (user) {
-                        console.log(user);
-                       // vm.user.status = 'like';
-                        console.log(vm.user.status);
-                    }
-                    else {
-                        vm.user.status = 'unlike';
-                        console.log(vm.user.status);
-                    }
-                });
-        }
-*/
 
         function FollowUser(followerId,followeeId) {
             console.log("followeeId"+followeeId);
@@ -259,7 +237,12 @@
             promise
                 .success(function (id) {
                     console.log(id);
-                    $location.url("/user/" + vm.userId + "/city/" + id);
+                    if (vm.userId != null) {
+                        $location.url("/user/" + vm.userId + "/city/" + id);
+                    }
+                    else {
+                        $location.url("/user/city/" + id);
+                    }
                 })
         }
 
@@ -279,7 +262,9 @@
             var promise1 = UserService.findUserById(vm.userId);
             promise1
                 .success(function (user) {
-                    vm.user = user;
+                    if (user != null) {
+                        vm.user = user;
+                    }
                 })
             // vm.hotels_list = hotel_list;
             //console.log(vm.hotels_list);

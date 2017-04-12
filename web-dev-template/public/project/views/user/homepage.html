@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" ng-app = "MyHotelApp">
-<head>
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet"/>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="../../css/style.css" rel="stylesheet"/>
-    <link href="../../css/textAngular.css" rel="stylesheet"/>
-</head>
-
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div>
             <a href="" class="pull-left navbar-brand">HAPPY STAY</a>
-            <a href="../../index.html#/login" class="pull-right navbar-brand">Login</a>
+            <a href="index.html#/login" class="pull-right navbar-brand">Login</a>
             <a href="" class="glyphicon glyphicon-log-in pull-right navbar-brand"></a>
-            <a href="../../index.html#/register" class="pull-right navbar-brand">Sign Up</a>
+            <a href="index.html#/register" class="pull-right navbar-brand">Sign Up</a>
             <a href="" class="glyphicon glyphicon-registration-mark pull-right navbar-brand"></a>
-            <a href="../../index.html#/loginAdmin" class="pull-right navbar-brand">Admin</a>
+            <a href="index.html#/loginAdmin" class="pull-right navbar-brand">Admin</a>
             <a href="" class="glyphicon glyphicon-registration-mark pull-right navbar-brand"></a>
-            <a href="../../index.html#/loginAgency" class="pull-right navbar-brand">Travel Agency</a>
+            <a href="index.html#/loginAgency" class="pull-right navbar-brand">Travel Agency</a>
             <a href="" class="glyphicon glyphicon-registration-mark pull-right navbar-brand"></a>
 
             <!--a href="../../index.html#/search" class="pull-right navbar-brand">Search</a>
@@ -47,6 +32,16 @@
         to help others make better choice in finding a place to stay.</h5>
     <br><hr>
 </div>
+</a>
+<div class="container-fluid">
+    <div class="input-group">
+        <input ng-model="searchText" type="text" class="form-control">
+        <span class="input-group-btn">
+        <a ng-click="model.findCityIdByCityName(searchText)" class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"> </span>
+        </a>
+    </span>
+    </div>
 <div class="container">
     <div class="container-fluid">
         <div class="row">

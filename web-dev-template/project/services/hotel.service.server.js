@@ -1,6 +1,7 @@
 module.exports = function(app,model){
     var HotelModel = model.hotelModel;
     app.get('/api/city/:cityId/hotel',findHotelByCityId);
+    app.get("/api/hotel/:hotelId",findHotelByHotelId);
     app.post("/api/hotel/:hotelId/hotelnew/", createHotel);
     app.get('/api/getAllHotels/', getAllHotels);
     app.get('/api/hotel/',findHotel);
@@ -9,6 +10,16 @@ module.exports = function(app,model){
     app.put('/api/hotel/:hotelId', updateHotel);
     app.put('/api/business/user/:userId/hotel/:hotelId',updateBusiness);
 
+    function findHotelByHotelId(req,res) {
+        hotelId = req.params.hotelId;
+        HotelModel
+            .findHotelByHotelId(hotelId)
+            .then(function (hotel) {
+                res.send(hotel);
+            },function (err) {
+                res.sendStatus(400).send(err);
+            });
+    }
     function updateBusiness(req,res) {
         var hotelId = req.params.hotelId;
         var userId = req.params.userId;

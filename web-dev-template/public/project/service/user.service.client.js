@@ -27,10 +27,20 @@
             findUserByIds: findUserByIds,
             likeHotel: likeHotel,
             undoLikeHotel: undoLikeHotel,
-            isHotelLiked: isHotelLiked
+            isHotelLiked: isHotelLiked,
+            follow:follow,
+            unfollow:unfollow
 
         };
         return api;
+
+        function follow(loggedInUserId,secondUserId){
+            return $http.put("/api/user/"+loggedInUserId+"/user2/"+secondUserId);
+        }
+
+        function unfollow(loggedInUserId,secondUserId){
+            return $http.put("/api/user/"+loggedInUserId+"/user2/"+secondUserId+"/unfollow");
+        }
 
         function likeHotel(userId,HotelId,cityId) {
             console.log("like hotel called"+ HotelId);

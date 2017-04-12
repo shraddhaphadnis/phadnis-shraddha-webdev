@@ -6,11 +6,18 @@
             </a>
         </div>
         <div class="navbar-text pull-right page-text">
-            <a href="#/user/{{model.user._id}}">
+
+            <a ng-if="model.user.role=='OWNER'" href="#/user/owner/{{model.userId}}">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+            <a ng-if="model.user.role!='OWNER'" href="#/user/{{model.userId}}">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
 
-            <a href="#/user/{{model.user._id}}">
+            <a ng-if="model.user.role=='OWNER'" href="#/user/owner/{{model.userId}}">
+                <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
+            </a>
+            <a ng-if="model.user.role!='OWNER'" href="#/user/{{model.userId}}">
                 <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
             </a>
 
@@ -20,7 +27,9 @@
             <a href="index.html#/home">
                 <span>Logout</span>
             </a>
+
         </div>
+
         <div class="navbar-header page-text">
             <a class="navbar-brand" href="#/home/{{model.user._id}}">Happy Stay</a>
         </div>
@@ -32,24 +41,25 @@
     <div class="col-sm-4 hidden-xs">
         <ul class="list-group">
             <li class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <a href="" ng-click="model.setChoice('EDIT')" class="active">
-                            Edit Profile
+                <div class="row text-center">
+                    <h3>{{model.secondUser.username}}</h3>
+                    <div ng-if="model.secondUser._id!=model.user._id">
+                        <a ng-if=!model.following ng-click="model.follow()"
+                           class="btn btn-success">
+                            <i class="glyphicon glyphicon-plus"/> follow {{model.secondUser.username}}
                         </a>
+                        <a ng-if=model.following ng-click="model.unfollow()"
+                           class="btn btn-warning">
+                            <i class="glyphicon glyphicon-minus"/> unfollow {{model.secondUser.username}}
+                        </a>
+                    </div>
 
-                    </div>
-                    <div class="col-xs-2">
-                        <a href="" class="pull-right">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                    </div>
                 </div>
             </li>
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-xs-10">
-                        <a href="" ng-click="model.setChoice('LIKE')" class="active like-button-color">
+                        <a href="" ng-click="model.setChoice('LIKE')" class="active">
                             Likes
                         </a>
 
@@ -64,7 +74,7 @@
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-xs-10">
-                        <a href="" ng-click="model.setChoice('FOLLOWER')" class="active follower-button-color">
+                        <a href="" ng-click="model.setChoice('FOLLOWER')" class="active">
                             Followers
                         </a>
 
@@ -79,7 +89,7 @@
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-xs-10">
-                        <a href="" ng-click="model.setChoice('FOLLOWING')" class="active following-button-color">
+                        <a href="" ng-click="model.setChoice('FOLLOWING')" class="active">
                             Following
                         </a>
 
@@ -98,10 +108,6 @@
         <div>
             <div ng-switch="model.choice">
 
-                <div ng-switch-when="EDIT">
-                    <div ng-include="model.getChoiceView(model.choice)"></div>
-                </div>
-
                 <div ng-switch-when="LIKE">
                     <div ng-include="model.getChoiceView(model.choice)"></div>
                 </div>
@@ -111,15 +117,10 @@
                 <div ng-switch-when="FOLLOWING">
                     <div ng-include="model.getChoiceView(model.choice)"></div>
                 </div>
-
-                <div ng-switch-when="null">
-                    <div ng-include="model.getChoiceView('EDIT')"></div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">

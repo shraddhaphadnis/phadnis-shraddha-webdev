@@ -10,15 +10,15 @@ module.exports = function () {
         likes:[String],
         likeStatus: String,
         followerNames: [String],
-        followers: [{type : mongoose.Schema.Types.ObjectId, ref:'UserModel'}],
+        followers: [String],
         followingNames: [String],
-        following: [{type : mongoose.Schema.Types.ObjectId, ref:'UserModel'}],
+        following: [String],
         facebook: {
             id:    String,
             token: String,
             email: String
         },
-        role: {type:String, default:"CUSTOMER", enum:['ADMIN', 'CUSTOMER']},
+        role: {type:String, default:"CUSTOMER", enum:['ADMIN', 'CUSTOMER', 'OWNER']},
         reviews : [{type : mongoose.Schema.Types.ObjectId, ref:'ReviewModel'}],
         business : [{type : mongoose.Schema.Types.ObjectId, ref:'BusinessModel'}],
         dateCreated: {type: Date, default: Date.now},

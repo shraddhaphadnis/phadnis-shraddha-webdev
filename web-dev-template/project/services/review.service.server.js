@@ -3,7 +3,7 @@ module.exports = function(app, model){
     var ReviewModel = model.reviewModel;
     app.get("/api/hotel/review/:hid", findReviewByHotelId);
     app.get("/api/review/:rid", findReviewById);
-    app.post("/api/user/:uid/review", createReview);
+    app.post("/api/user/:uid/hotel/:hotelId/review", createReview);
     app.put("/api/editReview/:rid", updateReview);
     app.delete("/api/delReview/:rid", deleteReview);
     app.get('/api/getAllReviews/', getAllReviews);
@@ -30,7 +30,7 @@ module.exports = function(app, model){
         console.log("server side create review");
         var userId = req.params.uid;
         var hotelReview = req.body;
-        var hotelId = hotelReview._hotel;
+        var hotelId = req.params.hotelId;
 
         var reviewNew = {
             comment:hotelReview.comment,
@@ -43,7 +43,7 @@ module.exports = function(app, model){
                     res.json(review);
                 },
                 function (error) {
-                console.log("BUGUGGGG")
+                console.log("BUGUGGGG");
                     res.sendStatus(400).send(error);
                 });
     }

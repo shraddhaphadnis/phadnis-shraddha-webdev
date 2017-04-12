@@ -7,6 +7,7 @@
 
             findHotelByCityId: findHotelByCityId,
             findHotelById: findHotelById,
+            findHotelByHotelId : findHotelByHotelId,
             createHotel: createHotel,
             getAllHotels: getAllHotels,
             findCurrentHotel: findCurrentHotel,
@@ -16,6 +17,12 @@
             //updateBusiness: updateBusiness
         };
         return api;
+
+        function findHotelByHotelId(hotelId) {
+            console.log("findHotelByHotelId"+hotelId);
+            var url = "/api/hotel/"+hotelId;
+            return $http.get(url);
+        }
 
         function updateBusiness(hotelId, userId) {
             var url = "/api/business/user/"+userId+"/hotel/" + hotelId;
