@@ -76,7 +76,7 @@
 
         function register(user) {
             console.log("user called client");
-            var url = '/api/user/';
+            var url = '/api/register/';
             return $http.post(url,user);
         }
 

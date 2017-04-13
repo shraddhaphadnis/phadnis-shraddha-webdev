@@ -30,6 +30,7 @@
                 templateUrl: "views/user/homepage.html",
                 controller: "CityListController",
                 controllerAs: "model"
+
             })
 
             .when("/user/:uid/home", {
@@ -130,7 +131,7 @@
                 controller: "ProfileController",
                 controllerAs: "model",
                 resolve: {
-                    checkLogin: checkLogin
+                    loggedin: checkLoggedin
                 }
             })
             .when("/user/:uid", {
@@ -187,6 +188,22 @@
             .otherwise({
                 redirectTo : "/login"
             });
+
+        function checkLoggedin($q, $timeout, $http, $location, $rootScope) {
+            var deferred = $q.defer();
+            $http.get('/api/loggedin').success(function(user) {
+                $rootScope.errorMessage = null;
+                if (user !== '0') {
+                    $rootScope.currentUser = user;
+                    deferred.resolve();
+                    $location.url('/user/'+$rootScope.currentUser._id);
+                } else {
+                    deferred.reject();
+                    $location.url('/');
+                }
+            });
+            return deferred.promise;
+        };
 
         function checkLogin($q, UserService, $location) {
             var deferred = $q.defer();

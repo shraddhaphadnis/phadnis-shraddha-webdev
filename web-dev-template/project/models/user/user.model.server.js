@@ -21,9 +21,23 @@ module.exports = function () {
         addToFollowing:addToFollowing,
         addToFollowers:addToFollowers,
         removeFromFollowing:removeFromFollowing,
-        removeFromFollowers:removeFromFollowers
+        removeFromFollowers:removeFromFollowers,
+        findUserByGoogleId : findUserByGoogleId,
+        findUserByFacebookId :findUserByFacebookId
     };
     return api;
+
+    function findUserByGoogleId(googleId) {
+        return UserModel
+            .findOne({'google.id': googleId});
+    }
+
+    function findUserByFacebookId(facebookId) {
+        return UserModel
+            .findOne({'facebook.id': facebookId});
+    }
+
+
 
     function addToFollowing(loggedInUserId,secondUserId) {
 

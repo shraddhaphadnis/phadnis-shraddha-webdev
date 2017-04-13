@@ -208,7 +208,6 @@
         }
 
         function deleteUser(userId){
-
             UserService.deleteUser(userId)
                 .success(function(response){
                     if(response == 'OK'){
@@ -230,6 +229,7 @@
                 promise
                     .success(function (user) {
                         var loginuser = user;
+                        $rootScope.currentUser = user;
                         console.log(loginuser);
                         if (loginuser != null) {
                             $location.url("/user/" + loginuser._id);
