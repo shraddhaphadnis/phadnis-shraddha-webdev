@@ -25,13 +25,8 @@
                                 .findBusinessById(user.business[b])
                                 .success(function (businessDetails) {
                                     vm.hotelId = businessDetails.hotelId;
-                                    HotelService
-                                        .findHotelByHotelId(vm.hotelId)
-                                        .success(function (hotel) {
-                                            vm.hotelName = hotel[0].hotelName;
-                                            console.log(vm.hotelName);
-                                            vm.hotelCity = hotel[0].hotelCity;
-                                            console.log(vm.hotelCity);
+                                    vm.hotelName = businessDetails.hotelName;
+                                    vm.hotelCity = businessDetails.hotelCity;
                                             CityService.findCityIdByCityName(vm.hotelCity)
                                                 .success(function (city1) {
                                                     console.log("%%%%%"+city1["City ID"]);
@@ -45,7 +40,6 @@
                                                     }
                                                     vm.business.push(newbusiness);
                                                 })
-                                        })
                                 })
                         }
                     }

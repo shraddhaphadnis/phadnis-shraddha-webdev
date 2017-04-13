@@ -39,7 +39,7 @@ module.exports = function () {
 
 
     function createBusiness(userId,hotelId,BusinessNew) {
-        console.log(">>>>>" + hotelId);
+        console.log(">>>>>" + BusinessNew.hotelName);
 
         return BusinessModel.create(BusinessNew)
             .then(function(reviewObject){
@@ -59,7 +59,7 @@ module.exports = function () {
                                             //hotelObj.save();
                                             reviewObject._user = userObject._id;
                                             reviewObject.username = userObject.username;
-                                            reviewObject._hotel = hotelObj._id;
+                                            reviewObject._hotel = hotelId;
                                             reviewObject.save();
                                             return reviewObject.save();
                                         },
@@ -78,6 +78,40 @@ module.exports = function () {
                     console.log(error);
                 });
     }
+   /* function createBusiness(userId,hotelId,reviewNew) {
+        console.log(">>>>>" + hotelId);
+
+        return BusinessModel.create(reviewNew)
+            .then(function(reviewObject){
+                    return model.userModel
+                        .findUserById(userId)
+                        .then(function(userObject) {
+                                return model.hotelModel
+                                    .findHotelByHotelId(hotelId)
+                                    .then(function (hotel) {
+                                        console.log("inside userobject" + hotel);
+                                        userObject.business.push(reviewObject);
+                                        userObject.save();
+                                        reviewObject._user = userObject._id;
+                                        reviewObject.username = userObject.username;
+                                        reviewObject._hotel = hotelId;
+                                        //  reviewObject.hotelName = hotel.hotelName;
+                                        //  reviewObject.hotelCity = hotel.hotelCity;
+                                        return reviewObject.save();
+                                    })
+
+                            },
+                            function(error){
+                                console.log("in model restaurant error");
+                                console.log(error);
+                            });
+                },
+                function(error){
+                    console.log("in model restaurant error");
+                    console.log(error);
+                });
+    }*/
+
 
     function updateBusiness(businessId, business) {
 

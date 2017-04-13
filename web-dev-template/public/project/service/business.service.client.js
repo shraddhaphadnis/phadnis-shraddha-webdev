@@ -35,10 +35,15 @@
             return $http.get(url);
         }
 
-        function createBusiness(userId, hotelBusiness) {
+       /* function createBusiness(userId, hotelBusiness) {
             var url = '/api/user/'+userId+'/business';
             console.log(hotelBusiness);
             return $http.post(url,hotelBusiness);
+        }*/
+        function createBusiness(userId, hotelId, hotelReview) {
+            var url = '/api/user/'+userId+'/hotel/'+hotelId+'/business';
+            console.log(hotelReview);
+            return $http.post(url,hotelReview);
         }
 
         function updateBusiness(businessId, businessUpdated) {

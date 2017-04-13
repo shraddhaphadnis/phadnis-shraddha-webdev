@@ -6,7 +6,7 @@ module.exports = function(app, model){
     var BusinessModel = model.businessModel;
     app.get("/api/hotel/business/:hid", findBusinessByHotelId);
     app.get("/api/business/:bid", findBusinessById);
-    app.post("/api/user/:uid/business", createBusiness);
+    app.post("/api/user/:uid/hotel/:hotelId/business", createBusiness);
     app.put("/api/editBusiness/:bid", updateBusiness);
     app.delete("/api/delBusiness/:bid", deleteBusiness);
     app.get('/api/getAllDiscounts/', getAllDiscounts);
@@ -29,7 +29,7 @@ module.exports = function(app, model){
             });
     }
 
-    function createBusiness(req,res){
+ /*   function createBusiness(req,res){
         console.log("server side create business");
         var userId = req.params.uid;
         console.log("userId inside server" + userId);
@@ -48,6 +48,30 @@ module.exports = function(app, model){
                 },
                 function (error) {
                     console.log("BUGUGGGG")
+                    res.sendStatus(400).send(error);
+                });
+    }*/
+
+    function createBusiness(req,res){
+        console.log("server side create review");
+        var userId = req.params.uid;
+        var hotelReview = req.body;
+        var hotelId = req.params.hotelId;
+
+        var reviewNew = {
+            discount:hotelReview.comment,
+            hotelId: hotelId,
+            hotelName : hotelReview.hotelName,
+            hotelCity:hotelReview.hotelCity
+        }
+        return BusinessModel
+            .createBusiness(userId,hotelId,reviewNew)
+            .then(function (review) {
+                    console.log(review);
+                    res.json(review);
+                },
+                function (error) {
+                    console.log("BUGUGGGG");
                     res.sendStatus(400).send(error);
                 });
     }
