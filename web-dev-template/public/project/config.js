@@ -159,22 +159,18 @@
                     checkLogin: checkLogin
                 }
             })
-           /* .when("/AgencyUser", {
-                templateUrl: "views/admin/agency.home.html",
-                controller: "AgencyProfileController",
-                controllerAs: "model",
-                resolve: {
-                    checkLogin: checkLogin
-                }
+
+            .when("/owner", {
+                templateUrl: "views/user/owner.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model"
             })
-            .when("/AgencyUser/:uid", {
-                templateUrl: "views/agency/agency.home.view.html",
-                controller: "AgencyProfileController",
-                controllerAs: "model",
-                resolve: {
-                    checkLogin: checkLogin
-                }
-            })*/
+
+            .when("/owner/:uid", {
+                templateUrl: "views/user/owner.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model"
+            })
 
 
             .when("/userAdmin/:uid", {

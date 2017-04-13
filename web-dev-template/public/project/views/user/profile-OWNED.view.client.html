@@ -1,0 +1,29 @@
+<div ng-controller="profileOwnerController as model">
+    <h2>Business Owned <a href="">
+        <span class="glyphicon glyphicon-eye-open follower-button-color"></span>
+    </a></h2>
+
+    <br>
+    <div class="container-fluid">
+        <div class="row col-sm-6 well">
+            <div ng-switch="model.business_owned.length">
+
+                <div ng-switch-when=0>
+
+                    <div class="well col-sm-8">
+                        <p class="bg-info">Sorry you dont own any Hotel!!</p>
+                    </div>
+                </div>
+                <div ng-switch-default>
+
+                    <div ng-repeat="f in model.business">
+                        {{model.userId}}
+                        <h3><span class="glyphicon glyphicon-user"></span>
+                                <a href="#/user/{{model.userId}}/city/{{f.cityId}}/hotelDetails/{{f.hotelId}}/">{{f.hotelName}}</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

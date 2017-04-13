@@ -9,7 +9,7 @@ module.exports = function () {
         business_owner : [{type : mongoose.Schema.Types.ObjectId, ref:'UserModel'}],
         business : [{type : mongoose.Schema.Types.ObjectId, ref:'BusinessModel'}],
         dateCreated: {type: Date, default: Date.now},
-        owned : [Boolean]
+        owned : [{type: Boolean, default: false}]
     },{collection:"hotel"});
     return HotelSchema;
 }

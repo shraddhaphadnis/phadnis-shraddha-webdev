@@ -5,6 +5,54 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController)
         .controller("profileOtherController",profileOtherController)
+        .controller("profileOwnerController",profileOwnerController)
+
+    function profileOwnerController($routeParams,UserService,$location, HotelService, CityService,BusinessService) {
+        var vm = this;
+        function init() {
+            vm.business = [];
+            vm.userId = $routeParams['uid'];
+            UserService
+                .findUserById(vm.userId)
+                .success((function (user) {
+                    if (user.business.length == 0)
+                    {
+                        vm.business = [];
+                    }
+                    else {
+                        for (b in user.business) {
+                            BusinessService
+                                .findBusinessById(user.business[b])
+                                .success(function (businessDetails) {
+                                    vm.hotelId = businessDetails.hotelId;
+                                    HotelService
+                                        .findHotelByHotelId(vm.hotelId)
+                                        .success(function (hotel) {
+                                            vm.hotelName = hotel[0].hotelName;
+                                            console.log(vm.hotelName);
+                                            vm.hotelCity = hotel[0].hotelCity;
+                                            console.log(vm.hotelCity);
+                                            CityService.findCityIdByCityName(vm.hotelCity)
+                                                .success(function (city1) {
+                                                    console.log("%%%%%"+city1["City ID"]);
+                                                    vm.cityId = city1["City ID"];
+                                                    console.log(vm.cityId);
+                                                    newbusiness =
+                                                    {
+                                                        hotelId : vm.hotelId,
+                                                        cityId : vm.cityId,
+                                                        hotelName : vm.hotelName
+                                                    }
+                                                    vm.business.push(newbusiness);
+                                                })
+                                        })
+                                })
+                        }
+                    }
+                }))
+        }
+        init();
+    }
 
     function profileOtherController($routeParams, UserService,$location, HotelService) {
         var vm = this;
@@ -219,7 +267,7 @@
         }
     }
 
-        function LoginController($location, UserService) {
+        function LoginController($location, UserService, $rootScope) {
             var vm = this;
             vm.login = login;
 
@@ -231,7 +279,14 @@
                         var loginuser = user;
                         $rootScope.currentUser = user;
                         console.log(loginuser);
-                        if (loginuser != null) {
+                        if (loginuser != null && loginuser.role == "ADMIN") {
+                            $location.url("/userAdmin/" + loginuser._id);
+                        }
+                        else if (loginuser != null && loginuser.role == "OWNER") {
+                            console.log("routing to owner profile");
+                            $location.url("/owner/" + loginuser._id);
+                        }
+                        else if (loginuser != null && loginuser.role == "USER") {
                             $location.url("/user/" + loginuser._id);
                         }
                         else {
@@ -260,7 +315,18 @@
                             console.log("user registered");
                             var user = response.data;
                             $rootScope.currentUser = user;
-                            $location.url("/user/" + user._id);
+                            if ($rootScope.currentUser.role == "ADMIN")
+                            {
+                                $location.url("/userAdmin/" + user._id);
+                            }
+                            else if ($rootScope.currentUser.role == "OWNER")
+                            {
+                                $location.url("/owner/" + user._id);
+                            }
+                            else
+                            {
+                                    $location.url("/user/" + user._id);
+                                }
                         });
             }
             else{

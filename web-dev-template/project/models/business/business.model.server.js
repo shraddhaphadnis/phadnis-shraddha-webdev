@@ -53,9 +53,10 @@ module.exports = function () {
                                             console.log("after hotel id" + hotelObj);
                                             userObject.business.push(reviewObject);
                                             userObject.save();
-                                            hotelObj.business.push(reviewObject);
-                                            console.log(hotelObj);
-                                            hotelObj.save();
+                                            //hotelObj.business.push(reviewObject);
+                                            //hotelObj.owned = true;
+                                            //console.log(hotelObj);
+                                            //hotelObj.save();
                                             reviewObject._user = userObject._id;
                                             reviewObject.username = userObject.username;
                                             reviewObject._hotel = hotelObj._id;

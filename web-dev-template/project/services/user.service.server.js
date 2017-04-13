@@ -9,6 +9,8 @@ module.exports = function(app,model){
     passport.deserializeUser(deserializeUser);
     var auth = authorized;
 
+    var bcrypt = require("bcrypt-nodejs");
+
     app.post('/api/login', passport.authenticate('wam'),login);
     app.post('/api/checkLogin', checkLogin);
     app.post('/api/checkAdmin', checkAdmin);
@@ -293,7 +295,7 @@ module.exports = function(app,model){
     function register(req, res) {
         console.log("In project user service");
         var user = req.body;
-        user.password = bcrypt.hashSync(user.password);
+      //  user.password = bcrypt.hashSync(user.password);
         model.userModel
             .createUser(user)
             .then(
