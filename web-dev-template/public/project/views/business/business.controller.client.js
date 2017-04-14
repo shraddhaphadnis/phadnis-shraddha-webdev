@@ -7,55 +7,6 @@
         .controller("EditBusinessController", EditBusinessController)
         .controller("NewBusinessController", NewBusinessController);
 
-
-    /*function NewBusinessController($routeParams, $location, BusinessService, HotelService) {
-        var vm = this;
-        vm.hotelId = $routeParams.hid;
-        vm.userId = $routeParams.uid;
-        vm.cityId = $routeParams.cid;
-
-        console.log(vm.userId);
-        vm.addBusiness = addBusiness;
-
-        function addBusiness(userId, hotelId, hotelBusiness) {
-            console.log(hotelBusiness);
-            hotelBusiness._hotel = hotelId;
-            vm.hotelId = $routeParams.hid;
-            vm.userId = $routeParams.uid;
-            vm.cityId = $routeParams.cid;
-
-            newhotel = {};
-            newhotel.hotelId = hotelId;
-            newhotel.hotelName = vm.hotelName;
-            newhotel.hotelCity = vm.hotelCity;
-
-            HotelService
-                .findHotelByCityId(vm.cityId)
-                .then(function (hotel) {
-                        BusinessService
-                            .createBusiness(userId,hotelBusiness)
-                            .then(function (data) {
-                                var URL = "/user/" + vm.userId + "/city/" + vm.cityId + "/hotelDetails/" + vm.hotelId;
-                                console.log("Discount add success");
-                                $location.url(URL);
-                            })
-                    },function () {
-                    HotelService
-                        .createHotel(vm.hotelId,newhotel)
-                        .then(function (hotel) {
-                            HotelService.createBusiness(userId,hotelBusiness)
-                                .then(function (data) {
-                                    var URL = "/user/" + vm.userId + "/city/" + vm.cityId + "/hotelDetails/" + vm.hotelId;
-                                    console.log("Discount add success");
-                                    $location.url(URL);
-                                })
-                        },function (err) {
-                            console.log("could not create the hotel");
-                        })
-                });
-        }
-    }*/
-
     function NewBusinessController($routeParams, $location, BusinessService, HotelService) {
         var vm = this;
         vm.hotelId = $routeParams.hid;

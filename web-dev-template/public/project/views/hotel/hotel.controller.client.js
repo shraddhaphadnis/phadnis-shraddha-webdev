@@ -50,6 +50,19 @@
         vm.likeHotel = likeHotel;
         vm.undoLikeHotel = undoLikeHotel;
         vm.OwnBusiness = OwnBusiness;
+        vm.hotelowned = hotelowned;
+
+        function hotelowned() {
+            vm.owned = true;
+            BusinessService.findHotelInBusiness(vm.hotelId)
+                .success(function (res) {
+                    if (res == "") {
+                        vm.owned = false;
+                    }
+                    else
+                        vm.owned = true;
+                })
+        }
 
         function init() {
             var promise = HotelService.findHotelById(vm.hotelId);
@@ -91,6 +104,7 @@
                     }
                 });
             isHotelLiked();
+            hotelowned();
         }
         init();
 

@@ -13,11 +13,16 @@
             createBusiness: createBusiness,
             updateBusiness: updateBusiness,
             deleteBusiness: deleteBusiness,
-            getAllDiscounts: getAllDiscounts
+            getAllDiscounts: getAllDiscounts,
+            findHotelInBusiness :findHotelInBusiness
 
         };
         return api;
 
+        function findHotelInBusiness(hotelId) {
+            var url = '/api/getbusiness/' + hotelId;
+            return $http.get(url);
+        }
 
         function getAllDiscounts() {
             console.log("getAll discounts client side");

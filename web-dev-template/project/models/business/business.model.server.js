@@ -13,10 +13,16 @@ module.exports = function () {
         updateBusiness : updateBusiness,
         deleteBusiness : deleteBusiness,
         setModel: setModel,
-        findDiscounts: findDiscounts
+        findDiscounts: findDiscounts,
+        findhotelInBusiness: findhotelInBusiness
     };
     return api;
 
+    function findhotelInBusiness(hotelId) {
+        return BusinessModel.findOne({
+            'hotelId' : hotelId
+        });
+    }
     function findDiscounts() {
         return BusinessModel.find();
     }

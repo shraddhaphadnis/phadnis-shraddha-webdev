@@ -10,7 +10,16 @@ module.exports = function(app, model){
     app.put("/api/editBusiness/:bid", updateBusiness);
     app.delete("/api/delBusiness/:bid", deleteBusiness);
     app.get('/api/getAllDiscounts/', getAllDiscounts);
+    app.get("/api/getbusiness/:hid", findhotelInBusiness);
 
+    function findhotelInBusiness(req,res) {
+        var hotelId = req.params.hid;
+        model.businessModel
+            .findhotelInBusiness(hotelId)
+            .then(function (response) {
+                res.send(response);
+            })
+    }
 
     function getAllDiscounts(req, res) {
         model.businessModel.findDiscounts()
