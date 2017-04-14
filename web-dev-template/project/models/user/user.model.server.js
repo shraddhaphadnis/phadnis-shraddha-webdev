@@ -6,7 +6,7 @@ module.exports = function () {
     var api = {
         createUser:createUser,
         findUserById:findUserById,
-        findUserByUsername : findUserByUsername,
+        findOneUserByUsername : findOneUserByUsername,
         findUserByCredentials:findUserByCredentials,
         updateUser : updateUser,
         findAllUsers:findAllUsers,
@@ -133,19 +133,11 @@ module.exports = function () {
         return UserModel.create(user);
     }
 
-    function findUserByCredentials(username,password) {
-        console.log("model server" + username + " " + password);
-        return UserModel
-            .find(
-                {
-                    username : username,
-                    password : password
-                }
-            );
+    function findUserByCredentials(_username,_password){
+        return UserModel.find({username:_username,password:_password});
     }
-
-    function findUserByUsername(username) {
-
+    function findOneUserByUsername(username) {
+        console.log("findOneUserByUsername called");
         return UserModel.findOne({
             username:username
         });

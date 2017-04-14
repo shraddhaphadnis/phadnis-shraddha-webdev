@@ -201,6 +201,9 @@ form{
     position: relative;
     min-height: 225px;
 }
-
+.navbar-text.white-text > a {
+    color: white;
+    text-decoration: none;
+}
 
 

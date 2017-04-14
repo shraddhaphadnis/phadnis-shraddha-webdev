@@ -78,15 +78,10 @@
             <div ng-switch="model.user.role == 'OWNER' && model.owned != true">
                 <div ng-switch-when= true>
                     <h2 class="heading-color">Own the hotel</h2>
-                    <a type="button" class="btn btn-success" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/business">Own this Hotel</a>
+                    <a type="button" class="btn btn-success"
+                       href="#/user/city/hotelDetails/business">Own this Hotel</a>
                     </h2>
                 </div>
-                <div ng-switch-when=false>
-                    <h2 class="heading-color">Post New discount</h2>
-                    <a type="button" class="btn btn-success" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/business">Post new discount</a>
-                    </h2>
-                </div>
-
             </div>
 
             <ol class="comment-list">
@@ -95,10 +90,11 @@
                         <footer class="comment-meta">
                             <div class="comment-author vcard">
                                 <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
-                                <div ng-switch=posts._user>
-                                    <div ng-switch-when=model.userId>
+                                <!--div ng-switch=posts._user>
+                                    <ng-switch-when=model.userId>
                                         <h3>
-                                            <a href="#/user/{{model.userId}}">{{posts.username}}</a>
+                                            <a ng-click = "model.setSecondUser(posts)"
+                                                    href="#/owner/{{posts._user}}">{{posts.username}}</a>
                                         </h3>
                                     </div>
                                     <div ng-switch-when!=model.userId>
@@ -107,7 +103,21 @@
                                             </a>
                                         </h3>
                                     </div>
+                                </div-->
+                                <div ng-if  = "model.userId == posts._user">
+                                <h3>
+                                    <a ng-click = "model.setSecondUser(posts)"
+                                       href="#/owner">{{posts.username}}</a>
+                                </h3>
                                 </div>
+                                    <div ng-if = "model.userId != posts._user">
+                                        <h3><span class="glyphicon glyphicon-user"></span>
+                                            <a ng-click = "model.setSecondUser(posts)"
+                                               href="#/user1/secondUserProfile">{{posts.username}}
+                                            </a>
+                                        </h3>
+                                    </div>
+
                             </div><!-- .comment-author -->
 
                             <div class="comment-metadata">
@@ -133,7 +143,9 @@
                             </div>
                         </div>
                         <!-- .comment-content -->
-                        <a ng-show="model.userId == posts._user" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/business/{{posts._id}}/edit">
+                        <a ng-show="model.userId == posts._user"
+                           ng-click = "model.setBusiness(posts)"
+                           href="#/user/city/hotel/business/edit">
                             <span class="fa fa-pencil fa-lg pull-right"></span>
                         </a>
 
@@ -147,7 +159,8 @@
                 <div>
                     <div class="row">
                         <h1 class="heading-color">Reviews</h1>
-                        <a type="button" class="btn btn-success"  href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/new">Add Review</a>
+                        <a type="button" class="btn btn-success"
+                           href="#/user/review/new">Add Review</a>
                     </div>
                     <ol class="comment-list">
 
@@ -156,10 +169,10 @@
                                 <footer class="comment-meta">
                                     <div class="comment-author vcard">
                                         <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
-                                        <div ng-switch=userReview._user>
+                                        <!--div ng-switch=userReview._user>
                                             <div ng-switch-when=model.userId>
                                                 <h3>
-                                                    <a href="#/user/{{model.userId}}">{{userReview.username}}</a>
+                                                    <a href="#/user">{{userReview.username}}</a>
                                                 </h3>
                                             </div>
                                             <div ng-switch-when!=model.userId>
@@ -168,6 +181,18 @@
                                                     </a>
                                                 </h3>
                                             </div>
+                                        </div-->
+                                        <div ng-if = "model.userId == userReview._user">
+                                            <h3>
+                                                <a href="#/user">{{userReview.username}}</a>
+                                            </h3>
+                                        </div>
+                                        <div ng-if = "model.userId != userReview._user">
+                                            <h3><span class="glyphicon glyphicon-user"></span>
+                                                <a ng-click = "model.secondReviewUser(userReview)"
+                                                   href="#/user1/secondUserProfile">{{userReview.username}}
+                                                </a>
+                                            </h3>
                                         </div>
                                     </div><!-- .comment-author -->
 
@@ -184,7 +209,9 @@
                                 <div class="comment-content">
                                     <p>{{userReview.comment}}</p>
                                 </div><!-- .comment-content -->
-                                <a ng-show="model.userId == userReview._user" href="#/user/{{model.userId}}/city/{{model.cityId}}/hotel/{{model.hotelId}}/review/{{userReview._id}}/edit">
+                                <a ng-show="model.userId == userReview._user"
+                                   ng-click = "model.setReview(userReview)"
+                                   href="#/user/city/hotelDetails/reviewEdit/">
                                     <span class="fa fa-pencil fa-lg pull-right"></span>
                                 </a>
 
@@ -208,9 +235,16 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">
-            <a href="#/user/{{model.userId}}">
+            <div ng-if = "model.user.role == 'OWNER'">
+            <a href="#/owner">
                 <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
             </a>
+            </div>
+            <div ng-if = "model.user.role == 'CUSTOMER'">
+                <a href="#/user">
+                    <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+                </a>
+            </div>
         </div>
     </div>
 </nav>

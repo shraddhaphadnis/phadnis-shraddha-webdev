@@ -1,16 +1,16 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text pull-left page-text">
-            <a href="#/home">
+            <a href="#/user/home">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
         <div class="navbar-text pull-right page-text">
-            <a href="#/user/{{model.user._id}}">
+            <a href="#/owner">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
 
-            <a href="#/user/{{model.user._id}}">
+            <a href="#/owner">
                 <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
             </a>
 
@@ -22,7 +22,7 @@
             </a>
         </div>
         <div class="navbar-header page-text">
-            <a class="navbar-brand" href="#/home/{{model.user._id}}">Happy Stay</a>
+            <a class="navbar-brand" href="#/user/home/">Happy Stay</a>
         </div>
     </div>
 </nav>
@@ -142,7 +142,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
 
-        <a href="#/owner/{{model.user._id}}" class="navbar-link navbar-brand pull-right">
+        <a href="#/owner" class="navbar-link navbar-brand pull-right">
           <span class="glyphicon glyphicon-user">
           </span>
         </a>

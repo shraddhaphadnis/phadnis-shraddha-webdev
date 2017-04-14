@@ -5,13 +5,19 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController)
         .controller("profileOtherController",profileOtherController)
-        .controller("profileOwnerController",profileOwnerController)
+        .controller("profileOwnerController",profileOwnerController);
 
-    function profileOwnerController($routeParams,UserService,$location, HotelService, CityService,BusinessService) {
+    function profileOwnerController($routeParams,UserService,$location, HotelService, CityService,BusinessService,loggedin,$rootScope) {
         var vm = this;
+        vm.setHotel = setHotel;
+
+        function setHotel(hotel) {
+            $rootScope.cityId = hotel.cityId;
+            $rootScope.hotelId = hotel.hotelId;
+        }
         function init() {
             vm.business = [];
-            vm.userId = $routeParams['uid'];
+            vm.userId = loggedin.data._id;
             UserService
                 .findUserById(vm.userId)
                 .success((function (user) {
@@ -48,15 +54,15 @@
         init();
     }
 
-    function profileOtherController($routeParams, UserService,$location, HotelService) {
+    function profileOtherController($routeParams, UserService,$location, HotelService,loggedin,$rootScope,CityService) {
         var vm = this;
         function init() {
             vm.series = [];
             vm.followers = [];
             vm.following_users = [];
             vm.hotels = [];
-            vm.userId = $routeParams['uid1'];
-            vm.secondUserId = $routeParams['uid2'];
+            vm.userId = loggedin.data._id;
+            vm.secondUserId = $rootScope.seconduser;
             UserService
                 .findUserById(vm.secondUserId)
                 .success(function (user) {
@@ -88,6 +94,11 @@
         vm.getFollowing = getFollowing;
         vm.follow = follow;
         vm.unfollow = unfollow;
+        vm.setSecondUser = setSecondUser;
+
+        function setSecondUser(user) {
+            $rootScope.seconduser = user._id;
+        }
 
         function follow() {
             //vm.allFollowing=[];
@@ -179,23 +190,47 @@
         }
 
         function getLikeDetails() {
-
             for (var like in vm.secondUser.likes) {
-                var series_id = vm.secondUser.likes[like];
-                SeriesService.findSeriesById(series_id)
-                    .then(function (series) {
-                        vm.series.push(series);
+                var hotelId = vm.secondUser.likes[like];
+                console.log(typeof hotelId);
+                HotelService.findHotelByHotelId(hotelId)
+                    .then(function (hotel) {
+                        console.log("**** hotel" + hotel);
+                        vm.hotels.push(hotel);
                     });
             }
         }
 
-        function searchHotel(searchTerm) {
+        /*function searchHotel(searchTerm) {
             if (vm.user._id == null)
                 $location.url("/search/" + searchTerm);
             else {
                 $location.url("/user/" + vm.user._id + "/search/" + searchTerm);
             }
 
+        }*/
+
+        function searchHotel(city,hotelId) {
+            vm.cityId;
+            console.log("&&&&&&&&&&&" + city);
+
+            CityService.findCityIdByCityName(city)
+                .success(function (city1) {
+                    console.log("%%%%%"+city1["City ID"]);
+                    vm.cityId = city1["City ID"];
+                    console.log(vm.cityId);
+                    vm.hotelId = hotelId;
+                    if (vm.userId == null) {
+                        $rootScope.hotelId = vm.hotelId;
+                        $rootScope.cityId = vm.cityId;
+                        $location.url("/home/city/hotelDetails/");
+                    }
+                    else {
+                        $rootScope.hotelId = vm.hotelId;
+                        $rootScope.cityId = vm.cityId;
+                        $location.url("/user/city/hotelDetails/");
+                    }
+                })
         }
 
 
@@ -230,11 +265,15 @@
             vm.flw = flw;
         }
 
-        function logout() {
-            UserService.logout()
-                .success(function () {
-                    $location.url("/login");
-                })
+        function logout(){
+            UserService
+                .logout()
+                .then(
+                    function (response) {
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    }
+                )
         }
         function updateUser(userId,user){
             UserService.updateUser(userId,user)
@@ -261,38 +300,36 @@
         }
     }
 
-        function LoginController($location, UserService, $rootScope) {
+        function LoginController($location, UserService, $rootScope,loggedin) {
             var vm = this;
             vm.login = login;
 
             function login(user) {
                 console.log("login called");
-                var promise = UserService.findUserByCredentials(user.username, user.password);
+                var promise = UserService.login(user);
                 promise
-                    .success(function (user) {
-                        var loginuser = user;
-                        $rootScope.currentUser = user;
-                        console.log(loginuser);
-                        if (loginuser != null && loginuser.role == "ADMIN") {
-                            $location.url("/userAdmin/" + loginuser._id);
+                    .then(function (response) {
+                        var user = response.data;
+                        if (user.role == "CUSTOMER") {
+                            alert("hello");
+                            $rootScope.currentUser = user;
+                            $location.url("/user/");// + user._id);
                         }
-                        else if (loginuser != null && loginuser.role == "OWNER") {
-                            console.log("routing to owner profile");
-                            $location.url("/owner/" + loginuser._id);
+                        if (user.role === "OWNER") {
+                            alert("hello1");
+                            $rootScope.currentUser = user;
+                            $location.url("/owner/");// + user._id);
                         }
-                        else if (loginuser != null && loginuser.role == "USER") {
-                            $location.url("/user/" + loginuser._id);
+                        if (user.role === "ADMIN") {
+                            alert("hello2");
+                            $rootScope.currentUser = user;
+                            $location.url("/userAdmin/");// + user._id);
                         }
-                        else {
-                            vm.error = "user not found";
-                        }
-                    })
-                    .error(function (err) {
-                        vm.error = "user not found";
-                        console.log(vm.error)
+                    }, function (err) {
+                        vm.error = "user/password does not match";
                     });
-            }
 
+            }
         }
     function RegisterController($scope,$rootScope,$location,UserService) {
         var vm = this;
@@ -308,18 +345,20 @@
                         function (response) {
                             console.log("user registered");
                             var user = response.data;
-                            $rootScope.currentUser = user;
-                            if ($rootScope.currentUser.role == "ADMIN")
+                            if (user.role == "ADMIN")
                             {
-                                $location.url("/userAdmin/" + user._id);
+                                $rootScope.currentUser = user;
+                                $location.url("/userAdmin");
                             }
-                            else if ($rootScope.currentUser.role == "OWNER")
+                            else if (user.role == "OWNER")
                             {
-                                $location.url("/owner/" + user._id);
+                                $rootScope.currentUser = user;
+                                $location.url("/owner");
                             }
                             else
                             {
-                                    $location.url("/user/" + user._id);
+                                $rootScope.currentUser = user;
+                                $location.url("/user");
                                 }
                         });
             }
@@ -330,9 +369,12 @@
         }
 
 
-        function ProfileController($routeParams, UserService,$location,HotelService,CityService) {
+        function ProfileController($routeParams, UserService,$location,HotelService,CityService,loggedin,$rootScope) {
             var vm = this;
-            vm.userId = $routeParams["uid"];
+            //vm.userId = $routeParams["uid"];
+            vm.userId = loggedin.data._id;
+            console.log(vm.userId);
+            vm.secondUserId = $rootScope.Seconduser;
             vm.hotels = [];
             console.log("Profile controller called");
             console.log(vm.userId);
@@ -365,6 +407,23 @@
             vm.getFollowers = getFollowers;
             vm.getFollowing = getFollowing;
             vm.searchHotel = searchHotel;
+            vm.logout = logout;
+            vm.setSecondUser = setSecondUser;
+
+            function setSecondUser(user) {
+                $rootScope.seconduser = user._id;
+            }
+
+            function logout(){
+                UserService
+                    .logout()
+                    .then(
+                        function (response) {
+                            $rootScope.currentUser = null;
+                            $location.url("/login");
+                        }
+                    )
+            }
 
             function searchHotel(city,hotelId) {
                 vm.cityId;
@@ -376,10 +435,15 @@
                         vm.cityId = city1["City ID"];
                         console.log(vm.cityId);
                         vm.hotelId = hotelId;
-                        if (vm.userId == null)
-                            $location.url("user/city/"+vm.cityId +"/hotelDetails/" + vm.hotelId);
+                        if (vm.userId == null) {
+                            $rootScope.hotelId = vm.hotelId;
+                            $rootScope.cityId = vm.cityId;
+                            $location.url("/home/city/hotelDetails/");
+                        }
                         else {
-                            $location.url("/user/"+ vm.userId + "/city/" + vm.cityId + "/hotelDetails/" + vm.hotelId);
+                            $rootScope.hotelId = vm.hotelId;
+                            $rootScope.cityId = vm.cityId;
+                            $location.url("/user/city/hotelDetails/");
                         }
                     })
             }
@@ -434,6 +498,7 @@
             }
 
             function getChoiceView(choice) {
+                console.log("get choice called" + choice);
                 var url = "views/user/profile-" + choice + ".view.client.html";
                 return url;
 
@@ -471,11 +536,15 @@
                 vm.flw = flw;
             }
 
-            function logout() {
-                UserService.logout()
-                    .success(function () {
-                        $location.url("/login");
-                    })
+            function logout(){
+                UserService
+                    .logout()
+                    .then(
+                        function (response) {
+                            $rootScope.currentUser = null;
+                            $location.url("/login");
+                        }
+                    )
             }
             function updateUser(userId,user){
                 UserService.updateUser(userId,user)

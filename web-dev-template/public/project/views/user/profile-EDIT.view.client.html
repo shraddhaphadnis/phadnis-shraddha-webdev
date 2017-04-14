@@ -7,7 +7,7 @@
     <div class="alert alert-success" ng-show="model.message">
         {{model.message}}
     </div>
-
+</div>
     <div class="container-fluid padding-navbar">
     <form>
         <div class="form-group">
@@ -29,7 +29,7 @@
     </form>
 
     <a class="btn btn-primary btn-block"
-       href="#/user/{{model.userId}}/home">Home</a>
+       href="#/user/homepage">Home</a>
     <a class="btn btn-danger  btn-block"
        ng-click="model.deleteUser(model.userId)">Delete
     </a>
@@ -37,17 +37,4 @@
            class="btn btn-success btn-block">
             Update
         </a>
-    <a class="btn btn-warning  btn-block" ng-show="user.role == 'ADMIN'"
-       ng-click="#/admin">LogIn as Admin</a>
-    <a class="btn btn-success  btn-block" ng-click="model.logout()"
-       href="#/login">Logout</a>
 </div>
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="row">
-            <a href="#/user/{{model.userId}}">
-                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
-            </a>
-        </div>
-    </div>
-</nav>

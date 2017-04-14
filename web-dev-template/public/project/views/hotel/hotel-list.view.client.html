@@ -1,24 +1,36 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div class="row">
-            <a class="" href="#/user/{{model.userId}}/home"><span class="glyphicon glyphicon-chevron-left white-glyphicon">
-              </span></a>
-            <a class=" navbar-text-decor" href="#">
-                HAPPY STAY
+        <div class="navbar-text white-text pull-left page-text">
+            <a href="#/user/homepage/">
+                <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
-            <a href="#" class="">
+        </div>
+        <div class="navbar-text white-text pull-right page-text">
+            <a href="#/user">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
 
-              <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
-              </span>
+            <a href="#/user">
+                <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
             </a>
+
+            <a href="" ng-click="model.logout()">
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+            <a href="" ng-click="model.logout()">
+                <span>Logout</span>
+            </a>
+        </div>
+        <div class="navbar-header page-text">
+            <a class="navbar-brand" href="#/home/user">Happy Stay</a>
         </div>
     </div>
 </nav>
-
 <div class="container">
     <!---->
     <div class="container-fluid padding-navbar">
         <div class="col-lg-12 row"  ng-repeat="hotel in model.hotels_list" >
+
             <section class="hotel-item-box">
                 <div class=" col-md-12 col-lg-4 pull-left" >
                     <img class="pull-left" style="padding:10px" src="{{hotel.hotel_data_node.img_selected.thumb.l}}" height="200px" width="300px"/>
@@ -27,15 +39,19 @@
                     <div>
                         <div ng-switch = model.user.userId>
                             <div ng-switch-when != "undefined">
-                                <h3><a href="#/user/{{model.userId}}/city/{{model.cityId}}/hotelDetails/{{hotel.hotel_data_node._id}}">{{hotel.hotel_data_node.name}}</a></h3>
-                                <h4>{{hotel.hotel_data_node.loc.city}}, {{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
+                                <h3><a ng-click = "model.sethotel()"
+                                        href="#/user/city/hotelDetails/">{{hotel.hotel_data_node.name}}</a></h3>
+                                <h4>{{hotel.hotel_data_node.loc.city}},{{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
                                 <h4>Rating: {{hotel.hotel_data_node.rating}}</h4>
+
                                 <!-- code to render a large video block-->
                             </div>
                             <div ng-switch-when="undefined">
-                                <h3><a href="#/user/{{model.userId}}/city/{{model.cityId}}/hotelDetails/{{hotel.hotel_data_node._id}}">{{hotel.hotel_data_node.name}}</a></h3>
+                                <h3><a ng-click = "model.sethotel(hotel)"
+                                        href="#/user/city/hotelDetails/">{{hotel.hotel_data_node.name}}</a></h3>
                                 <h4>{{hotel.hotel_data_node.loc.city}}, {{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
                                 <h4>Rating: {{hotel.hotel_data_node.rating}}</h4>
+                            </div>
                                 <!-- code to render the regular video block -->
                         </div>
                     </div>
@@ -59,7 +75,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">
-            <a href="#/user/{{model.userId}}">
+            <a href="#/user">
                 <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
             </a>
         </div>

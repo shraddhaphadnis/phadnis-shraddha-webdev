@@ -1,33 +1,35 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div class="row">
-            <a class=" navbar-text-decor" href="#">
-                HAPPY STAY
+        <div class="navbar-text white-text pull-left page-text">
+            <a href="#/home">
+                <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
-            <a href="#" class="">
-
-              <span class="fa fa-user fa-lg white-glyphicon pull-right">Welcome {{model.user.username}}. Followers - {{model.user.followers.length}}
-              </span>
-            </a>
-            <a href="#/user/{{model.userId}}/search" class="pull-right navbar-brand">Search</a>
-            <a href="" class="glyphicon glyphicon-registration-mark pull-right navbar-brand"></a>
         </div>
-    </div>
+        <div class="navbar-text white-text pull-right page-text">
+            <a href="#/user">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+
+            <a href="#/user">
+                <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
+            </a>
+
+            <a href="" ng-click="model.logout()">
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+            <a href="" ng-click="model.logout()">
+                <span>Logout</span>
+            </a>
+        </div>
+        <div class="navbar-header page-text">
+            <a class="navbar-brand" href="#/home/user">Happy Stay</a>
+        </div>
     </div>
 </nav>
 <div id="home-sec" class="image">
     <div class="container"  >
         <div class="row text-center">
             <div class="input-group">
-                <!--<input ng-model="searchText" type="text" class="form-control" placeholder="Search Hotels by City">-->
-                <!--<span class="input-group-btn">-->
-                <!--ng-click="model.searchPhotos(searchText)" -->
-                <!--<a href="#/user/{{model.userId}}/hotel/{{searchText}}"-->
-                <!--class="btn btn-default" type="button">-->
-                <!--<a href="#/api/getCityId/{{searchText}}"-->
-                <!--class="btn btn-default" type="button">-->
-                <!--<span class="glyphicon glyphicon-search"></span>Search Hotels-->
-                <!--</a>-->
                 </span>
             </div>
         </div>
@@ -58,40 +60,38 @@
         <div class="row">
             <div class="col-lg-4 col-xs-12" style="padding:10px">
                 <div class="row text-center"><label>BOSTON</label></div>
-                <a href="#/user/{{model.userId}}/city/1735253871019858688"><img src="../../../images/Boston1.jpg" height="200px" width="100%" />
+                <a href="#/user/city"><img src="../../../images/Boston1.jpg" height="200px" width="100%" />
                 </a></div>
             <div class="col-lg-4 col-xs-12 col-right" style="padding:10px">
                 <div class="row text-center"><label>San Francisco</label></div>
 
-                <a href="#/user/{{model.userId}}/city/8972374504552210638"><img src="../../../images/SanFrancisco.jpg" height="200px" width="100%" />
+                <a href="#/user/city"><img src="../../../images/SanFrancisco.jpg" height="200px" width="100%" />
                 </a></div>
             <div class="col-lg-4 col-xs-12" style="padding:10px">
                 <div class="row text-center"><label>Miami</label></div>
-                <a style="position: relative" href="#/user/{{model.userId}}/city/7584075281880045548"><img src="../../../images/Miami.jpg" height="200px" width="100%" /></a></div>
+                <a style="position: relative" href="#/user/city"><img src="../../../images/Miami.jpg" height="200px" width="100%" /></a></div>
         </div>
         <div class="row">
             <div class="col-lg-4 col-xs-12 col-right" style="padding:10px">
                 <div class="row text-center"><label>New York</label></div>
-                <a href="#/user/{{model.userId}}/city/6492440167096287044"><img src="../../../images/NewYork.jpg" height="200px" width="100%"/></a></div>
+                <a href="#/user/city"><img src="../../../images/NewYork.jpg" height="200px" width="100%"/></a></div>
             <div class="col-lg-4 col-xs-12" style="padding:10px"    >
                 <div class="row text-center"><label>Washington</label></div>
-                <a href="#/user/{{model.userId}}/city/2575014202605553242"><img src="../../../images/Washington.jpg" height="200px" width="100%"/>
+                <a href="#/user/city"><img src="../../../images/Washington.jpg" height="200px" width="100%"/>
                 </a></div>
             <div class="col-lg-4 col-xs-12" style="padding:10px">
                 <div class="row text-center"><label>Chicago</label></div>
-                <a href="#/user/{{model.userId}}/city/4445976469820650387"><img src="../../../images/Chicago.jpg" height="200px" width="100%"/>
+                <a href="#/user/city"><img src="../../../images/Chicago.jpg" height="200px" width="100%"/>
                 </a></div>
         </div>
         <br><br>
     </div>
 </div>
 
-
-
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">
-            <a href="#/user/{{model.userId}}">
+            <a href="#/user">
                 <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
             </a>
         </div>

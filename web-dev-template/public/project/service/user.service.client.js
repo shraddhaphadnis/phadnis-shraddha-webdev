@@ -97,11 +97,7 @@
             return $http.post("/api/checkAdmin");
         }
 
-        function login(username,password) {
-            var user ={
-                username:username,
-                password:password
-            }
+        function login(user) {
             console.log(user);
             return $http.post('/api/login', user);
         }

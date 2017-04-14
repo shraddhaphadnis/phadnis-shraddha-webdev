@@ -1,7 +1,9 @@
 module.exports = function(app,model){
 
-    var passport      = require('passport');
+    var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
+    var bcrypt = require("bcrypt-nodejs");
+
     var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
     var FacebookStrategy = require('passport-facebook').Strategy;
     passport.use(new LocalStrategy(localStrategy));
@@ -9,9 +11,8 @@ module.exports = function(app,model){
     passport.deserializeUser(deserializeUser);
     var auth = authorized;
 
-    var bcrypt = require("bcrypt-nodejs");
 
-    app.post('/api/login', passport.authenticate('wam'),login);
+    app.post('/api/login', passport.authenticate('local'),login);
     app.post('/api/checkLogin', checkLogin);
     app.post('/api/checkAdmin', checkAdmin);
     app.post('/api/logout', logout);
@@ -297,7 +298,7 @@ module.exports = function(app,model){
     function register(req, res) {
         console.log("In project user service");
         var user = req.body;
-      //  user.password = bcrypt.hashSync(user.password);
+        user.password = bcrypt.hashSync(user.password);
         model.userModel
             .createUser(user)
             .then(
@@ -373,15 +374,15 @@ module.exports = function(app,model){
     }
 
     function localStrategy(username, password, done) {
-       // console.log(username);
-        model
-            .userModel
-            .findUserByUsername(username)
+        console.log("local strategy" +username);
+            model.userModel.findOneUserByUsername(username)
             .then(
                 function (user) {
-                    //console.log(user);
-                    if(user && bcrypt.compareSync(password, user.password)) {
-                        //console.log("In if ")
+                    console.log(user.username);
+                    console.log(password);
+                    console.log(bcrypt.compareSync(password, user.password));
+                    if(user != null && user.username == username && bcrypt.compareSync(password, user.password)) {
+                        console.log("In if ")
                         return done(null, user);
                     } else {
                         return done(null, false);
@@ -466,37 +467,42 @@ module.exports = function(app,model){
     }
 
 
-        function findUserByUsername(req,res) {
-
-            var user,username;
-            username = req.query.username;
-            for( var u in users){
-                if(users[u].username === username){
-                    user = users[u];
-                    res.send(user);
-                    return;
-                }
-            }
-            res.send('0');
-        }
-    function findUserByCredentials(req,res) {
-        var username = req.query['username'];
-        var password = req.query['password'];
-        console.log("find credentials called" + " " + username + " " + password);
+    function findUserByUsername(req, res) {
+        var username = req.query.username;
         model.userModel
-            .findUserByCredentials(username, password)
+            .findOneUserByUsername(username)
             .then(function (user) {
-                if (user.length != 0) {
-                    console.log("response = "+user);
+                console.log("hi "+user);
+                if (user) {
+
                     res.json(user[0]);
                 }
                 else {
-                    console.log("error");
+
+                    console.log(username + '22');
+                    res.sendStatus(404);
+                }
+            },function (err) {
+                console.log("in find userbyusername");
+                res.sendStatus(404);
+            });
+
+    }
+    function findUserByCredentials(req, res) {
+        var username = req.query['username'];
+        var password = req.query['password'];
+        model.userModel
+            .findUserByCredentials(username, password)
+            .then(function (response) {
+                if (response.length != 0) {
+                    res.json(response[0])
+                }
+                else {
+                    console.log("error in credentials");
                     res.sendStatus(404);
                 }
             }, function (err) {
-                console.log("error !!!");
-                res.sendStatus(404).send(err);
+                res.sendStatus(404);
             });
     }
 

@@ -9,7 +9,7 @@
         .controller("AdminRegisterController", AdminRegisterController)
         .controller("AdminProfileController", AdminProfileController)
 
-    function AdminLoginController($location, UserService) {
+    function AdminLoginController($location, UserService,loggedin) {
         var vm = this;
         vm.login = login;
 
@@ -24,14 +24,14 @@
                 vm.alert = "Username and Password required";
             }
             else{
-                var promise = UserService.login(username, password);
+                var promise = UserService.login(user);
                 promise
                     .success(function (user) {
                         if (user === '0' || user.role != 'ADMIN') {
                             vm.alert = "No such Admin";
                         }
                         else {
-                            $location.url("/userAdmin/" + user._id);
+                            $location.url("/userAdmin");
                         }
                     })
                     .error(function () {
@@ -57,10 +57,11 @@
                     });
         }
     }
-    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService,CityService) {
+    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService,CityService,loggedin,$rootScope) {
         var vm = this;
         var model = this;
-        vm.userId = $routeParams["uid"];
+        vm.userId = loggedin.data._id;
+        vm.user = loggedin.data;
         vm.getAllRegUsers = getAllRegUsers;
         vm.deleteUser = deleteUser;
         vm.AddNewUser = AddNewUser;
@@ -80,6 +81,19 @@
         vm.select_review = select_review;
         vm.AddComment = AddComment;
         vm.deleteCommentAdmin = deleteCommentAdmin;
+        vm.logout = logout;
+
+        function logout(){
+            UserService
+                .logout()
+                .then(
+                    function (response) {
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    }
+                )
+        }
+
 
         function getAllReviews() {
             ReviewService
@@ -92,7 +106,7 @@
 
         function updateHotel(hotel) {
             console.log(hotel._id);
-            HotelService.updateHotel(hotel._id,hotel)
+            HotelService.updateHotel(hotel._id, hotel)
                 .success(function (hotel) {
                     vm.hotel = hotel;
 
@@ -100,12 +114,13 @@
         }
 
         function AddNewHotel(hotel) {
-             HotelService.createHotelAdmin(hotel)
+            HotelService.createHotelAdmin(hotel)
                 .success(function (hotel) {
                     vm.hotel = hotel;
                     getAllHotels();
                 })
         }
+
         function getAllHotels() {
             HotelService.getAllHotels()
                 .success(function (hotels) {
@@ -123,18 +138,19 @@
                             console.log("set reviews");
                             vm.reviews = reviews;
                             getAllReviews();
-                        },function (err) {
+                        }, function (err) {
                             res.sendStatus(404).send(err);
                         })
-                },function (err) {
+                }, function (err) {
                     res.sendStatus(err);
                 })
         }
+
         function deleteHotelAdmin(hotel) {
             HotelService
                 .deleteHotelAdmin(hotel._id)
                 .then(function (response) {
-                    console.log("***"+response);
+                    console.log("***" + response);
                     UserService
                         .findUserWhoLikedHotel(hotel.hotelId)
                         .then(function (hotel1) {
@@ -166,6 +182,7 @@
                         });
                 })
         }
+
         function deleteUserAdmin(user) {
             UserService
                 .deleteUserAdmin(user._id)
@@ -173,16 +190,17 @@
                     UserService
                         .getAllRegUsers()
                         .then(function (users) {
-                         console.log("set user");
-                         vm.users = users;
-                         getAllRegUsers();
-                        },function (err) {
-                        res.sendStatus(404).send(err);
-                    })
-                },function (err) {
-                res.sendStatus(err);
-            })
+                            console.log("set user");
+                            vm.users = users;
+                            getAllRegUsers();
+                        }, function (err) {
+                            res.sendStatus(404).send(err);
+                        })
+                }, function (err) {
+                    res.sendStatus(err);
+                })
         }
+
         function select(user) {
             model.inputUser = angular.copy(user);
             model.selected = 0;
@@ -192,6 +210,7 @@
             model.inputHotel = angular.copy(hotel);
             model.selected = 0;
         }
+
         function select_review(review) {
             model.inputReview = angular.copy(review);
             model.selected = 0;
@@ -199,15 +218,16 @@
 
         function updateComment(review) {
             console.log(review._id);
-            ReviewService.updateReview(review._id,review)
+            ReviewService.updateReview(review._id, review)
                 .success(function (review) {
                     vm.review = review;
                     getAllReviews();
                 })
         }
+
         function update(user) {
             console.log(user._id);
-            UserService.updateUser(user._id,user)
+            UserService.updateUser(user._id, user)
                 .success(function (user) {
                     vm.user = user;
                     getAllRegUsers();
@@ -259,28 +279,21 @@
                 })
                 .error(function () {
                 });
-           /* HotelService
-                .findCurrentHotel()
-                .success(function (hotel) {
-                    if(hotel != null) {
-                        vm.hotel = hotel;
-                    }
-                })
-                .error(function () {
+            /* HotelService
+             .findCurrentHotel()
+             .success(function (hotel) {
+             if(hotel != null) {
+             vm.hotel = hotel;
+             }
+             })
+             .error(function () {
 
-                });*/
-           getAllRegUsers();
-           getAllHotels();
-           getAllReviews();
+             });*/
+            getAllRegUsers();
+            getAllHotels();
+            getAllReviews();
         }
+
         init();
-        vm.logout = logout;
-
-        function logout() {
-            UserService.logout()
-                .success(function () {
-                    $location.url("/loginAdmin");
-                })
-        }
     }
 })();

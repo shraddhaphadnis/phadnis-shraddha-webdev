@@ -1,8 +1,39 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left page-text">
+            <a href="#/home/">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-text white-text pull-right page-text">
+            <a href="#/userAdmin">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+
+            <a href="#/userAdmin">
+                <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
+            </a>
+
+            <a href="" ng-click="model.logout()">
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+            <a href="" ng-click="model.logout()">
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+        <div class="navbar-header page-text">
+            <a class="navbar-brand" href="#/home/login">Happy Stay</a>
+        </div>
+    </div>
+</nav>
+
 <h1 class="page-header">Admin</h1>
 <h2 class="sub-header">Manage Users</h2>
 <button class="btn btn-success" ng-click="model.getAllRegUsers()">Get All users</button>
-<button class="btn btn-success" ng-click="model.getAllHotels()">Get All Hotels</button>
-<button class="btn btn-success" ng-click="model.getAllReviews()">Get All Reviews</button>
+<button class="btn btn-danger" ng-click="model.getAllHotels()">Get All Hotels</button>
+<button class="btn btn-primary" ng-click="model.getAllReviews()">Get All Reviews</button>
 <h1>User Details</h1>
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
@@ -243,3 +274,12 @@
         </tbody>
     </table>
 </div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <a href="#/userAdmin">
+                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+            </a>
+        </div>
+    </div>
+</nav>

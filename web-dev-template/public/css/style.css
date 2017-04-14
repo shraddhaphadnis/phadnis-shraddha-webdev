@@ -157,3 +157,7 @@ p {
         height: 4px;
     }
 }
+
+.navbar a {
+    color: white !important;
+}

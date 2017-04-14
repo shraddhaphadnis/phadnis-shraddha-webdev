@@ -1,5 +1,4 @@
-<div ng-controller="ProfileController as model">
-    <h2>Followers <a href="">
+<h2>Followers <a href="">
         <span class="glyphicon glyphicon-eye-open follower-button-color"></span>
     </a></h2>
 
@@ -15,11 +14,11 @@
                 <div ng-switch-default>
                     <div ng-repeat="f in model.followers">
                         <h3><span class="glyphicon glyphicon-user"></span>
-                            <a href="#/user1/{{model.user._id}}/secondUser/{{f._id}}">{{f.firstName}}</a>
+                            <a ng-click = "model.setSecondUser(f)"
+                               href="#/user1/secondUserProfile">{{f.firstName}}</a>
                         </h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

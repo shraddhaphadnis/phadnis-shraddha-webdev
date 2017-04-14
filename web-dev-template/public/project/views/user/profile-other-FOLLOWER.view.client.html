@@ -1,7 +1,7 @@
-<div ng-controller="profileOtherController as model">
-    <h2>Followers <a href="">
+<h2>Followers <a href="">
         <span class="glyphicon glyphicon-eye-open follower-button-color"></span>
-    </a></h2>
+    </a>
+</h2>
 
     <br>
     <div class="container-fluid">
@@ -19,10 +19,14 @@
                     <div ng-repeat="f in model.followers">
                         <h3><span class="glyphicon glyphicon-user"></span>
                             <div ng-if="model.user._id!=f._id">
-                                <a href="#/user1/{{model.user._id}}/secondUser/{{f._id}}">{{f.firstName}}</a>
+                                <a ng-click = "model.setSecondUser(f)"
+                                   href="#/user1/secondUserProfile">{{f.firstName}}</a>
                             </div>
-                            <div ng-if="model.user._id==f._id">
-                                <a href="#/user/{{model.user._id}}">{{f.firstName}}</a>
+                            <div ng-if="model.user._id==f._id && model.user.role == 'OWNER'">
+                                <a href="#/owner">{{f.firstName}}</a>
+                            </div>
+                            <div ng-if="model.user._id==f._id && model.user.role == 'CUSTOMER'">
+                                <a href="#/user">{{f.firstName}}</a>
                             </div>
                         </h3>
                     </div>
@@ -30,4 +34,4 @@
             </div>
         </div>
     </div>
-</div>
+

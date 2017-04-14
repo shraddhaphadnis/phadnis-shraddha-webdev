@@ -2,12 +2,29 @@
     angular
         .module("MyHotelApp")
         .config(Config);
-    function Config($routeProvider) {
+
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+        return $http.get('/api/loggedin').success(function(user) {
+            $rootScope.errorMessage = null;
+            if (user !== '0') {
+                $rootScope.currentUser = user;
+            } else {
+                $location.url('/login');
+            }
+        });
+    };
+    function Config($routeProvider, $httpProvider) {
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+        $httpProvider.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
+
         $routeProvider
             .when("/home", {
                 templateUrl: 'views/user/homepage.html',
                 controller: "CityListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
 
             .when("/user/:uid/search",{
@@ -30,43 +47,63 @@
                 templateUrl: "views/user/homepage.html",
                 controller: "CityListController",
                 controllerAs: "model"
-
             })
 
-            .when("/user/:uid/home", {
+            .when("/user/homepage/", {
                 templateUrl: "views/user/user_home.html",
                 controller: "CityListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user/city/:cid", {
+            .when("/home/city", {
                 templateUrl: "views/hotel/hotel-list.view.client.html",
                 controller: "HotelListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user/city/:cid/hotelDetails/:hid",{
+            .when("/user/city/hotelDetails/",{
                 templateUrl: "views/hotel/hotel-details.view.client.html",
                 controller: "HotelDetailsController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user/:uid/city/:cid/hotelDetails/:hid",{
+            .when("/user/city/hotelDetails/",{
                 templateUrl: "views/hotel/hotel-details.view.client.html",
                 controller: "HotelDetailsController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user/:uid/city/:cid", {
+            .when("/user/city", {
                 templateUrl: "views/hotel/hotel-list.view.client.html",
                 controller: "HotelListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user/:uid/city/:cid/hotel/:hid/new",{
+            .when("/user/review/new",{
                 templateUrl: "views/review/new-review.view.client.html",
                 controller: "NewReviewController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user/:uid/city/:cid/hotel/:hid/review/:rid/edit",{
+            .when("/user/city/hotelDetails/reviewEdit/",{
                 templateUrl: "views/review/edit-review.view.client.html",
                 controller: "EditReviewController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/city/:cid/hotel/:hid", {
                 templateUrl: 'views/hotel/hotel-details.view.client.html',
@@ -74,37 +111,109 @@
                 controllerAs: "model"
             })
 
-            .when("/user/:uid/city/:cid/hotel/:hid", {
+            .when("/user/city/hotelDetails/newReview", {
                 templateUrl: 'views/hotel/hotel-details.view.client.html',
                 controller: "HotelDetailsController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user1/:uid1/secondUser/:uid2", {
+            .when("/user1/secondUserProfile", {
                 templateUrl: 'views/user/profile-other-user-view.client.html',
                 controller: "profileOtherController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
 
-            .when("/user/:uid/city/:cid/hotel/:hid/business",{
+            .when("/user/city/hotelDetails/business",{
                 templateUrl: "views/business/new-business.view.client.html",
                 controller: "NewBusinessController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when("/user/:uid/city/:cid/hotel/:hid/business/:bid/edit",{
+            .when("/user/city/hotel/business/edit",{
                 templateUrl: "views/business/edit-business.view.client.html",
                 controller: "EditBusinessController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
 
+            .when("/user/LIKE",{
+                templateUrl: "views/user/profile-LIKE.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/user/LIKE",{
+                templateUrl: "views/user/profile-other-LIKE.view.client.html",
+                controller: "profileOtherController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/user/FOLLOWING",{
+                templateUrl: "views/user/profile-FOLLOWING.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/user/FOLLOWING",{
+                templateUrl: "views/user/profile-other-FOLLOWING.view.client.html",
+                controller: "profileOtherController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/user/FOLLOWER",{
+                templateUrl: "views/user/profile-FOLLOWER.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/user/FOLLOWER",{
+                templateUrl: "views/user/profile-other-FOLLOWER.view.client.html",
+                controller: "profileOtherController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/user/OWNED",{
+                templateUrl: "views/user/profile-OWNED.view.client.html",
+                controller: "profileOwnerController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
                 controller: "LoginController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/loginAdmin", {
                 templateUrl: "views/admin/admin.login.view.html",
                 controller: "AdminLoginController",
                 controllerAs: "model"
+
             })
            /* .when("/loginAgency", {
                 templateUrl: "views/agency/travel.agent.login.view.html",
@@ -134,12 +243,14 @@
                     loggedin: checkLoggedin
                 }
             })
-            .when("/user/:uid", {
+            /*.when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
-
-            })
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })*/
             .when("/profile",{
                 templateUrl: 'views/user/profile.view.client.html',
                 controller: 'ProfileController',
@@ -156,36 +267,42 @@
                 controller: "AdminProfileController",
                 controllerAs: "model",
                 resolve: {
-                    checkLogin: checkLogin
+                    loggedin: checkLoggedin
                 }
             })
 
             .when("/owner", {
                 templateUrl: "views/user/owner.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
 
-            .when("/owner/:uid", {
+         /*   .when("/owner/:uid", {
                 templateUrl: "views/user/owner.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
-            })
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })*/
 
 
-            .when("/userAdmin/:uid", {
+            /*.when("/userAdmin/:uid", {
                 templateUrl: "views/admin/admin.home.view.html",
                 controller: "AdminProfileController",
                 controllerAs: "model",
                 resolve: {
-                    checkAdmin: checkAdmin
+                    loggedin: checkLoggedin
                 }
-            })
+            })*/
             .otherwise({
                 redirectTo : "/login"
             });
 
-        function checkLoggedin($q, $timeout, $http, $location, $rootScope) {
+    /*    function checkLoggedin($q, $timeout, $http, $location, $rootScope) {
             var deferred = $q.defer();
             $http.get('/api/loggedin').success(function(user) {
                 $rootScope.errorMessage = null;
@@ -201,7 +318,7 @@
             return deferred.promise;
         };
 
-        function checkLogin($q, UserService, $location) {
+      function checkLogin($q, UserService, $location) {
             var deferred = $q.defer();
             UserService
                 .checkLogin()
@@ -230,6 +347,6 @@
                     }
                 });
             return deferred._promise;
-        }
+        }*/
     }
 })();

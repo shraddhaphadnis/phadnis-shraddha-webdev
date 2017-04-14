@@ -5,11 +5,11 @@
         .controller("NewReviewController", NewReviewController);
 
 
-    function NewReviewController($routeParams, $location, ReviewService, HotelService) {
+    function NewReviewController($routeParams, $location, ReviewService, HotelService,$rootScope, loggedin) {
         var vm = this;
-        vm.hotelId = $routeParams.hid;
-        vm.userId = $routeParams.uid;
-        vm.cityId = $routeParams.cid;
+        vm.hotelId = $rootScope.hotelId;
+        vm.userId = loggedin.data._id;
+        vm.cityId = $rootScope.cityId;
 
         var promise1 = HotelService.findHotelById(vm.hotelId);
         promise1
@@ -35,12 +35,12 @@
         function addReview(userId, hotelId, hotelReview) {
             console.log(hotelReview);
             hotelReview._hotel = hotelId;
-            vm.hotelId = $routeParams.hid;
-            vm.userId = $routeParams.uid;
-            vm.cityId = $routeParams.cid;
-            hotelReview.hotelName = vm.hotelName;
+            //vm.hotelId = $rootScope.hotelId;
+            //vm.userId = loggedin.data._id;
+            //vm.cityId = $rootScope.cityId;
+            //hotelReview.hotelName = vm.hotelName;
             console.log("(((((((((("+hotelReview.hotelName);
-            hotelReview.hotelCity = vm.hotelCity;
+            //hotelReview.hotelCity = vm.hotelCity;
 
 
             console.log(hotelReview);
@@ -49,7 +49,7 @@
             var promise = ReviewService.createReview(vm.userId, vm.hotelId, hotelReview);
             promise
                 .success(function (data) {
-                    var URL = "/user/" + vm.userId + "/city/" + vm.cityId + "/hotelDetails/" + vm.hotelId;
+                    var URL = "/user/city/hotelDetails/newReview";
                     console.log("review add success");
                     $location.url(URL);
                 })
@@ -60,45 +60,44 @@
         }
     }
 
-    function EditReviewController($routeParams, $location, ReviewService, HotelService) {
+    function EditReviewController($routeParams, $location, ReviewService, HotelService,loggedin,$rootScope) {
         //console.log("Hello in hotel list controller");
         var vm = this;
-        vm.hotelId = $routeParams.hid;
-        vm.userId = $routeParams.uid;
-        vm.reviewId = $routeParams.rid;
-        vm.cityId = $routeParams.cid;
 
         vm.updateReview = updateReview;
         vm.deleteReview = deleteReview;
 
         function updateReview(newReview) {
-            vm.hotelId = $routeParams.hid;
-            vm.userId = $routeParams.uid;
-            vm.reviewId = $routeParams.rid;
-            vm.cityId = $routeParams.cid;
+           // vm.hotelId = $routeParams.hid;
+            //vm.userId = $routeParams.uid;
+            //vm.reviewId = $routeParams.rid;
+            //vm.cityId = $routeParams.cid;
             var promise = ReviewService.updateReview(vm.reviewId, newReview);
             promise.success(function (data) {
                 //console.log(data);
-                $location.url("/user/" + vm.userId + "/city/" + vm.cityId + "/hotelDetails/" + vm.hotelId);
+                $location.url("/user/city/hotelDetails/");
 
             })
         }
 
         function deleteReview(reviewId) {
-            vm.hotelId = $routeParams.hid;
-            vm.userId = $routeParams.uid;
-            vm.reviewId = $routeParams.rid;
-            vm.cityId = $routeParams.cid;
+            //vm.hotelId = $routeParams.hid;
+            //vm.userId = $routeParams.uid;
+            //vm.reviewId = $routeParams.rid;
+            //vm.cityId = $routeParams.cid;
             var promise = ReviewService.deleteReview(reviewId);
             promise.success(function (data) {
-                $location.url("/user/" + vm.userId + "/city/" + vm.cityId + "/hotelDetails/" + vm.hotelId);
+                $location.url("/user/city/hotelDetails/");
 
             })
         }
 
         function init() {
             //console.log("Hi");
-
+            vm.hotelId = $rootScope.hotelId;
+            vm.userId = loggedin.data._id;
+            vm.reviewId = $rootScope.reviewId;
+            vm.cityId = $rootScope.cityId;
             var promise = ReviewService.findReviewById(vm.reviewId);
             promise
                 .success(function (review) {
