@@ -31,6 +31,8 @@ module.exports = function(app,model){
     app.put("/api/user/:loggedInUserId/user2/:secondUserId",follow);
     app.put("/api/user/:loggedInUserId/user2/:secondUserId/unfollow",unfollow);
     app.get ('/api/loggedin', loggedin);
+    app.get("/api/allUsers/:hotelId",findUsersWhoLikedHotel);
+
 
     app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
     app.get('/auth/facebook/callback',
@@ -319,7 +321,6 @@ module.exports = function(app,model){
         res.send(200);
     }
 
-
     function checkLogin(req, res) {
         res.send(req.isAuthenticated() ? req.user :  '0');
     }
@@ -583,4 +584,20 @@ module.exports = function(app,model){
                     }
                 );
             }
+    function findUsersWhoLikedHotel(req,res) {
+
+        var hotelId = req.params.hotelId;
+        model.userModel.findUsersWhoLikedHotel(hotelId)
+            .then(function (response) {
+
+                res.json(response);
+
+            },function (err) {
+                res.status(400).send(err);
+
+            })
+
+    }
+
+
 }

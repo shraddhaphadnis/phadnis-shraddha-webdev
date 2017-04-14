@@ -96,11 +96,13 @@ module.exports = function(app,model){
     }
 
     function deleteHotelAdmin(req, res) {
+        console.log("delete admin called ^^^^");
         model.hotelModel
             .deleteHotel(req.params.HotelId)
             .then(
                 function (hotel) {
-                    return model.hotelModel.findAllUsers();
+                    console.log("RRRRRRR" + hotel);
+                    return model.hotelModel.findAllHotels();
                 },
                 function (err) {
                     res.status(400).send(err);

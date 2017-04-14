@@ -57,7 +57,7 @@
                     });
         }
     }
-    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService) {
+    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService,CityService) {
         var vm = this;
         var model = this;
         vm.userId = $routeParams["uid"];
@@ -95,7 +95,7 @@
             HotelService.updateHotel(hotel._id,hotel)
                 .success(function (hotel) {
                     vm.hotel = hotel;
-                    getAllHotels();
+
                 })
         }
 
@@ -133,19 +133,38 @@
         function deleteHotelAdmin(hotel) {
             HotelService
                 .deleteHotelAdmin(hotel._id)
-                .then(function (hotel) {
-                    HotelService
-                        .getAllHotels()
-                        .then(function (hotels) {
-                         console.log("set hotels");
-                         vm.hotels = hotels;
-                         getAllHotels();
-                        },function (err) {
-                        res.sendStatus(404).send(err);
-                    })
-                },function (err) {
-                res.sendStatus(err);
-            })
+                .then(function (response) {
+                    console.log("***"+response);
+                    UserService
+                        .findUserWhoLikedHotel(hotel.hotelId)
+                        .then(function (hotel1) {
+                            CityService
+                                .findCityIdByCityName(hotel.hotelCity)
+                                .then(function (city1) {
+                                    console.log(city1);
+                                    vm.cityId = city1.data["City ID"];
+                                    console.log(vm.cityId);
+                                    var usersWhoLiked = hotel1.data;
+                                    for (var i in usersWhoLiked) {
+                                        UserService
+                                            .undoLikeHotel(usersWhoLiked[i]._id, hotel.hotelId, vm.cityId);
+                                    }
+                                    HotelService
+                                        .getAllHotels()
+                                        .then(function (hotels) {
+                                            console.log("set hotels");
+                                            vm.hotels = hotels;
+                                            getAllHotels();
+                                        }, function (err) {
+                                            res.sendStatus(404).send(err);
+                                        })
+                                }, function (err) {
+                                    res.sendStatus(err);
+                                })
+                        }, function (err) {
+                            res.sendStatus(err);
+                        });
+                })
         }
         function deleteUserAdmin(user) {
             UserService

@@ -23,10 +23,21 @@ module.exports = function () {
         removeFromFollowing:removeFromFollowing,
         removeFromFollowers:removeFromFollowers,
         findUserByGoogleId : findUserByGoogleId,
-        findUserByFacebookId :findUserByFacebookId
+        findUserByFacebookId :findUserByFacebookId,
+        findUsersWhoLikedHotel:findUsersWhoLikedHotel
     };
     return api;
 
+    function findUsersWhoLikedHotel(hotelId) {
+        //console.log("I have come here");
+        return UserModel.find({likes: {$in: [hotelId]}});
+        /*for(var i in likedUsers){
+         console.log(likedUsers[i]);
+         updatelikeStatus(likedUsers[i]._id,seriesId,"unlike");
+         }
+         return;*/
+
+    }
     function findUserByGoogleId(googleId) {
         return UserModel
             .findOne({'google.id': googleId});

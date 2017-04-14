@@ -29,11 +29,16 @@
             undoLikeHotel: undoLikeHotel,
             isHotelLiked: isHotelLiked,
             follow:follow,
-            unfollow:unfollow
+            unfollow:unfollow,
+            findUserWhoLikedHotel:findUserWhoLikedHotel
 
         };
         return api;
 
+        function findUserWhoLikedHotel(hotelId) {
+            return $http.get("/api/allUsers/"+hotelId);
+
+        }
         function follow(loggedInUserId,secondUserId){
             return $http.put("/api/user/"+loggedInUserId+"/user2/"+secondUserId);
         }
