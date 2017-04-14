@@ -195,7 +195,7 @@
             })
             .when("/user/OWNED",{
                 templateUrl: "views/user/profile-OWNED.view.client.html",
-                controller: "profileOwnerController",
+                controller: "OwnerController",
                 controllerAs: "model",
                 resolve: {
                     loggedin: checkLoggedin
@@ -273,7 +273,7 @@
 
             .when("/owner", {
                 templateUrl: "views/user/owner.view.client.html",
-                controller: "ProfileController",
+                controller: "OwnerController",
                 controllerAs: "model",
                 resolve: {
                     loggedin: checkLoggedin

@@ -5,7 +5,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController)
         .controller("profileOtherController",profileOtherController)
-        .controller("profileOwnerController",profileOwnerController);
+        .controller("profileOwnerController",profileOwnerController)
 
     function profileOwnerController($routeParams,UserService,$location, HotelService, CityService,BusinessService,loggedin,$rootScope) {
         var vm = this;
@@ -499,9 +499,7 @@
 
             function getChoiceView(choice) {
                 console.log("get choice called" + choice);
-                var url = "views/user/profile-" + choice + ".view.client.html";
-                return url;
-
+                return "views/user/profile-" + choice + ".view.client.html";
             }
 
 
