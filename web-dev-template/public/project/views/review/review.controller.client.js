@@ -38,9 +38,9 @@
             //vm.hotelId = $rootScope.hotelId;
             //vm.userId = loggedin.data._id;
             //vm.cityId = $rootScope.cityId;
-            //hotelReview.hotelName = vm.hotelName;
+            hotelReview.hotelName = vm.hotelName;
             console.log("(((((((((("+hotelReview.hotelName);
-            //hotelReview.hotelCity = vm.hotelCity;
+            hotelReview.hotelCity = vm.hotelCity;
 
 
             console.log(hotelReview);

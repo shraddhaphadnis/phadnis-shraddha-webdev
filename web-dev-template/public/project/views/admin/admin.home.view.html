@@ -61,7 +61,14 @@
                       ng-show="(model.predicate == 'lastName') && (model.reverse == false)"></span>
                 Last Name
             </th>
-            <th>Roles</th>
+            <th ng-click="model.order('role')" class="nowrap">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
+                          ng-show="(model.predicate == 'role') && (model.reverse == true)"></span>
+                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"
+                      ng-show="(model.predicate == 'role') && (model.reverse == false)"></span>
+                Roles
+            </th>
+
             <th>Actions</th>
         </tr>
         </thead>
@@ -84,14 +91,15 @@
                        ng-model="model.inputUser.lastName">
             </td>
             <td>
-                <input type="text" class="form-control" id="role" placeholder="role1,role2"
+                <input type="text" class="form-control" id="role" placeholder="CUSTOMER, OWNER, ADMIN"
                        ng-model="model.inputUser.role">
             </td>
             <td>
                 <a href="" ng-click="model.AddNewUser(model.inputUser)"
                    ng-hide="model.selected == -1">
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-plus pull-left" aria-hidden="true"></span>
                 </a>
+
                 <a href="" ng-click="model.update(model.inputUser)"
                    ng-hide="model.selected == -1">
                     <span class="glyphicon glyphicon-ok okicon pull-right" aria-hidden="true"></span>
@@ -103,7 +111,7 @@
             <td>&nbsp;</td>
             <td>{{u.firstName}}</td>
             <td>{{u.lastName}}</td>
-            <td>{{u.roles}}</td>
+            <td>{{u.role}}</td>
             <td>
                 <a href="" ng-click="model.deleteUserAdmin(u)"><span
                         class="glyphicon glyphicon-remove removeicon pull-left"
@@ -143,6 +151,7 @@
                       ng-show="(model.predicate == 'hotelId') && (model.reverse == false)"></span>
                 Hotel Id
             </th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -162,7 +171,7 @@
             <td>
                 <a href="" ng-click="model.AddNewHotel(model.inputHotel)"
                    ng-hide="model.selected == -1">
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-plus pull-left" aria-hidden="true"></span>
                 </a>
                 <a href="" ng-click="model.updateHotel(model.inputHotel)"
                    ng-hide="model.selected == -1">
@@ -176,8 +185,7 @@
             <td>{{u.hotelId}}</td>
             <td>
                 <a href="" ng-click="model.deleteHotelAdmin(u)"><span
-                        class="glyphicon glyphicon-remove removeicon pull-left"
-                        aria-hidden="true"></span>
+                        class="glyphicon glyphicon-remove removeicon pull-left" aria-hidden="true"></span>
                 </a>
                 <a href="" ng-click="model.select_hotel(u)"><span
                         class="glyphicon glyphicon-cog pencilicon pull-right" aria-hidden="true"></span>
@@ -194,7 +202,6 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr class="theadrow">
-            {{model.hotelName}}
             <th ng-click="model.order('model.hotelName')" class="nowrap">
                     <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"
                           ng-show="(model.predicate == 'hotelName') && (model.reverse == true)"></span>
@@ -223,6 +230,7 @@
                       ng-show="(model.predicate == 'comment') && (model.reverse == false)"></span>
                 Review Comment
             </th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -244,19 +252,12 @@
                        ng-model="model.inputReview.comment">
             </td>
             <td>
-                <a href="" ng-click="model.AddComment(model.inputReview)"
-                   ng-hide="model.selected == -1">
-                    <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
-                </a>
-                <a href="" ng-click="model.updateComment(model.inputReview)"
-                   ng-hide="model.selected == -1">
-                    <span class="glyphicon glyphicon-ok okicon pull-right" aria-hidden="true"></span>
-                </a>
+            <input type="text" class="form-control" placeholder="Delete">
             </td>
         </tr>
 
         <tr ng-repeat="u in model.comments | orderBy:model.predicate:model.reverse">
-            {{u.hotelName}}
+            {{u}}
             <td>{{u.hotelName}}</td>
             <td>{{u.hotelCity}}</td>
             <td>{{u.username}}</td>
@@ -274,6 +275,8 @@
         </tbody>
     </table>
 </div>
+<br>
+<br>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">

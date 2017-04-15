@@ -109,6 +109,7 @@
             HotelService.updateHotel(hotel._id, hotel)
                 .success(function (hotel) {
                     vm.hotel = hotel;
+                    getAllHotels();
 
                 })
         }
