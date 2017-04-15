@@ -325,6 +325,9 @@
                             $rootScope.currentUser = user;
                             $location.url("/userAdmin/");// + user._id);
                         }
+                        else {
+                            vm.error ("user not found");
+                        }
                     }, function (err) {
                         vm.error = "user/password does not match";
                     });
@@ -338,35 +341,40 @@
 
         function createUser(user) {
             console.log("create user called");
-            if(!$scope.register.$invalid && user.password == user.veryPassword){
+            if (!$scope.register.$invalid && user.password == user.veryPassword) {
                 UserService
-                    .register(user)
-                    .then(
-                        function (response) {
-                            console.log("user registered");
-                            var user = response.data;
-                            if (user.role == "ADMIN")
-                            {
-                                $rootScope.currentUser = user;
-                                $location.url("/userAdmin");
-                            }
-                            else if (user.role == "OWNER")
-                            {
-                                $rootScope.currentUser = user;
-                                $location.url("/owner");
-                            }
-                            else
-                            {
-                                $rootScope.currentUser = user;
-                                $location.url("/user");
-                                }
-                        });
-            }
-            else{
-                vm.veryPasswordAlert = "Passwords do not match";
-            }
+                    .findUserByUsername(user.username)
+                    .success(function (user) {
+                        vm.error = "sorry username is already taken";
+                    })
+                    .error(function () {
+                        UserService
+                            .register(user)
+                            .then(
+                                function (response) {
+                                    console.log("user registered");
+                                    var user = response.data;
+                                    if (user.role == "ADMIN") {
+                                        $rootScope.currentUser = user;
+                                        $location.url("/userAdmin");
+                                    }
+                                    else if (user.role == "OWNER") {
+                                        $rootScope.currentUser = user;
+                                        $location.url("/owner");
+                                    }
+                                    else {
+                                        $rootScope.currentUser = user;
+                                        $location.url("/user");
+                                    }
+                                })
+                            .error(function () {
+                                vm.error = "Sorry could not register";
+                            })
+
+                    })
             }
         }
+    }
 
 
         function ProfileController($routeParams, UserService,$location,HotelService,CityService,loggedin,$rootScope) {

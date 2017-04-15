@@ -2,8 +2,141 @@
     var app = angular
         .module("MyHotelApp")
         .controller("HotelListController", HotelListController)
+        .controller("HotelListGuestController",HotelListGuestController)
         .controller("HotelDetailsController", HotelDetailsController)
-        .controller("CityListController", CityListController);
+        .controller("HotelDetailsGuestController", HotelDetailsGuestController)
+        .controller("CityListController", CityListController)
+        .controller("CityListControllerForGuest", CityListControllerForGuest);
+
+    function HotelDetailsGuestController($location, $routeParams, HotelService, ReviewService, UserService, BusinessService,$rootScope) {
+        var vm = this;
+        vm.hotelId = $rootScope.hotelId;
+        vm.cityId = $rootScope.cityId;
+
+       /* vm.FollowUser = FollowUser;
+        // vm.setLikeStatus = setLikeStatus;
+        // vm.isHotelLiked = isHotelLiked;
+        vm.likeHotel = likeHotel;
+        vm.undoLikeHotel = undoLikeHotel;
+        vm.OwnBusiness = OwnBusiness;
+        vm.hotelowned = hotelowned;
+        vm.setReview = setReview;
+        vm.setBusiness = setBusiness;
+        vm.setSecondUser = setSecondUser;
+        vm.secondReviewUser = secondReviewUser;
+        vm.logout = logout;*/
+
+        function logout(){
+            UserService
+                .logout()
+                .then(
+                    function (response) {
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    }
+                )
+        }
+
+        function secondReviewUser(userReview) {
+            $rootScope.Seconduser = userReview._user;
+        }
+
+        function setSecondUser(business) {
+            $rootScope.Seconduser = business._user;
+        }
+
+        function setBusiness(business) {
+            console.log("set Business");
+            $rootScope.businessId = business._id;
+        }
+
+        function setReview(review) {
+            console.log("set Review");
+            $rootScope.reviewId = review._id;
+        }
+
+        function hotelowned() {
+            vm.owned = true;
+            BusinessService.findHotelInBusiness(vm.hotelId)
+                .success(function (res) {
+                    if (res == "") {
+                        vm.owned = false;
+                    }
+                    else
+                        vm.owned = true;
+                })
+        }
+
+        function init() {
+            var promise = HotelService.findHotelById(vm.hotelId);
+            promise
+                .success(function (hotelDetails) {
+                    console.log("hotel details in success!!!!" + hotelDetails.data[vm.hotelId]);
+                    vm.hotelDetails = hotelDetails.data[vm.hotelId].hotel_data_node;
+                    vm.hotelName = vm.hotelDetails.name;
+                    vm.hotelCity = vm.hotelDetails.loc.city;
+                    console.log(vm.hotelCity);
+                    console.log(vm.hotelName);
+                    var resp = BusinessService.findBusinessByHotelId(vm.hotelId);
+                    resp
+                        .success(function (discounts) {
+                            vm.Business = discounts;
+                            console.log(discounts);
+                        })
+                        .error(function (err) {
+                            console.log(err);
+                        });
+                    var prom = ReviewService.findReviewByHotelId(vm.hotelId);
+                    prom
+                        .success(function (UserReviews) {
+                            vm.Reviews = UserReviews;
+                            console.log(UserReviews);
+                        })
+                        .error(function (err) {
+                            console.log(err);
+                        });
+                })
+                .error(function (err) {
+                    console.log(err);
+                });
+        }
+        init();
+
+    }
+
+
+    function CityListControllerForGuest($routeParams,UserService, HotelService, ReviewService,CityService,$location,$rootScope) {
+        var vm = this;
+        vm.logout = logout;
+        vm.findCityIdByCityName = findCityIdByCityName;
+        function init() {
+        }
+
+        init();
+        function logout(){
+            UserService
+                .logout()
+                .then(
+                    function (response) {
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    }
+                )
+        }
+
+        function findCityIdByCityName(city) {
+            var promise = CityService
+                .findCityByName(city)
+                .success(function (city) {
+                    console.log(city);
+                    vm.cityId = city["City ID"];
+                    console.log(vm.cityId);
+                    $rootScope.cityId = vm.cityId
+                    $location.url("/home/city");
+                });
+        }
+    }
+
 
     function CityListController($routeParams,UserService, HotelService, ReviewService,CityService,$location,$rootScope,loggedin) {
         var vm = this;
@@ -70,6 +203,18 @@
         vm.setBusiness = setBusiness;
         vm.setSecondUser = setSecondUser;
         vm.secondReviewUser = secondReviewUser;
+        vm.logout = logout;
+
+        function logout(){
+            UserService
+                .logout()
+                .then(
+                    function (response) {
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    }
+                )
+        }
 
         function secondReviewUser(userReview) {
             $rootScope.Seconduser = userReview._user;
@@ -264,7 +409,54 @@
 
     }
 
-    function HotelListController($routeParams,UserService, HotelService, CityService,$location,$rootScope,loggedin) {
+    function HotelListGuestController($routeParams,UserService, HotelService, CityService,$location,$rootScope) {
+        console.log("Inside hotel guest list controller");
+        var vm = this;
+        vm.getCityId = getCityId;
+        vm.cityId = $rootScope.cityId;
+        vm.sethotel = sethotel;
+
+        function sethotel(hotel) {
+            $rootScope.hotelId = hotel.hotel_data_node._id;
+        }
+
+
+
+        function getCityId(city) {
+            console.log(city);
+            var promise = CityService.findCityByName(city);
+            promise
+                .success(function (id) {
+                    console.log(id);
+
+                })
+        }
+
+        function getCityById(city) {
+            console.log(city);
+            var promise = CityService.findCityByName(city);
+            promise
+                .success(function (id) {
+                    console.log(id);
+                    $location.url("/home/city");
+                })
+        }
+
+        function init() {
+            var promise = HotelService.findHotelByCityId(vm.cityId);
+            promise
+                .success(function (hotels) {
+                    vm.hotels_list = hotels.data;
+                })
+                .error(function () {
+
+                });
+
+        }
+
+        init();
+    }
+        function HotelListController($routeParams,UserService, HotelService, CityService,$location,$rootScope,loggedin) {
         console.log("Inside hotel list controller");
         var vm = this;
         vm.userId = loggedin.data._id;

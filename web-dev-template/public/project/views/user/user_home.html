@@ -1,16 +1,20 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text white-text pull-left page-text">
-            <a href="#/home">
+            <a href="#/user/home">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <div class="navbar-text white-text pull-right page-text">
-            <a href="#/user">
+        <div ng-switch="model.user.role" class="navbar-text white-text pull-right page-text">
+            <a ng-switch-when="OWNER"
+                href="#/owner">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
-
-            <a href="#/user">
+            <a ng-switch-when="CUTSOMER"
+               href="#/user">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+            <a href="#/user/homepage">
                 <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
             </a>
 
@@ -22,7 +26,7 @@
             </a>
         </div>
         <div class="navbar-header page-text">
-            <a class="navbar-brand" href="#/home/user">Happy Stay</a>
+            <a class="navbar-brand" href="#/user/homepage">Happy Stay</a>
         </div>
     </div>
 </nav>
@@ -47,7 +51,7 @@
 
 <div class="container-fluid">
     <div class="input-group">
-        <input ng-model="searchText" type="text" class="form-control">
+        <input ng-model="searchText" type="text" class="form-control" placeholder="Enter the City name Ex: San Francisco">
         <span class="input-group-btn">
         <a ng-click="model.findCityIdByCityName(searchText)" class="btn btn-default" type="button">
             <span class="glyphicon glyphicon-search"> </span>
@@ -60,38 +64,42 @@
         <div class="row">
             <div class="col-lg-4 col-xs-12" style="padding:10px">
                 <div class="row text-center"><label>BOSTON</label></div>
-                <a href="#/user/city"><img src="../../../images/Boston1.jpg" height="200px" width="100%" />
+                <a href=""><img src="../../../images/Boston1.jpg" height="200px" width="100%" />
                 </a></div>
             <div class="col-lg-4 col-xs-12 col-right" style="padding:10px">
                 <div class="row text-center"><label>San Francisco</label></div>
 
-                <a href="#/user/city"><img src="../../../images/SanFrancisco.jpg" height="200px" width="100%" />
+                <a href=""><img src="../../../images/SanFrancisco.jpg" height="200px" width="100%" />
                 </a></div>
             <div class="col-lg-4 col-xs-12" style="padding:10px">
                 <div class="row text-center"><label>Miami</label></div>
-                <a style="position: relative" href="#/user/city"><img src="../../../images/Miami.jpg" height="200px" width="100%" /></a></div>
+                <a style="position: relative" href=""><img src="../../../images/Miami.jpg" height="200px" width="100%" /></a></div>
         </div>
         <div class="row">
             <div class="col-lg-4 col-xs-12 col-right" style="padding:10px">
                 <div class="row text-center"><label>New York</label></div>
-                <a href="#/user/city"><img src="../../../images/NewYork.jpg" height="200px" width="100%"/></a></div>
+                <a href=""><img src="../../../images/NewYork.jpg" height="200px" width="100%"/></a></div>
             <div class="col-lg-4 col-xs-12" style="padding:10px"    >
                 <div class="row text-center"><label>Washington</label></div>
-                <a href="#/user/city"><img src="../../../images/Washington.jpg" height="200px" width="100%"/>
+                <a href=""><img src="../../../images/Washington.jpg" height="200px" width="100%"/>
                 </a></div>
             <div class="col-lg-4 col-xs-12" style="padding:10px">
                 <div class="row text-center"><label>Chicago</label></div>
-                <a href="#/user/city"><img src="../../../images/Chicago.jpg" height="200px" width="100%"/>
+                <a href=""><img src="../../../images/Chicago.jpg" height="200px" width="100%"/>
                 </a></div>
         </div>
         <br><br>
     </div>
 </div>
+</div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
-        <div class="row">
-            <a href="#/user">
+        <div ng-switch="model.user.role" class="row">
+            <a ng-switch-when="OWNER" href="#/owner">
+                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+            </a>
+            <a ng-switch-when="CUSTOMER" href="#/user">
                 <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
             </a>
         </div>

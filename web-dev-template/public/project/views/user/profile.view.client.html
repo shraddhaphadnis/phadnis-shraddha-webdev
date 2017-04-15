@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text white-text pull-left page-text">
-            <a href="#/home/user">
+            <a href="#/user/homepage/">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
@@ -22,7 +22,7 @@
             </a>
         </div>
         <div class="navbar-header page-text">
-            <a class="navbar-brand" href="#/home/user">Happy Stay</a>
+            <a class="navbar-brand" href="#/user">Happy Stay</a>
         </div>
     </div>
 </nav>
@@ -122,9 +122,14 @@
 
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-
-        <a href="#/user" class="navbar-link navbar-brand pull-right">
+    <div ng-switch="model.user.role" class="container-fluid">
+        <a ng-switch-when="OWNER"
+           href="#/owner" class="navbar-link navbar-brand pull-right">
+          <span class="glyphicon glyphicon-user">
+          </span>
+        </a>
+        <a ng-switch-when="CUSTOMER"
+           href="#/user" class="navbar-link navbar-brand pull-right">
           <span class="glyphicon glyphicon-user">
           </span>
         </a>

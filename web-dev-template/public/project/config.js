@@ -37,15 +37,10 @@
                 controller: "CityListController",
                 controllerAs: "model"
             })
-            .when("/user/:uid/city/:cid/hotel/:searchTerm", {
-                templateUrl: 'views/user/homepage.html',
-                controller: "CityListController",
-                controllerAs: "model"
-            })
 
             .when("/user/home",{
                 templateUrl: "views/user/homepage.html",
-                controller: "CityListController",
+                controller: "CityListControllerForGuest",
                 controllerAs: "model"
             })
 
@@ -58,12 +53,9 @@
                 }
             })
             .when("/home/city", {
-                templateUrl: "views/hotel/hotel-list.view.client.html",
-                controller: "HotelListController",
-                controllerAs: "model",
-                resolve: {
-                    loggedin: checkLoggedin
-                }
+                templateUrl: "views/hotel/hotel-guest-list.view.client.html",
+                controller: "HotelListGuestController",
+                controllerAs: "model"
             })
             .when("/user/city/hotelDetails/",{
                 templateUrl: "views/hotel/hotel-details.view.client.html",
@@ -73,13 +65,10 @@
                     loggedin: checkLoggedin
                 }
             })
-            .when("/user/city/hotelDetails/",{
-                templateUrl: "views/hotel/hotel-details.view.client.html",
-                controller: "HotelDetailsController",
-                controllerAs: "model",
-                resolve: {
-                    loggedin: checkLoggedin
-                }
+            .when("/home/city/hotelDetails/",{
+                templateUrl: "views/hotel/hotel-details-guest.view.client.html",
+                controller: "HotelDetailsGuestController",
+                controllerAs: "model"
             })
             .when("/user/city", {
                 templateUrl: "views/hotel/hotel-list.view.client.html",
@@ -299,7 +288,7 @@
                 }
             })*/
             .otherwise({
-                redirectTo : "/login"
+                redirectTo : "/user/home"
             });
 
     /*    function checkLoggedin($q, $timeout, $http, $location, $rootScope) {

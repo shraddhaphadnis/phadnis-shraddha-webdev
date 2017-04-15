@@ -5,22 +5,6 @@
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <div class="navbar-text white-text pull-right page-text">
-                <a ng-if ="model.user" href="#/owner">
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
-
-            <a href="#/user">
-                <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
-            </a>
-
-            <a href="" ng-click="model.logout()">
-                <span class="glyphicon glyphicon-log-out"></span>
-            </a>
-            <a href="" ng-click="model.logout()">
-                <span>Logout</span>
-            </a>
-        </div>
         <div class="navbar-header page-text">
             <a class="navbar-brand" href="">Happy Stay</a>
         </div>
@@ -37,23 +21,13 @@
                 </div>
                 <div class="  col-md-12 col-lg-8" >
                     <div>
-                        <div ng-switch = model.user.userId>
-                            <div ng-switch-when != "undefined">
                                 <h3><a ng-click = "model.sethotel(hotel)"
-                                        href="#/user/city/hotelDetails/">{{hotel.hotel_data_node.name}}</a></h3>
+                                       href="#/home/city/hotelDetails/">{{hotel.hotel_data_node.name}}</a></h3>
                                 <h4>{{hotel.hotel_data_node.loc.city}},{{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
                                 <h4>Rating: {{hotel.hotel_data_node.rating}}</h4>
 
                                 <!-- code to render a large video block-->
-                            </div>
-                            <div ng-switch-when="undefined">
-                                <h3><a ng-click = "model.sethotel(hotel)"
-                                        href="#/user/city/hotelDetails/">{{hotel.hotel_data_node.name}}</a></h3>
-                                <h4>{{hotel.hotel_data_node.loc.city}}, {{hotel.hotel_data_node.loc.cnt_code}} - {{hotel.hotel_data_node.loc.pin}}</h4>
-                                <h4>Rating: {{hotel.hotel_data_node.rating}}</h4>
-                            </div>
-                                <!-- code to render the regular video block -->
-                        </div>
+                            <!-- code to render the regular video block -->
                     </div>
                 </div>
             </section>
@@ -76,9 +50,9 @@
     <div class="container-fluid">
         <div class="row">
             <div ng-if="model.user.role == 'CUSTOMER'">
-            <a href="#/user">
-                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
-            </a>
+                <a href="#/user">
+                    <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+                </a>
             </div>
             <div ng-if="model.user.role == 'OWNER'">
                 <a href="#/owner">

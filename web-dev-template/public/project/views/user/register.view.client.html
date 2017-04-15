@@ -1,12 +1,8 @@
 <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
                 <div class="row">
-                        <a class=" navbar-text-decor" href="#">
+                        <a class=" navbar-text-decor" href="">
                                 Happy Stay
-                        </a>
-                        <a href="#/login" class="">
-              <span class="glyphicon glyphicon-ok white-glyphicon pull-right">
-              </span>
                         </a>
                 </div>
         </div>
@@ -23,6 +19,9 @@
                 </ul>
         </div>
         <h1>Register</h1>
+        <div class="alert alert-danger" ng-show="model.error">
+                {{model.error}}
+        </div>
         <form name="register" novalidate ng-submit="model.createUser(model.user)">
                 <div class="input-group">
                         <div class="input-group-addon">
@@ -74,7 +73,6 @@
 
                 <div class="form-group">
                         <input type="radio" ng-model="model.user.role" value="OWNER"> Owner&nbsp;
-                        <input type="radio" ng-model="model.user.role" value="ADMIN"> Admin&nbsp;
                         <input type="radio" ng-model="model.user.role" value="CUSTOMER"> User
                 </div>
                 <!--<div ng-show="register.LastName.$invalid && register.LastName.$submitted" class="error">Last Name is required</div>-->
@@ -85,13 +83,13 @@
                 </a>
         </form>
         <a class="btn btn-danger  btn-block"
-           href="#/login">Cancel</a>
+           href="#/user/home">Cancel</a>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid">
                 <div class="row">
-                        <a href="#/user/{{model.userId}}">
-                                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+                        <a href="#/user/home">
+                                <span class="glyphicon glyphicon-home white-glyphicon pull-right"></span>
                         </a>
                 </div>
         </div>

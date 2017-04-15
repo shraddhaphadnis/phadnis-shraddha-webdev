@@ -1,25 +1,31 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div class="row">
-            <a class="" href="#/user/{{model.userId}}/city/{{model.cityId}}"><span class="glyphicon glyphicon-chevron-left white-glyphicon">
-              </span></a>
-            <a class=" navbar-text-decor" href="#">
-                HAPPY STAY
+        <div class="navbar-text white-text pull-left page-text">
+            <a href="#/user/homepage/">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-text white-text pull-right page-text">
+            <a ng-if ="model.user.role == 'OWNER'" href="#/owner">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+            <a ng-if ="model.user.role == 'CUSTOMER'" href="#/user">
+                <span class="glyphicon glyphicon-user"></span>
             </a>
 
-            <ng-switch = model.isOwned>
-            <div ng-switch-when=true>
-                <a href = "#/user/{{model.userId}}/business" class="">
-                    <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
-              </span>
-                </a>
-            </div>
-            <div ng-switch-when=false>
-                    <a href="#/user/{{model.userId}}" class="">
-                    <span class="fa fa-user fa-lg white-glyphicon pull-right">Hi, {{model.user.username}}. Followers - {{model.user.followers.length}}
-                </span>
-                    </a>
-            </div>
+            <a href="#/user">
+                <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
+            </a>
+
+            <a href="" ng-click="model.logout()">
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+            <a href="" ng-click="model.logout()">
+                <span>Logout</span>
+            </a>
+        </div>
+        <div class="navbar-header page-text">
+            <a class="navbar-brand" href="">Happy Stay</a>
         </div>
     </div>
 </nav>
@@ -235,16 +241,12 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">
-            <div ng-if = "model.user.role == 'OWNER'">
-            <a href="#/owner">
-                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
-            </a>
-            </div>
-            <div ng-if = "model.user.role == 'CUSTOMER'">
-                <a href="#/user">
+                <a ng-if="model.user.role == 'CUSTOMER'" href="#/user">
                     <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
                 </a>
-            </div>
+                <a ng-if="model.user.role == 'OWNER'" href="#/owner">
+                    <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+                </a>
         </div>
     </div>
 </nav>

@@ -1,11 +1,11 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div class="navbar-text pull-left page-text">
-            <a href="#/user/home">
+        <div class="navbar-text white-text pull-left page-text">
+            <a href="#/user/homepage/">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <div class="navbar-text pull-right page-text">
+        <div class="navbar-text white-text pull-right page-text">
             <a href="#/owner">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
@@ -14,15 +14,15 @@
                 <span>{{model.user.firstName}}&nbsp;&nbsp;&nbsp;</span>
             </a>
 
-            <a href="index.html#/home">
+            <a href="" ng-click="model.logout()">
                 <span class="glyphicon glyphicon-log-out"></span>
             </a>
-            <a href="index.html#/home">
+            <a href="" ng-click="model.logout()">
                 <span>Logout</span>
             </a>
         </div>
         <div class="navbar-header page-text">
-            <a class="navbar-brand" href="#/user/home/">Happy Stay</a>
+            <a class="navbar-brand" href="#/owner">Happy Stay</a>
         </div>
     </div>
 </nav>
@@ -141,7 +141,6 @@
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
-
         <a href="#/owner" class="navbar-link navbar-brand pull-right">
           <span class="glyphicon glyphicon-user">
           </span>

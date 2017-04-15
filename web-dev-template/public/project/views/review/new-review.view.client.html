@@ -3,7 +3,7 @@
         <div class="row">
             <a class="" href="#/user/city/hotelDetails/"><span class="glyphicon glyphicon-chevron-left white-glyphicon">
               </span></a>
-            <a class=" navbar-text-decor" href="#">
+            <a class="navbar-text-decor" href="">
                 Review
             </a>
 
@@ -26,12 +26,20 @@
         </form>
     </div>
 </div>
+
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">
-            <a href="#/user/{{model.userId}}">
-                <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
-            </a>
+            <div ng-if="model.user.role == 'CUSTOMER'">
+                <a href="#/user">
+                    <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+                </a>
+            </div>
+            <div ng-if="model.user.role == 'OWNER'">
+                <a href="#/owner">
+                    <span class="glyphicon glyphicon-user white-glyphicon pull-right"></span>
+                </a>
+            </div>
         </div>
     </div>
 </nav>

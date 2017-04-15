@@ -1,0 +1,61 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text white-text pull-left page-text">
+            <a href="#/user/homepage/">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-header page-text">
+            <a class="navbar-brand" href="">Happy Stay</a>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid padding-navbar">
+    <div>
+        <div class="row">
+            <img ng-src="{{model.hotelDetails.img_selected.fs.l}}" width="100%" height="400px">
+        </div>
+        <div class="row container">
+            <div class="col-xs-12 col-lg-6">
+                <h1 class="heading-color">Details</h1>
+                <h3>{{model.hotelDetails.name}}</h3>
+                <br>
+                <hr>
+                <div class="container">
+                    <h2 class="heading-color">Facilities</h2>
+                    <div class="row">
+                        <i class="fa fa-wifi col-lg-2 col-xs-2" aria-hidden="true"></i>
+                        <i class="fa fa-cutlery col-lg-2 col-xs-2" aria-hidden="true"></i>
+                        <i class="fa fa-snowflake-o col-lg-2 col-xs-2" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <hr>
+                <div class="container">
+                    <h2 class="heading-color">Location</h2>
+                    <div class="row">
+                        <i class="fa fa-map-marker fa-lg col-xs-2">
+                        </i>
+                        <label>{{model.hotelDetails.loc.city}}</label>
+                    </div>
+                    <div class="col-lg-4 col-xs-4" id="map">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="container-fluid padding-navbar">
+        <div class="col-lg-4 col-xs-12" style="padding:10px" ng-repeat="hotelImage in model.hotelDetails.img">
+            <img ng-src="{{hotelImage.l}}" height="200px" width="100%"/>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+        </div>
+    </div>
+</nav>
