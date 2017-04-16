@@ -52,8 +52,7 @@
                 <div class="container">
                     <h2 class="heading-color">Location</h2>
                     <div class="row">
-                        <i class="fa fa-map-marker fa-lg col-xs-2">
-                        </i>
+                        <i class="fa fa-map-marker fa-lg col-xs-2"></i>
                         <label>{{model.hotelDetails.loc.city}}</label>
                     </div>
                     <div class="col-lg-4 col-xs-4" id="map">
@@ -65,6 +64,7 @@
                     <span>
                         <div ng-switch-when=true
                              ng-click="model.undoLikeHotel()">
+                            Unlike
                                 <span class="glyphicon glyphicon-heart like-button-color"></span>
 
                         </div>
@@ -72,6 +72,7 @@
                     <span>
                         <div ng-switch-when=false
                              ng-click="model.likeHotel()">
+                            Like
                                 <span class="glyphicon glyphicon-heart-empty like-button-color"></span>
 
                         </div>
@@ -96,20 +97,6 @@
                         <footer class="comment-meta">
                             <div class="comment-author vcard">
                                 <img src="https://secure.gravatar.com/avatar/3e4153bc3fc407dfeca1bce714d933df?s=60&amp;d=mm&amp;r=g" width="60" height="60" alt="" class="avatar avatar-60wp-user-avatar wp-user-avatar-60 alignnone photo avatar-default">
-                                <!--div ng-switch=posts._user>
-                                    <ng-switch-when=model.userId>
-                                        <h3>
-                                            <a ng-click = "model.setSecondUser(posts)"
-                                                    href="#/owner/{{posts._user}}">{{posts.username}}</a>
-                                        </h3>
-                                    </div>
-                                    <div ng-switch-when!=model.userId>
-                                        <h3><span class="glyphicon glyphicon-user"></span>
-                                            <a href="#/user1/{{model.userId}}/secondUser/{{posts._user}}">{{posts.username}}
-                                            </a>
-                                        </h3>
-                                    </div>
-                                </div-->
                                 <div ng-if  = "model.userId == posts._user">
                                 <h3>
                                     <a ng-click = "model.setSecondUser(posts)"
@@ -134,7 +121,7 @@
 
                         </footer><!-- .comment-meta -->
 
-                        <div class="alert-danger">
+                        <div class="well-sm">
                             <div class="card card-inverse card-primary mb-3 text-center">
                                 <div class="card-header">
                                     DISCOUNTS
