@@ -1,9 +1,10 @@
 var express = require('express');
 var passport      = require('passport');
- var cookieParser  = require('cookie-parser');
- var session       = require('express-session');
-
+var cookieParser  = require('cookie-parser');
+var session       = require('express-session');
+var dotenv = require('dotenv');
 var app = express();
+dotenv.load();
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());

@@ -56,15 +56,15 @@ module.exports = function(app,model){
         }));
 
     var googleConfig = {
-        clientID     : "473667437328-uot912efme140vhsfu904bufo0445tuk.apps.googleusercontent.com",
-        clientSecret : "8kGLiEMhPjprPvIf0wDrrAti",
-        callbackURL  : "http://localhost:3000/google/oauth/callback"
+        clientID     : process.env.GOOGLE_CLIENT_ID,
+        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL  : process.env.GOOGLE_CALLBACK_URL
     };
 
     var facebookConfig = {
-        clientID     : "1883335911952006",
-        clientSecret : "c40660843a306f35087f2989eaf16533",
-        callbackURL  : "http://localhost:3000/auth/facebook/callback"
+        clientID     : process.env.FACEBOOK_CLIENT_ID,
+        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL  : process.env.FACEBOOK_CALLBACK_URL
     };
     //console.log("Inside user service server js");
 
