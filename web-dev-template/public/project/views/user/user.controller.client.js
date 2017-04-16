@@ -331,7 +331,6 @@
                     }, function (err) {
                         vm.error = "user/password does not match";
                     });
-
             }
         }
     function RegisterController($scope,$rootScope,$location,UserService) {
@@ -372,6 +371,9 @@
                             })
 
                     })
+            }
+            else {
+                vm.error = "Please enter all required fields";
             }
         }
     }

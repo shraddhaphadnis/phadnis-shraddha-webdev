@@ -31,18 +31,28 @@
                        ng-model="model.user.username"
                        class="form-control"
                        placeholder="username" name="username" required/>
+                        <div ng-show="register.username.$invalid && register.$submitted" class="error">Username is required</div>
                 </div>
-                <div ng-show="register.username.$invalid && register.$submitted" class="error">Username is required</div>
+                <div class="input-group">
+                        <div class="input-group-addon">
+                                <span class="glyphicon glyphicon glyphicon-lock"></span>
+                        </div>
                 <input type="password"
                        ng-model="model.user.password"
                        class="form-control"
                        placeholder="password" name="password" required/>
                 <div ng-show="register.password.$invalid && register.$submitted" class="error">Password is required</div>
+                </div>
+                <div class="input-group">
+                        <div class="input-group-addon">
+                                <span class="glyphicon glyphicon glyphicon-lock"></span>
+                        </div>
                 <input type="password"
                        ng-model="model.user.veryPassword"
                        class="form-control"
                        placeholder="verify password" name="veryPassword" required/>
                 <div ng-show="model.veryPasswordAlert" class="error">Password fields not matching</div>
+                </div>
                 <div class="input-group">
                         <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-envelope"></span>
