@@ -39,28 +39,28 @@
             }
         }
     }
-    function AdminRegisterController($rootScope,$location,UserService) {
+    function AdminRegisterController($rootScope,$location,UserService,loggedin) {
         var vm = this;
         console.log("In project user controller");
 
         vm.createUser = createUser;
         function createUser(user) {
-            user.role = 'ADMIN';
+            //user.role = 'ADMIN';
             UserService
                 .register(user)
                 .then(
                     function (response) {
                         console.log(response);
                         var user = response.data;
-                        $rootScope.currentUser = user;
-                        $location.url("/userAdmin/" + user._id);
+                        $rootScope.userId = user._id;
+                        $location.url("/userAdmin/profile");
                     });
         }
     }
-    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService,CityService,loggedin,$rootScope) {
+    function AdminProfileController($routeParams, UserService,$location,HotelService,ReviewService,CityService,loggedin,$rootScope,BusinessService) {
         var vm = this;
         var model = this;
-        vm.userId = loggedin.data._id;
+        vm.userId = $rootScope.userId;
         vm.user = loggedin.data;
         vm.getAllRegUsers = getAllRegUsers;
         vm.deleteUser = deleteUser;
@@ -184,7 +184,7 @@
                 })
         }
 
-        function deleteUserAdmin(user) {
+       /* function deleteUserAdmin(user) {
             UserService
                 .deleteUserAdmin(user._id)
                 .then(function (user) {
@@ -200,6 +200,62 @@
                 }, function (err) {
                     res.sendStatus(err);
                 })
+        }*/
+        function deleteUserAdmin(user) {
+            console.log("delete user called in owner controller");
+            var answer = confirm("Are you sure?");
+            if (answer) {
+                UserService
+                    .deleteUser(user._id)
+                    .then(function () {
+                        UserService.findUsersToDeleteFromFollowers(user._id)
+                            .then(function (response1) {
+                                var deleteFromFollowers=response1.data;
+                                deleteFromFollowers.forEach(function (element, index, array) {
+                                    UserService.removeFromFollowers(deleteFromFollowers[index]._id, user._id);
+                                })
+                                UserService.findUsersToDeleteFromFollowing(user._id)
+                                    .then(function (response2) {
+                                        var deleteFromFollowing=response2.data;
+                                        deleteFromFollowing.forEach(function (element, index, array) {
+                                            UserService.removeFromFollowing(deleteFromFollowing[index]._id,user._id);
+                                        })
+                                    });
+                            });
+                    })
+                    .then(function () {
+                        if(user.role=="OWNER") {
+                            console.log("user role set as owner in owner controller");
+                            BusinessService.findBusinessByUser(user.username)
+                                .then(function (business) {
+                                    if (business.length == 0) {
+                                        UserService.getAllRegUsers()
+                                            .success(function (user) {
+                                                vm.users = user;
+                                            })
+                                    }
+                                    else {
+                                        for (b in business.data) {
+                                            BusinessService.deleteBusiness(business.data[b]._id)
+                                                .success(function () {
+                                                    UserService.getAllRegUsers()
+                                                        .success(function (user) {
+                                                            vm.users = user;
+                                                        })
+                                                })
+                                        }
+                                    }
+                                })
+                        }
+                        else{
+                            UserService.getAllRegUsers()
+                                .success(function (user) {
+                                    vm.users = user;
+                                })
+                        }
+
+                    })
+            }
         }
 
         function select(user) {

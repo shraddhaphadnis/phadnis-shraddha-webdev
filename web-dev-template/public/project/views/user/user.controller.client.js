@@ -5,7 +5,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController)
         .controller("profileOtherController",profileOtherController)
-        .controller("profileOwnerController",profileOwnerController)
+        .controller("profileOwnerController",profileOwnerController);
 
     function profileOwnerController($routeParams,UserService,$location, HotelService, CityService,BusinessService,loggedin,$rootScope) {
         var vm = this;
@@ -323,7 +323,7 @@
                         if (user.role === "ADMIN") {
                             alert("hello2");
                             $rootScope.currentUser = user;
-                            $location.url("/userAdmin/");// + user._id);
+                            $location.url("/userAdmin/profile");// + user._id);
                         }
                         else {
                             vm.error ("user not found");
@@ -377,7 +377,7 @@
     }
 
 
-        function ProfileController($routeParams, UserService,$location,HotelService,CityService,loggedin,$rootScope) {
+        function ProfileController($routeParams, UserService,$location,HotelService,CityService,loggedin,$rootScope,BusinessService) {
             var vm = this;
             //vm.userId = $routeParams["uid"];
             vm.userId = loggedin.data._id;
@@ -390,8 +390,12 @@
                 UserService
                     .findUserById(vm.userId)
                     .success(function(user){
-                        if(user != null){
-                            vm.user = user;
+                        vm.user = user;
+                        if(user.role == 'OWNER') {
+                            console.log("user role set as owner");
+                            $location.url("/owner");
+                        }
+                        else if(user != null) {
                             isLoggedInUserFollowing();
                             getLikeDetails();
                             getFollowers();
@@ -565,9 +569,9 @@
 
             }
 
-            function deleteUser(userId){
-
-                UserService.deleteUser(userId)
+         /*   function deleteUser(userId){
+                UserService
+                    .deleteUser(userId)
                     .success(function(response){
                         if(response == 'OK'){
                             $location.url("/login");
@@ -575,6 +579,109 @@
                     })
                     .error(function(){
                     });
+            }*/
+
+            /*function deleteUser(user) {
+                console.log(user);
+                UserService
+                    .deleteUser(userId)
+                    .then(function () {
+                        UserService.findUsersToDeleteFromFollowers(userId)
+                            .then(function (response1) {
+                                var deleteFromFollowers = response1.data;
+                                deleteFromFollowers.forEach(function (element, index, array) {
+                                    UserService.removeFromFollowers(deleteFromFollowers[index]._id, userId);
+                                })
+                                UserService.findUsersToDeleteFromFollowing(userId)
+                                    .then(function (response2) {
+                                        var deleteFromFollowing = response2.data;
+                                        deleteFromFollowing.forEach(function (element, index, array) {
+                                            UserService.removeFromFollowing(deleteFromFollowing[index]._id, userId);
+                                        })
+                                    });
+                            });
+                    })
+
+
+                                if (user.role == 'OWNER') {
+                                    console.log("inside business controller");
+                                    BusinessService.findBusinessByUser(user.username)
+                                        .then(function (business) {
+                                            if (business.length == 0) {
+                                                res.send(200);
+                                            }
+                                            else {
+                                                for (b in business) {
+                                                    BusinessService
+                                                        .deleteBusiness(b)
+                                                        .success(function () {
+                                                        })
+                                                }
+                                            }
+                                        })
+                                }
+                            })
+                    .then(function (response) {
+                        UserService
+                            .getAllRegUsers()
+                            .then(function (users) {
+                                console.log("set user");
+                                vm.users = users;
+                            },function (err) {
+                                res.sendStatus(404).send(err);
+                            })
+                    },function (err) {
+                        res.sendStatus(err);
+                    });
+
+            }*/
+
+            function deleteUser(user) {
+                console.log("delete user called" + user);
+                var answer = confirm("Are you sure?");
+                if (answer) {
+                    UserService
+                        .deleteUser(user._id)
+                        .then(function () {
+                            UserService.findUsersToDeleteFromFollowers(user._id)
+                                .then(function (response1) {
+                                    var deleteFromFollowers=response1.data;
+                                    deleteFromFollowers.forEach(function (element, index, array) {
+                                        UserService.removeFromFollowers(deleteFromFollowers[index]._id, user._id);
+                                    })
+                                    UserService.findUsersToDeleteFromFollowing(user._id)
+                                        .then(function (response2) {
+                                            var deleteFromFollowing=response2.data;
+                                            deleteFromFollowing.forEach(function (element, index, array) {
+                                                UserService.removeFromFollowing(deleteFromFollowing[index]._id,user._id);
+                                            })
+                                        });
+                                });
+                        })
+                        .then(function () {
+                            if(user.role=="OWNER") {
+                                console.log("Owner %%%%");
+                                BusinessService.findBusinessByUser(user.username)
+                                    .then(function (business) {
+                                        if (business.length == 0) {
+                                            $location.url("/login");
+                                        }
+                                        else {
+                                            for (b in business) {
+                                                BusinessService.deleteBusiness(business[b]._id)
+                                                    .success(function () {
+                                                        $location.url("/login");
+                                                    })
+                                            }
+                                        }
+                                    })
+                            }
+                            else{
+                                $location.url("/login");
+                            }
+
+                        })
+                }
             }
         }
 })();

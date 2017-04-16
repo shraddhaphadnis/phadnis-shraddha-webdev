@@ -24,9 +24,20 @@ module.exports = function () {
         removeFromFollowers:removeFromFollowers,
         findUserByGoogleId : findUserByGoogleId,
         findUserByFacebookId :findUserByFacebookId,
-        findUsersWhoLikedHotel:findUsersWhoLikedHotel
+        findUsersWhoLikedHotel:findUsersWhoLikedHotel,
+        findUsersToDeleteFromFollowers:findUsersToDeleteFromFollowers,
+        findUsersToDeleteFromFollowing:findUsersToDeleteFromFollowing
     };
     return api;
+
+    function findUsersToDeleteFromFollowers(toBeRemovedId) {
+        return UserModel.find({followers: {$in: [toBeRemovedId]}});
+
+    }
+    function findUsersToDeleteFromFollowing(toBeRemovedId) {
+        return UserModel.find({following: {$in: [toBeRemovedId]}});
+
+    }
 
     function findUsersWhoLikedHotel(hotelId) {
         //console.log("I have come here");

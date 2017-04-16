@@ -30,11 +30,33 @@
             isHotelLiked: isHotelLiked,
             follow:follow,
             unfollow:unfollow,
-            findUserWhoLikedHotel:findUserWhoLikedHotel
+            findUserWhoLikedHotel:findUserWhoLikedHotel,
+            findUsersToDeleteFromFollowers : findUsersToDeleteFromFollowers,
+            findUsersToDeleteFromFollowing:findUsersToDeleteFromFollowing,
+            removeFromFollowers:removeFromFollowers,
+            removeFromFollowing:removeFromFollowing
 
         };
         return api;
 
+        function findUsersToDeleteFromFollowers(toBeRemovedId) {
+            return $http.get("/api/removeFollowers/"+toBeRemovedId);
+
+        }
+        function findUsersToDeleteFromFollowing(toBeRemovedId) {
+            return $http.get("/api/removeFollowing/"+toBeRemovedId);
+
+        }
+
+        function removeFromFollowers(currentUserId,toBeRemovedId) {
+            return $http.delete("/api/removeFollower/currentUser/"+currentUserId+"/deleteUser/"+toBeRemovedId);
+
+        }
+
+        function removeFromFollowing(currentUserId,toBeRemovedId) {
+            return $http.delete("/api/removeFollowing/currentUser/"+currentUserId+"/deleteUser/"+toBeRemovedId);
+
+        }
         function findUserWhoLikedHotel(hotelId) {
             return $http.get("/api/allUsers/"+hotelId);
 

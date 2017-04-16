@@ -11,6 +11,17 @@ module.exports = function(app, model){
     app.delete("/api/delBusiness/:bid", deleteBusiness);
     app.get('/api/getAllDiscounts/', getAllDiscounts);
     app.get("/api/getbusiness/:hid", findhotelInBusiness);
+    app.get("/api/getbusinessbyuserId/:username",findBusinessByUser);
+
+    function findBusinessByUser(req,res) {
+        var username = req.params.username;
+        console.log("findbusiness by user");
+        model.businessModel
+            .findBusinessByUser(username)
+            .then(function (business) {
+                res.send(business)
+            })
+    }
 
     function findhotelInBusiness(req,res) {
         var hotelId = req.params.hid;

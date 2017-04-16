@@ -33,6 +33,11 @@ module.exports = function(app,model){
     app.put("/api/user/:loggedInUserId/user2/:secondUserId/unfollow",unfollow);
     app.get ('/api/loggedin', loggedin);
     app.get("/api/allUsers/:hotelId",findUsersWhoLikedHotel);
+    app.get("/api/removeFollowers/:toBeRemovedId",findUsersToDeleteFromFollowers);
+    app.get("/api/removeFollowing/:toBeRemovedId",findUsersToDeleteFromFollowing);
+
+    app.delete("/api/removeFollower/currentUser/:currentUserId/deleteUser/:toBeRemovedId",removeFromFollowers);
+    app.delete("/api/removeFollowing/currentUser/:currentUserId/deleteUser/:toBeRemovedId",removeFromFollowing);
 
 
     app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
@@ -166,6 +171,70 @@ module.exports = function(app,model){
 
     function loggedin(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+
+    function findUsersToDeleteFromFollowers(req,res) {
+        var toBeRemovedId=req.params['toBeRemovedId'];
+
+        model.userModel.findUsersToDeleteFromFollowers(toBeRemovedId)
+            .then(function (response) {
+
+                res.json(response);
+
+            },function (err) {
+                res.status(400).send(err);
+
+            })
+
+        //return $http.get("/api/removeFollowers/"+toBeRemovedId+"/currentUser/"+currentUserId);
+
+    }
+    function findUsersToDeleteFromFollowing(req,res) {
+        var toBeRemovedId=req.params['toBeRemovedId'];
+
+        model.userModel.findUsersToDeleteFromFollowing(toBeRemovedId)
+            .then(function (response) {
+
+                res.json(response);
+
+            },function (err) {
+                res.status(400).send(err);
+
+            })
+
+        //return $http.get("/api/removeFollowing/"+toBeRemovedId+"/currentUser/"+currentUserId);
+
+    }
+    function removeFromFollowers(req,res) {
+        var currentUserId = req.params.currentUserId;
+        var toBeRemovedId = req.params.toBeRemovedId;
+
+        model.userModel.removeFromFollowers(currentUserId,toBeRemovedId)
+            .then(function (response) {
+                res.json(response);
+
+            },function (err) {
+                res.status(400).send(err);
+
+            })
+
+
+
+
+    }
+
+    function removeFromFollowing(req,res) {
+        var currentUserId = req.params.currentUserId;
+        var toBeRemovedId = req.params.toBeRemovedId;
+        model.userModel.removeFromFollowing(currentUserId,toBeRemovedId)
+            .then(function (response) {
+                res.json(response);
+
+            },function (err) {
+                res.status(400).send(err);
+
+            })
     }
 
 
@@ -513,7 +582,7 @@ module.exports = function(app,model){
             .findUserById(userId)
             .then(
                 function (user) {
-                    console.log(user);
+                    console.log("&&&&&&&&& find user by id"+ user);
                     if(user)
                         res.send(user);
                     else

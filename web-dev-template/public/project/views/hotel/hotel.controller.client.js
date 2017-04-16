@@ -38,11 +38,11 @@
         }
 
         function secondReviewUser(userReview) {
-            $rootScope.Seconduser = userReview._user;
+            $rootScope.seconduser = userReview._user;
         }
 
         function setSecondUser(business) {
-            $rootScope.Seconduser = business._user;
+            $rootScope.seconduser = business._user;
         }
 
         function setBusiness(business) {
@@ -217,11 +217,11 @@
         }
 
         function secondReviewUser(userReview) {
-            $rootScope.Seconduser = userReview._user;
+            $rootScope.seconduser = userReview._user;
         }
 
         function setSecondUser(business) {
-            $rootScope.Seconduser = business._user;
+            $rootScope.seconduser = business._user;
         }
 
         function setBusiness(business) {

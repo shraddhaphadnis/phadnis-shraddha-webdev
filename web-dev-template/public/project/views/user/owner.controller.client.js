@@ -50,6 +50,54 @@ function OwnerController($routeParams, UserService,$location,HotelService,CitySe
     vm.getBusiness = getBusiness;
     vm.setHotel = setHotel;
 
+    function deleteUser(user) {
+        console.log("delete user called in owner controller");
+        var answer = confirm("Are you sure?");
+        if (answer) {
+            UserService
+                .deleteUser(user._id)
+                .then(function () {
+                    UserService.findUsersToDeleteFromFollowers(user._id)
+                        .then(function (response1) {
+                            var deleteFromFollowers=response1.data;
+                            deleteFromFollowers.forEach(function (element, index, array) {
+                                UserService.removeFromFollowers(deleteFromFollowers[index]._id, user._id);
+                            })
+                            UserService.findUsersToDeleteFromFollowing(user._id)
+                                .then(function (response2) {
+                                    var deleteFromFollowing=response2.data;
+                                    deleteFromFollowing.forEach(function (element, index, array) {
+                                        UserService.removeFromFollowing(deleteFromFollowing[index]._id,user._id);
+                                    })
+                                });
+                        });
+                })
+                .then(function () {
+                    if(user.role=="OWNER") {
+                        console.log("user role set as owner in owner controller");
+                        BusinessService.findBusinessByUser(user.username)
+                            .then(function (business) {
+                                if (business.length == 0) {
+                                    $location.url("/login");
+                                }
+                                else {
+                                    for (b in business.data) {
+                                        BusinessService.deleteBusiness(business.data[b]._id)
+                                            .success(function () {
+                                                $location.url("/login");
+                                            })
+                                    }
+                                }
+                            })
+                    }
+                    else{
+                        $location.url("/login");
+                    }
+
+                })
+        }
+    }
+
     function setHotel(hotel) {
         $rootScope.cityId = hotel.cityId;
         $rootScope.hotelId = hotel.hotelId;
@@ -180,7 +228,12 @@ function OwnerController($routeParams, UserService,$location,HotelService,CitySe
 
     function getChoiceView(choice) {
         console.log("get choice called" + choice);
-        return "views/user/profile-" + choice + ".view.client.html";
+        if (choice == 'EDIT') {
+            return "views/user/profile-owner-" + choice + ".view.client.html";
+        }
+        else {
+            return "views/user/profile-" + choice + ".view.client.html";
+        }
     }
 
 
@@ -238,7 +291,7 @@ function OwnerController($routeParams, UserService,$location,HotelService,CitySe
 
     }
 
-    function deleteUser(userId){
+  /*  function deleteUser(userId){
 
         UserService.deleteUser(userId)
             .success(function(response){
@@ -248,6 +301,6 @@ function OwnerController($routeParams, UserService,$location,HotelService,CitySe
             })
             .error(function(){
             });
-    }
+    }*/
 }
 })();

@@ -14,10 +14,16 @@ module.exports = function () {
         deleteBusiness : deleteBusiness,
         setModel: setModel,
         findDiscounts: findDiscounts,
-        findhotelInBusiness: findhotelInBusiness
+        findhotelInBusiness: findhotelInBusiness,
+        findBusinessByUser: findBusinessByUser
     };
     return api;
 
+    function findBusinessByUser(username) {
+        return BusinessModel.find({
+            'username' : username
+        });
+    }
     function findhotelInBusiness(hotelId) {
         return BusinessModel.findOne({
             'hotelId' : hotelId
@@ -132,7 +138,6 @@ module.exports = function () {
     }
 
     function deleteBusiness(businessId) {
-
         return BusinessModel.remove({
             _id: businessId
         })

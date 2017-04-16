@@ -150,6 +150,22 @@
                     loggedin: checkLoggedin
                 }
             })
+            /*.when("/user/EDIT", {
+                templateUrl: 'views/user/profile-EDIT.view.client.html',
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })*/
+            .when("/user/EDIT", {
+             templateUrl: 'views/user/profile-owner-EDIT.view.client.html',
+             controller: "OwnerController",
+             controllerAs: "model",
+             resolve: {
+             loggedin: checkLoggedin
+             }
+             })
             .when("/user/FOLLOWING",{
                 templateUrl: "views/user/profile-FOLLOWING.view.client.html",
                 controller: "ProfileController",
@@ -251,7 +267,7 @@
                 controllerAs: 'model'
             })
 
-            .when("/userAdmin", {
+            .when("/userAdmin/profile", {
                 templateUrl: "views/admin/admin.home.view.html",
                 controller: "AdminProfileController",
                 controllerAs: "model",

@@ -6,6 +6,7 @@
         .module("MyHotelApp")
         .factory("BusinessService", BusinessService)
     function BusinessService($http) {
+        //noinspection JSAnnotator
         var api = {
 
             findBusinessById: findBusinessById,
@@ -14,10 +15,17 @@
             updateBusiness: updateBusiness,
             deleteBusiness: deleteBusiness,
             getAllDiscounts: getAllDiscounts,
-            findHotelInBusiness :findHotelInBusiness
+            findHotelInBusiness :findHotelInBusiness,
+            findBusinessByUser : findBusinessByUser
 
         };
         return api;
+
+        function findBusinessByUser(username) {
+            console.log("client ####");
+            var url = '/api/getbusinessbyuserId/'+username;
+            return $http.get(url);
+        }
 
         function findHotelInBusiness(hotelId) {
             var url = '/api/getbusiness/' + hotelId;
