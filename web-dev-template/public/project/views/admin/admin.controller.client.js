@@ -53,7 +53,7 @@
                         console.log(response);
                         var user = response.data;
                         $rootScope.userId = user._id;
-                        $location.url("/userAdmin/profile");
+                        $location.url("/userAdmin");
                     });
         }
     }

@@ -355,7 +355,7 @@
                                     var user = response.data;
                                     if (user.role == "ADMIN") {
                                         $rootScope.currentUser = user;
-                                        $location.url("/userAdmin");
+                                        $location.url("/userAdmin/profile");
                                     }
                                     else if (user.role == "OWNER") {
                                         $rootScope.currentUser = user;
