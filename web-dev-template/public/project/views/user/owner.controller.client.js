@@ -104,25 +104,25 @@ function OwnerController($routeParams, UserService,$location,HotelService,CitySe
     }
     
     function getBusiness() {
-        vm.business = [];
+        vm.businessowned = [];
         UserService
             .findUserById(vm.userId)
             .success((function (user) {
                 if (user.business.length == 0)
                 {
-                    vm.business = [];
+                    vm.businessowned = [];
                 }
                 else {
                     for (b in user.business) {
                         BusinessService
                             .findBusinessById(user.business[b])
                             .success(function (businessDetails) {
-                                vm.hotelId = businessDetails.hotelId;
-                                vm.hotelName = businessDetails.hotelName;
-                                vm.hotelCity = businessDetails.hotelCity;
-                                CityService.findCityIdByCityName(vm.hotelCity)
+                                CityService.findCityIdByCityName(businessDetails.hotelCity)
                                     .success(function (city1) {
                                         console.log("%%%%%"+city1["City ID"]);
+                                        vm.hotelId = businessDetails.hotelId;
+                                        vm.hotelName = businessDetails.hotelName;
+                                        vm.hotelCity = businessDetails.hotelCity;
                                         vm.cityId = city1["City ID"];
                                         console.log(vm.cityId);
                                         newbusiness =
@@ -131,7 +131,7 @@ function OwnerController($routeParams, UserService,$location,HotelService,CitySe
                                                 cityId : vm.cityId,
                                                 hotelName : vm.hotelName
                                             }
-                                        vm.business.push(newbusiness);
+                                        vm.businessowned.push(newbusiness);
                                     })
                             })
                     }
