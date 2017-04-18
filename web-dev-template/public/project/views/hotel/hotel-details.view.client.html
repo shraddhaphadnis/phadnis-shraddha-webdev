@@ -58,7 +58,7 @@
                     <div class="col-lg-4 col-xs-4" id="map">
                     </div>
                 </div>
-
+                <hr>
                 <h2 class="ng-binding">
                 <div ng-switch="model.isLiked">
                     <span>
@@ -79,9 +79,10 @@
                     </span>
 
                 </div>
-            </h2>
+                </h2>
+                <hr>
             </div>
-
+            <hr>
             <div ng-switch="model.user.role == 'OWNER' && model.owned != true">
                 <div ng-switch-when= true>
                     <h2 class="heading-color">Own the hotel</h2>
@@ -207,16 +208,14 @@
                                    href="#/user/city/hotelDetails/reviewEdit/">
                                     <span class="fa fa-pencil fa-lg pull-right"></span>
                                 </a>
-
                             </article>
                             <!--<div class="reply"><a rel="nofollow" class="comment-reply-link btn btn-sm btn-default" href="https://indiahikes.com/top-6-winter-treks-in-india-that-you-must-do/?replytocom=908#respond" onclick="return addComment.moveForm( &quot;div-comment-908&quot;, &quot;908&quot;, &quot;respond&quot;, &quot;21636&quot; )" aria-label="Reply to Amit Chaudhary" style="display: inline;">Reply</a></div>			</article>&lt;!&ndash; .comment-body &ndash;&gt;-->
                         </li><!-- #comment-## -->
-
-
                     </ol>
                 </div>
             </div>
         </div>
+
         <div class="container-fluid padding-navbar">
             <div class="col-lg-4 col-xs-12" style="padding:10px" ng-repeat="hotelImage in model.hotelDetails.img">
                 <img ng-src="{{hotelImage.l}}" height="200px" width="100%"/>
