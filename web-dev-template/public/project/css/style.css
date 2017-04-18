@@ -126,7 +126,7 @@ a:hover {
     .comment-list .children{padding-left:10px;}
 }
 .heading-color{
-    color: royalblue;
+    color: #2b669a;
 }
 .comment-color{
     color: black;
@@ -191,13 +191,14 @@ form{
     /*padding: 0 210px;*/
     position: relative;
     min-height: 200px;
+    border-color: black;
 }
 .hotel-img {
     margin-left: 0;
 }
 
 .hotel-info {
-    background-color: #f7f7f7;
+    background-color: lightgray;
     padding: 7px 10px 7px 15px;
     position: relative;
     min-height: 225px;
@@ -205,6 +206,9 @@ form{
 .navbar-text.white-text > a {
     color: white;
     text-decoration: none;
+}
+.success {
+    background-color: #3c3c3c;  
 }
 
 
