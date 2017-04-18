@@ -49,17 +49,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="container">
-                    <h2 class="heading-color">Location</h2>
-                    <div class="row">
-                        <i class="fa fa-map-marker fa-lg col-xs-2"></i>
-                        <label>{{model.hotelDetails.loc.city}}</label>
-                    </div>
-                    <div class="col-lg-4 col-xs-4" id="map">
-                    </div>
-                </div>
-                <hr>
-                <h2 class="ng-binding">
+                <h2 class="ng-binding heading-color">
                 <div ng-switch="model.isLiked">
                     <span>
                         <div ng-switch-when=true
@@ -153,7 +143,7 @@
                 <div>
                     <div class="row">
                         <h1 class="heading-color">Reviews</h1>
-                        <a type="button" class="btn btn-success"
+                        <a type="button" class="btn btn-primary"
                            href="#/user/review/new">Add Review</a>
                     </div>
                     <ol class="comment-list">
